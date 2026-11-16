@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 
 public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public string herbName; // tøeba "Virelen"
+    public string herbName; // tÅ™eba "Virelen"
 
     private bool isDragging = false;
     private GameObject currentHerbObj;
     private RectTransform canvasRectTransform;
+    private RectTransform currentHerbRect;
+    private Renderer cauldronRenderer;
     public GameManager gameManager;
 
     void Start()
@@ -20,11 +22,16 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             canvasRectTransform = canvasObj.GetComponent<RectTransform>();
         else
             Debug.LogWarning("Canvas s tagem 'Controll' nebyl nalezen.");
+
+        var cauldronObj = GameObject.FindWithTag("Cauldorn");
+        if (cauldronObj != null)
+            cauldronRenderer = cauldronObj.GetComponent<Renderer>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        currentHerbObj = Instantiate(Resources.Load<GameObject>("Prefabs/Herb"));
+        currentHerbObj = Instantiate(ResourceCache.Load<GameObject>("Prefabs/Herb"));
+        currentHerbRect = currentHerbObj.GetComponent<RectTransform>();
 
         if (canvasRectTransform != null)
         {
@@ -40,14 +47,14 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         {
             script.herbName = herbName;
 
-            Sprite sprite = Resources.Load<Sprite>($"Herbs/{herbName}");
+            Sprite sprite = ResourceCache.Load<Sprite>($"Herbs/{herbName}");
             if (sprite != null)
             {
                 Image image = currentHerbObj.GetComponent<Image>();
                 if (image != null)
                     image.sprite = sprite;
                 else
-                    Debug.LogWarning("Prefab nemá komponentu Image.");
+                    Debug.LogWarning("Prefab nemÃ¡ komponentu Image.");
             }
             else
             {
@@ -64,29 +71,28 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         if (currentHerbObj != null)
         {
-            var cauldorn = GameObject.FindWithTag("Cauldorn");
-            Vector3 cauldornScreenPos = Camera.main.WorldToScreenPoint(cauldorn.transform.position);
+            Vector3 cauldornScreenPos = Camera.main.WorldToScreenPoint(cauldronRenderer.transform.position);
             Vector3 uiScreenPos = Touchscreen.current.primaryTouch.position.ReadValue();
 
             float distance = Vector2.Distance(uiScreenPos, cauldornScreenPos);
 
             if (distance < 300f)
             {
-                float height = cauldorn.GetComponent<Renderer>().bounds.size.y;
-                float offsetY = height * 0.1f;
+                Bounds bounds = cauldronRenderer.bounds;
+                float offsetY = bounds.size.y * 0.1f;
 
                 Vector3 kotelTop = new Vector3(
-                cauldorn.GetComponent<Renderer>().bounds.center.x,
-                cauldorn.GetComponent<Renderer>().bounds.max.y-offsetY,
-                cauldorn.GetComponent<Renderer>().bounds.center.z
+                bounds.center.x,
+                bounds.max.y - offsetY,
+                bounds.center.z
                 );
                 // animace s efektem
-                StartCoroutine(FlyToTargetAndShrink(currentHerbObj.GetComponent<RectTransform>(), kotelTop));
-                gameManager.GetComponent<GameManager>().SetUsedHerbs(herbName); 
+                StartCoroutine(FlyToTargetAndShrink(currentHerbRect, kotelTop));
+                gameManager.SetUsedHerbs(herbName); 
             }
             else
             {
-                Destroy(currentHerbObj); // nebo vrácení zpìt
+                Destroy(currentHerbObj); // nebo vrÃ¡cenÃ­ zpÄ›t
             }
 
             currentHerbObj = null;
@@ -101,13 +107,13 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             Vector2 touchPos;
             if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
             {
-                // Získání pozice dotyku
+                // ZÃ­skÃ¡nÃ­ pozice dotyku
                 Vector2 screenPos = Touchscreen.current.primaryTouch.position.ReadValue();
 
-                // Pøevod na lokální pozici v rámci canvasu
+                // PÅ™evod na lokÃ¡lnÃ­ pozici v rÃ¡mci canvasu
                 if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, null, out touchPos))
                 {
-                    currentHerbObj.GetComponent<RectTransform>().localPosition = touchPos;
+                    currentHerbRect.localPosition = touchPos;
                 }
             }
         }

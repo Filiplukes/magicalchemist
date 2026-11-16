@@ -31,6 +31,7 @@ public class PoisonEffect : MonoBehaviour
     private float blurVelocity;
     private float currentBlurEase = 1.6f;
     private DepthOfField depthOfField;
+    private bool idleApplied;
 
     void Awake()
     {
@@ -70,6 +71,25 @@ public class PoisonEffect : MonoBehaviour
 
     void Update()
     {
+        // Bez jedu a s ustáleným rozmazáním není co přepočítávat – neutrální hodnoty stačí nastavit jednou.
+        if (poisonAmount <= 0f && blurAmount < 0.0001f)
+        {
+            if (!idleApplied)
+            {
+                blurAmount = 0f;
+                blurVelocity = 0f;
+                if (colorAdjust != null)
+                {
+                    colorAdjust.colorFilter.value = Color.white;
+                    colorAdjust.contrast.value = 0f;
+                    colorAdjust.saturation.value = 0f;
+                }
+                ApplyBlur(0f);
+                idleApplied = true;
+            }
+            return;
+        }
+        idleApplied = false;
 
         pulseTime += Time.deltaTime;
         float currentPulseSpeed = Mathf.Lerp(basePulseSpeed, maxPulseSpeed, poisonAmount);

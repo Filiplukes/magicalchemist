@@ -1,9 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using TMPro;
+using Unity.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 
+/// <summary>
+/// Kreslení kouzla prstem a vyhodnocení přesnosti.
+///
+/// Výkon: kreslí se přímo do pixel bufferu textury (žádné SetPixel), textura se do GPU posílá
+/// nejvýš jednou za snímek (LateUpdate) a jen když se změnila. Maska reference se počítá jednou
+/// na kouzlo a cachuje se. Počty pixelů pro hodnocení se udržují průběžně při kreslení, takže
+/// vyhodnocení je okamžité.
+///
+/// Hodnocení je stejné jako dřív: pokrytí čáry minus kreslení mimo čáru (viz EvaluateCorrectness).
+/// </summary>
 [RequireComponent(typeof(RawImage))]
 public class SpellDrawScript : MonoBehaviour,
                          IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -12,25 +23,46 @@ public class SpellDrawScript : MonoBehaviour,
     [Range(1, 100)]
     public int brushSize = 20;
     public bool scaleBrushByResolution = true;
-    public Color drawColor = Color.red; // <--- sem přidat
+    public Color drawColor = Color.red;
 
     [Header("Vyhodnocení")]
-    private string spellName;  // název sprite v Resources/Spells/
-    private Sprite referenceSprite;
     public TextMeshProUGUI resultText;
     public GameManager gameManager;
 
+    private const float InterpolationStep = 2.4f;
+    private static readonly Color32 BackgroundBlack = new Color32(0, 0, 0, 255);
+
+    private string spellName;
     private bool canDraw = false;
     private Vector2? lastPaintPos = null;
-
-    Texture2D drawTex;
-    RawImage raw;
-
-    Color[] referencePixels;
-    int refW, refH;
-    int blackPixelCount;
-
     private int movesToSpell = 0;
+
+    private Texture2D drawTex;
+    private NativeArray<Color32> texPixels;   // přímý přístup k datům textury
+    private NativeArray<Color32> zeroPixels;  // průhledný obraz pro rychlé mazání (memcpy)
+    private int texW, texH;
+    private bool textureDirty;
+    private Color32 drawColor32;
+
+    // Maska "kde je černá čára reference" v rozlišení textury (cache podle kouzla).
+    private readonly Dictionary<string, ReferenceMask> maskCache = new Dictionary<string, ReferenceMask>();
+    private ReferenceMask currentMask;
+    private bool[] drawn;                     // co už hráč nakreslil
+
+    // Průběžné počty pro hodnocení.
+    private int drawnCount;
+    private int matchedCount;
+
+    // Štětec jako řádkové úseky: pro dy = -r..r je půlšířka brushHalfWidth[dy + r].
+    private int brushRadiusCached = -1;
+    private int[] brushHalfWidth;
+
+    private class ReferenceMask
+    {
+        public bool[] isBlack;
+        public int[] blackIndices;
+        public int blackCount => blackIndices.Length;
+    }
 
     readonly Dictionary<string, int> spellMove = new Dictionary<string, int> {
         { "Air", 3 },
@@ -55,24 +87,49 @@ public class SpellDrawScript : MonoBehaviour,
         { "Light", Color.white },
         { "Time", new Color(1f, 0.65f, 0f) }          // orange
     };
+
     void Awake()
     {
-        raw = GetComponent<RawImage>();
+        var raw = GetComponent<RawImage>();
 
         RectTransform rt = (RectTransform)transform;
-        int w = Mathf.RoundToInt(rt.rect.width);
-        int h = Mathf.RoundToInt(rt.rect.height);
+        texW = Mathf.Max(1, Mathf.RoundToInt(rt.rect.width));
+        texH = Mathf.Max(1, Mathf.RoundToInt(rt.rect.height));
 
-        drawTex = new Texture2D(w, h, TextureFormat.ARGB32, false);
+        // RGBA32 = stejné pořadí bajtů jako Color32, takže lze psát přímo do dat textury.
+        drawTex = new Texture2D(texW, texH, TextureFormat.RGBA32, false);
         drawTex.filterMode = FilterMode.Point;
+        texPixels = drawTex.GetPixelData<Color32>(0);
+        zeroPixels = new NativeArray<Color32>(texW * texH, Allocator.Persistent, NativeArrayOptions.ClearMemory);
+        drawn = new bool[texW * texH];
 
         ClearTexture();
         raw.texture = drawTex;
 
         if (scaleBrushByResolution)
         {
-            brushSize = Mathf.Max(1, Mathf.RoundToInt(drawTex.width * 0.04f));
+            brushSize = Mathf.Max(1, Mathf.RoundToInt(texW * 0.04f));
         }
+        EnsureBrush();
+    }
+
+    void OnDestroy()
+    {
+        if (zeroPixels.IsCreated) zeroPixels.Dispose();
+        if (drawTex != null) Destroy(drawTex);
+    }
+
+    void LateUpdate()
+    {
+        FlushTexture();
+    }
+
+    /// <summary>Pošle změny textury do GPU (max. jednou za snímek).</summary>
+    private void FlushTexture()
+    {
+        if (!textureDirty) return;
+        drawTex.Apply(false);
+        textureDirty = false;
     }
 
     public void SetSpell(string spellName)
@@ -80,48 +137,82 @@ public class SpellDrawScript : MonoBehaviour,
         this.spellName = spellName;
         movesToSpell = spellMove[spellName];
         drawColor = spellColor[spellName];
-        LoadReferenceSprite();
+        drawColor32 = drawColor;
 
-    }
-
-    void LoadReferenceSprite()
-    {
-        // Načti sprite z Resources/Spells/
-        referenceSprite = Resources.Load<Sprite>("Spells/" + spellName);
-        if (referenceSprite == null)
+        currentMask = GetMask(spellName);
+        if (currentMask == null)
         {
             Debug.LogError($"Sprite '{spellName}' nenalezen ve Resources/Spells/");
+            return;
         }
 
-        if (referenceSprite != null)
+        canDraw = true;
+        FillBackgroundWithReference();
+    }
+
+    private ReferenceMask GetMask(string name)
+    {
+        if (maskCache.TryGetValue(name, out var cached)) return cached;
+
+        var sprite = Resources.Load<Sprite>("Spells/" + name);
+        if (sprite == null) return null;
+
+        Rect spriteRect = sprite.textureRect;
+        int x = Mathf.RoundToInt(spriteRect.x);
+        int y = Mathf.RoundToInt(spriteRect.y);
+        int refW = Mathf.RoundToInt(spriteRect.width);
+        int refH = Mathf.RoundToInt(spriteRect.height);
+        Color[] referencePixels = sprite.texture.GetPixels(x, y, refW, refH);
+
+        // Stejné převzorkování a práh jako původní verze.
+        var isBlack = new bool[texW * texH];
+        var blackIndices = new List<int>();
+        for (int py = 0; py < texH; py++)
         {
-            canDraw = true;
-            FillBackgroundWithReference();
-            CountReferenceBlackPixels();
-            drawTex.Apply();
+            int refRow = (py * refH / texH) * refW;
+            int row = py * texW;
+            for (int px = 0; px < texW; px++)
+            {
+                Color refCol = referencePixels[refRow + px * refW / texW];
+                if (refCol.a > 0.1f && refCol.grayscale < 0.1f)
+                {
+                    isBlack[row + px] = true;
+                    blackIndices.Add(row + px);
+                }
+            }
         }
+
+        var mask = new ReferenceMask { isBlack = isBlack, blackIndices = blackIndices.ToArray() };
+        maskCache[name] = mask;
+        return mask;
+    }
+
+    void FillBackgroundWithReference()
+    {
+        ClearTexture();
+        foreach (int i in currentMask.blackIndices)
+            texPixels[i] = BackgroundBlack;
     }
 
     public void ClearTexture()
     {
-        var cols = new Color[drawTex.width * drawTex.height];
-        for (int i = 0; i < cols.Length; i++) cols[i] = Color.clear;
-        drawTex.SetPixels(cols);
-        drawTex.Apply();
+        texPixels.CopyFrom(zeroPixels);
+
+        System.Array.Clear(drawn, 0, drawn.Length);
+        drawnCount = 0;
+        matchedCount = 0;
+        textureDirty = true;
     }
 
     public void OnPointerDown(PointerEventData e)
     {
-
         Paint(e);
     }
 
     public void OnDrag(PointerEventData e)
     {
-
         Paint(e);
     }
-
 
     public void OnPointerUp(PointerEventData e)
     {
@@ -130,10 +221,7 @@ public class SpellDrawScript : MonoBehaviour,
             if (canDraw)
             {
                 float correctness = EvaluateCorrectness();
-                gameManager.GetComponent<GameManager>().SetPecentSpell(correctness * 100f);
-
-                //bodovani nastavit pak text vyskakujici ukazujici jak dobre caroval
-
+                gameManager.SetPecentSpell(correctness * 100f);
 
                 if (resultText != null)
                     resultText.text = $"Přesnost: {(correctness * 100f):0}%";
@@ -153,15 +241,15 @@ public class SpellDrawScript : MonoBehaviour,
     {
         if (!canDraw) return;
 
-        Vector2 local;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            (RectTransform)transform, e.position, e.pressEventCamera, out local);
+            (RectTransform)transform, e.position, e.pressEventCamera, out Vector2 local);
 
         Rect r = ((RectTransform)transform).rect;
-        int x = Mathf.RoundToInt((local.x - r.xMin) / r.width * drawTex.width);
-        int y = Mathf.RoundToInt((local.y - r.yMin) / r.height * drawTex.height);
-
+        int x = Mathf.RoundToInt((local.x - r.xMin) / r.width * texW);
+        int y = Mathf.RoundToInt((local.y - r.yMin) / r.height * texH);
         Vector2 currentPos = new Vector2(x, y);
+
+        EnsureBrush();
 
         if (lastPaintPos == null)
         {
@@ -170,151 +258,85 @@ public class SpellDrawScript : MonoBehaviour,
         else
         {
             Vector2 last = lastPaintPos.Value;
-            Vector2 delta = currentPos - last;
+            float distance = (currentPos - last).magnitude;
+            int steps = Mathf.CeilToInt(distance / InterpolationStep);
 
-            float distance = delta.magnitude;
-            float stepSize = 2.4f; // kompromis: nižší počet bodů
-            int steps = Mathf.CeilToInt(distance / stepSize);
-
-            for (int i = 0; i <= steps; i++)
+            if (steps == 0)
             {
-                float t = (float)i / steps;
-                Vector2 interpolated = Vector2.LerpUnclamped(last, currentPos, t);
-                DrawCircle(Mathf.RoundToInt(interpolated.x), Mathf.RoundToInt(interpolated.y));
+                DrawCircle(x, y);
+            }
+            else
+            {
+                for (int i = 0; i <= steps; i++)
+                {
+                    Vector2 p = Vector2.LerpUnclamped(last, currentPos, (float)i / steps);
+                    DrawCircle(Mathf.RoundToInt(p.x), Mathf.RoundToInt(p.y));
+                }
             }
         }
 
         lastPaintPos = currentPos;
-
-        // ❗️Voláme Apply jen jednou, až po všech bodech
-        if (e.dragging)
-            drawTex.Apply();
     }
+
+    private void EnsureBrush()
+    {
+        if (brushRadiusCached == brushSize && brushHalfWidth != null) return;
+
+        int rad = brushSize;
+        brushHalfWidth = new int[2 * rad + 1];
+        for (int dy = -rad; dy <= rad; dy++)
+        {
+            // Největší dx, pro které platí dx² + dy² <= r² (stejná podmínka jako původní kruh).
+            int limit = rad * rad - dy * dy;
+            int hw = Mathf.FloorToInt(Mathf.Sqrt(limit));
+            while (hw * hw > limit) hw--;
+            while ((hw + 1) * (hw + 1) <= limit) hw++;
+            brushHalfWidth[dy + rad] = hw;
+        }
+        brushRadiusCached = rad;
+    }
+
     void DrawCircle(int cx, int cy)
     {
-        for (int y = -brushSize; y <= brushSize; y++)
-            for (int x = -brushSize; x <= brushSize; x++)
-            {
-                if (x * x + y * y > brushSize * brushSize) continue;
+        int rad = brushRadiusCached;
+        bool[] isBlack = currentMask.isBlack;
+        bool changed = false;
 
-                int px = cx + x;
-                int py = cy + y;
-                if (px < 0 || py < 0 || px >= drawTex.width || py >= drawTex.height) continue;
-
-                drawTex.SetPixel(px, py, drawColor); // <--- místo Color.white
-            }
-    }
-
-    void FillBackgroundWithReference()
-    {
-        Rect spriteRect = referenceSprite.textureRect;
-        int x = Mathf.RoundToInt(spriteRect.x);
-        int y = Mathf.RoundToInt(spriteRect.y);
-        int w = Mathf.RoundToInt(spriteRect.width);
-        int h = Mathf.RoundToInt(spriteRect.height);
-
-        referencePixels = referenceSprite.texture.GetPixels(x, y, w, h);
-        refW = w;
-        refH = h;
-
-        for (int py = 0; py < drawTex.height; py++)
+        int yMin = Mathf.Max(0, cy - rad);
+        int yMax = Mathf.Min(texH - 1, cy + rad);
+        for (int py = yMin; py <= yMax; py++)
         {
-            for (int px = 0; px < drawTex.width; px++)
+            int hw = brushHalfWidth[py - cy + rad];
+            int xMin = Mathf.Max(0, cx - hw);
+            int xMax = Mathf.Min(texW - 1, cx + hw);
+            int row = py * texW;
+            for (int px = xMin; px <= xMax; px++)
             {
-                int refX = px * refW / drawTex.width;
-                int refY = py * refH / drawTex.height;
-                Color refCol = referencePixels[refY * refW + refX];
+                int i = row + px;
+                if (drawn[i]) continue;
 
-                if (refCol.a > 0.1f && refCol.grayscale < 0.1f)
-                    drawTex.SetPixel(px, py, Color.black);
-                else
-                    drawTex.SetPixel(px, py, Color.clear);
+                drawn[i] = true;
+                texPixels[i] = drawColor32;
+                drawnCount++;
+                if (isBlack[i]) matchedCount++;
+                changed = true;
             }
         }
-        drawTex.Apply();
+
+        if (changed) textureDirty = true;
     }
 
-    void CountReferenceBlackPixels()
-    {
-        blackPixelCount = 0;
-        Color[] pixels = drawTex.GetPixels();
-
-        foreach (var c in pixels)
-        {
-            if (c.a > 0.1f && c.grayscale < 0.1f)
-                blackPixelCount++;
-        }
-    }
-
-
-    bool IsSimilarColor(Color a, Color b, float threshold = 0.1f)
-    {
-        return Mathf.Abs(a.r - b.r) < threshold &&
-               Mathf.Abs(a.g - b.g) < threshold &&
-               Mathf.Abs(a.b - b.b) < threshold &&
-               a.a > 0.1f;
-    }
-
-
+    /// <summary>
+    /// 1 - (nepokrytá čára / celá čára) - (kreslení mimo čáru / celá čára), oříznuto na 0..1.
+    /// </summary>
     float EvaluateCorrectness()
     {
-        int remainingBlackPixels = 0;
-        int drawnColorPixels = 0;
-        int matchedDrawnPixels = 0;
+        if (currentMask == null || currentMask.blackCount == 0) return 0f;
 
-        Color[] pixels = drawTex.GetPixels();
-
-        for (int i = 0; i < pixels.Length; i++)
-        {
-            Color current = pixels[i];
-            int px = i % drawTex.width;
-            int py = i / drawTex.width;
-            int refX = px * refW / drawTex.width;
-            int refY = py * refH / drawTex.height;
-            int refIndex = refY * refW + refX;
-
-            if (refIndex >= referencePixels.Length)
-                continue;
-
-            Color refCol = referencePixels[refIndex];
-            bool isRefBlack = refCol.a > 0.1f && refCol.grayscale < 0.1f;
-            bool isDrawn = IsSimilarColor(current, drawColor);
-
-            if (isRefBlack && !isDrawn)
-                remainingBlackPixels++;
-
-            if (isDrawn)
-            {
-                drawnColorPixels++;
-
-                if (isRefBlack)
-                    matchedDrawnPixels++;
-            }
-        }
-
-        if (blackPixelCount == 0) return 0f;
-
-        float baseAccuracy = 1f - (float)remainingBlackPixels / blackPixelCount;
-        float excessDraw = Mathf.Max(0, (float)(drawnColorPixels - matchedDrawnPixels) / blackPixelCount);
-        float finalScore = Mathf.Clamp01(baseAccuracy - excessDraw);
-        return finalScore;
-    }
-
-    void DrawLine(int x0, int y0, int x1, int y1)
-    {
-        int dx = Mathf.Abs(x1 - x0);
-        int dy = Mathf.Abs(y1 - y0);
-        int sx = x0 < x1 ? 1 : -1;
-        int sy = y0 < y1 ? 1 : -1;
-        int err = dx - dy;
-
-        while (true)
-        {
-            DrawCircle(x0, y0);
-            if (x0 == x1 && y0 == y1) break;
-            int e2 = 2 * err;
-            if (e2 > -dy) { err -= dy; x0 += sx; }
-            if (e2 < dx) { err += dx; y0 += sy; }
-        }
+        int blackCount = currentMask.blackCount;
+        int remainingBlackPixels = blackCount - matchedCount;
+        float baseAccuracy = 1f - (float)remainingBlackPixels / blackCount;
+        float excessDraw = Mathf.Max(0, (float)(drawnCount - matchedCount) / blackCount);
+        return Mathf.Clamp01(baseAccuracy - excessDraw);
     }
 }

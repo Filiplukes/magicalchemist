@@ -9,14 +9,14 @@ public class SpellSounds : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            Debug.LogError("Chybí AudioSource komponenta!");
+            Debug.LogError("ChybÃ­ AudioSource komponenta!");
         }
     }
 
     public void PlaySound(string soundName)
     {
-        string path = "SoundsSpells/" + soundName; // bez pøípony .wav
-        AudioClip clip = Resources.Load<AudioClip>(path);
+        string path = "SoundsSpells/" + soundName; // bez pÅ™Ã­pony .wav
+        AudioClip clip = ResourceCache.Load<AudioClip>(path);
 
         if (clip == null)
         {
