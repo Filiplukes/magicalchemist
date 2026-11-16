@@ -14,6 +14,7 @@ public class RiseAndScalePotion : MonoBehaviour
     Vector3 endPos;
     Vector3 startScale;
     private string sceneName;
+    private Material glowMaterial;
 
     private void Awake()
     {
@@ -41,14 +42,14 @@ public class RiseAndScalePotion : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
 
-            // plynul˝ p¯echod (SmoothStep pro hezËÌ efekt)
+            // plynul√Ω p≈ôechod (SmoothStep pro hezƒç√≠ efekt)
             transform.position = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, t));
             transform.localScale = Vector3.Lerp(startScale, targetScale, Mathf.SmoothStep(0f, 1f, t));
 
             yield return null;
         }
 
-        // na konci nastav p¯esnÏ cÌlovÈ hodnoty (pro jistotu)
+        // na konci nastav p≈ôesnƒõ c√≠lov√© hodnoty (pro jistotu)
         transform.position = endPos;
         transform.localScale = targetScale;
         Destroy(gameObject);
@@ -60,14 +61,20 @@ public class RiseAndScalePotion : MonoBehaviour
         TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
         text.text = GetRating(quality);
         text.color = GetRatingColor(quality);
-        Material mat = text.fontMaterial;
-        mat.EnableKeyword("GLOW_ON");
-        mat.SetColor("_GlowColor", text.color);
-        mat.SetFloat("_GlowPower", 0.5f);
-        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Potions/" + name);
+        // fontMaterial vytv√°≈ô√≠ kopii materi√°lu ‚Äì uvoln√≠ se v OnDestroy.
+        glowMaterial = text.fontMaterial;
+        glowMaterial.EnableKeyword("GLOW_ON");
+        glowMaterial.SetColor("_GlowColor", text.color);
+        glowMaterial.SetFloat("_GlowPower", 0.5f);
+        gameObject.GetComponent<SpriteRenderer>().sprite = ResourceCache.Load<Sprite>("Potions/" + name);
         if (name == "Broken") {
             smoke.SetActive(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (glowMaterial != null) Destroy(glowMaterial);
     }
 
    private string GetRating(int quality)
@@ -148,19 +155,19 @@ public class RiseAndScalePotion : MonoBehaviour
     private Color GetRatingColor(int quality)
     {
         if (quality >= 80)
-            return new Color(1f, 0.84f, 0f); // Zlat·
+            return new Color(1f, 0.84f, 0f); // Zlat√°
         else if (quality >= 65)
-            return new Color(0.6f, 0.4f, 1f); // Fialov·
+            return new Color(0.6f, 0.4f, 1f); // Fialov√°
         else if (quality >= 50)
-            return new Color(0f, 0.8f, 1f); // Tyrkysov·
+            return new Color(0f, 0.8f, 1f); // Tyrkysov√°
         else if (quality >= 35)
-            return new Color(0.3f, 1f, 0.3f); // Zelen·
+            return new Color(0.3f, 1f, 0.3f); // Zelen√°
         else if (quality >= 20)
             return Color.white;
         else if (quality >= 10)
-            return new Color(0.5f, 0.1f, 0.1f); // TemnÏ Ëerven· (Poor)
+            return new Color(0.5f, 0.1f, 0.1f); // Temnƒõ ƒçerven√° (Poor)
         else
-            return new Color(0.7f, 0.7f, 0.7f); // äed· (Flop)
+            return new Color(0.7f, 0.7f, 0.7f); // ≈†ed√° (Flop)
     }
 
 }

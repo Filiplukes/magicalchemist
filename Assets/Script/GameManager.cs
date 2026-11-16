@@ -35,8 +35,19 @@ public class GameManager : MonoBehaviour
     private int totalScore = 0;
     private int totalGems = 0;
 
+    // Komponenty se hledají jednou ve Start, ne při každé bylině/kouzlu.
+    private CreatePotion cauldronPotion;
+    private EffectManagerScript effects;
+    private SpellSounds sounds;
+    private PoisonEffect poison;
+
     void Start()
     {
+
+        cauldronPotion = cauldron.GetComponent<CreatePotion>();
+        effects = effectManager.GetComponent<EffectManagerScript>();
+        sounds = spellSounds.GetComponent<SpellSounds>();
+        if (poisonEffekt != null) poison = poisonEffekt.GetComponent<PoisonEffect>();
 
         UpdateScore();
         totalFlowersThrown = int.Parse(PlayerPrefs.GetString("flower_thrower", "0"));
@@ -78,7 +89,7 @@ public class GameManager : MonoBehaviour
         int index = Random.Range(0, allRecepts.Count);
         aktualRecept = allRecepts[index];
         textNameOfCreatedPotion.text = aktualRecept.name;
-        imageOfCreatedPotionl.sprite = Resources.Load<Sprite>("Potions/" + aktualRecept.name);
+        imageOfCreatedPotionl.sprite = ResourceCache.Load<Sprite>("Potions/" + aktualRecept.name);
 }
 
     private IEnumerator ExecuteReceptSteps()
@@ -100,7 +111,7 @@ public class GameManager : MonoBehaviour
                 herbInputUpdated = false;
                 if (herbIndex<step.herbs.Count) {
                     useHerbImage.gameObject.SetActive(true);
-                    useHerbImage.sprite = Resources.Load<Sprite>("Herbs/" + step.herbs[herbIndex]);
+                    useHerbImage.sprite = ResourceCache.Load<Sprite>("Herbs/" + step.herbs[herbIndex]);
                 }
                 else{
                     useHerbImage.gameObject.SetActive(false);
@@ -110,7 +121,7 @@ public class GameManager : MonoBehaviour
                 yield return new WaitUntil(() => herbInputUpdated || spellInputUpdated);
                 countSteps++;
                 if (herbInputUpdated) {
-                    cauldron.GetComponent<CreatePotion>().BoostVolumeSmooth();
+                    cauldronPotion.BoostVolumeSmooth();
                     totalFlowersThrown++;
                     if(totalFlowersThrown > 50) {
                         AchievementsManagerScript.Instance.UnlockAchievement("flower_thrower");
@@ -145,8 +156,8 @@ public class GameManager : MonoBehaviour
                         float raw = 150 * (percentSpells / 100f);
                         point = point + Mathf.RoundToInt(raw / 5f) * 5;
                         var nameSpellAktual = step.element.Split('.')[0];
-                        effectManager.GetComponent<EffectManagerScript>().PlaySpellEffect(nameSpellAktual);
-                        spellSounds.GetComponent<SpellSounds>().PlaySound(nameSpellAktual);
+                        effects.PlaySpellEffect(nameSpellAktual);
+                        sounds.PlaySound(nameSpellAktual);
                         perfectTrace++;
                         if (perfectTrace > 9) {
                             AchievementsManagerScript.Instance.UnlockAchievement("perfect_trace");
@@ -158,7 +169,7 @@ public class GameManager : MonoBehaviour
                         point = 0;
                         perfectTrace = 0;
                         namePotion = "Broken";
-                        spellSounds.GetComponent<SpellSounds>().PlaySound("Explosion");
+                        sounds.PlaySound("Explosion");
                         breakPotion = true;                      
                         break;                                            
                     }
@@ -182,7 +193,7 @@ public class GameManager : MonoBehaviour
             failedTen = 0;
         }
         int quality = Mathf.RoundToInt(((float)point / maxPoints) * 100f);
-        cauldron.GetComponent<CreatePotion>().CreateCompletePotion(namePotion,quality);
+        cauldronPotion.CreateCompletePotion(namePotion,quality);
         totalScore = totalScore + point;
         if (quality > 10)
         {
@@ -191,11 +202,11 @@ public class GameManager : MonoBehaviour
         }
         UpdateScore();
 
-        if (poisonEffekt != null)
+        if (poison != null)
         {
             bool failed = namePotion == "Broken";
             float poisonGain = failed ? 0.15f : 0.05f;
-            poisonEffekt.GetComponent<PoisonEffect>().AddPoison(poisonGain, failed);
+            poison.AddPoison(poisonGain, failed);
         }
         stepCoroutine = null;
 
