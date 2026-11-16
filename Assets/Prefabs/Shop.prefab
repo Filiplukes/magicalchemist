@@ -298,14 +298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67810b8505f8143ac5ad29fff644f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayerPrefsKey: Cauldron
-  baseName: Cauldron
-  baseName1: _0
+  type: 1
   applyBuyButton: {fileID: 2014103672541679812}
   gemsTable: {fileID: 2546023554072323110}
-  managerName: CauldronsData
-  fileWithSprites: Cauldrons
-  basePrice: 500
 --- !u!1 &409364028356626171
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,14 +797,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67810b8505f8143ac5ad29fff644f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayerPrefsKey: Fire
-  baseName: Fire
-  baseName1: _0
+  type: 2
   applyBuyButton: {fileID: 7654486925315056393}
   gemsTable: {fileID: 2546023554072323110}
-  managerName: FiresData
-  fileWithSprites: Fires
-  basePrice: 250
 --- !u!1 &1059324448470495960
 GameObject:
   m_ObjectHideFlags: 0
@@ -3566,14 +3556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67810b8505f8143ac5ad29fff644f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  PlayerPrefsKey: RoomName
-  baseName: Room
-  baseName1: _0
+  type: 0
   applyBuyButton: {fileID: 3924368108688148417}
   gemsTable: {fileID: 2546023554072323110}
-  managerName: RoomsData
-  fileWithSprites: Rooms
-  basePrice: 1000
 --- !u!1 &8917604948983105678
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,8 +40,8 @@ public class ResultScoreScript : MonoBehaviour
     {
         int newTotal;
 
-        newTotal = PlayerPrefs.GetInt("GemsCount", 0) + gems;
-        PlayerPrefs.SetInt("GemsCount", newTotal);
+        newTotal = PlayerPrefs.GetInt(Cosmetics.GemsPrefsKey, 0) + gems;
+        PlayerPrefs.SetInt(Cosmetics.GemsPrefsKey, newTotal);
         PlayerPrefs.Save();
 
 

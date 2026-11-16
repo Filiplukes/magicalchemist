@@ -45,3 +45,7 @@ crashlytics-build.properties
 # OS
 .DS_Store
 Thumbs.db
+
+# Editor player save data (persistentDataPath resolves to project root in this editor)
+/Items/
+/cosmetics.json*
