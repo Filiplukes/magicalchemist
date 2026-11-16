@@ -22,6 +22,18 @@ public class PoisonEffect : MonoBehaviour
     [Tooltip("Při chybě se pohled rozmaže rychleji.")]
     public float errorBlurEaseDuration = 0.35f;
 
+    [Header("UI (bylinky)")]
+    [Tooltip("Maximální poloměr rozmazání UI prvků s materiálem UI/Poison (v UV, 0.03 = 3 % velikosti sprite).")]
+    [Range(0f, 0.15f)]
+    public float uiMaxBlurRadius = 0.06f;
+    [Tooltip("Kolik mip úrovní navíc se při plném jedu použije (měkčí rozmazání zdarma). Vyžaduje mipmapy na sprite.")]
+    [Range(0f, 6f)]
+    public float uiMaxMipBias = 3.5f;
+
+    [Header("Rozmazání světa")]
+    [Tooltip("Zapnuto = starý URP Depth of Field (max 1.5) místo PoisonBlurFeature. Vypnuto (default) = hlubší a levnější PoisonBlurFeature na rendereru. Nikdy neběží oba.")]
+    public bool useDepthOfField = false;
+
     [Header("Poison hodnoty")]
     [Range(0f, 1f)]
     public float poisonAmount = 0f;       // aktuální síla jedu (0–1)
@@ -32,6 +44,57 @@ public class PoisonEffect : MonoBehaviour
     private float currentBlurEase = 1.6f;
     private DepthOfField depthOfField;
     private bool idleApplied;
+
+    static readonly int PoisonTintId = Shader.PropertyToID("_PoisonTint");
+    static readonly int PoisonBlurId = Shader.PropertyToID("_PoisonBlur");
+    static readonly int PoisonBlurRadiusId = Shader.PropertyToID("_PoisonBlurRadius");
+    static readonly int PoisonColorId = Shader.PropertyToID("_PoisonColor");
+    static readonly int PoisonMipBiasId = Shader.PropertyToID("_PoisonMipBias");
+    static readonly int PoisonBlurEasedId = Shader.PropertyToID("_PoisonBlurEased");
+    // Čte PoisonBlurFeature; 0 = feature se nespustí (např. když se používá DoF).
+    static readonly int PoisonWorldBlurId = Shader.PropertyToID("_PoisonWorldBlur");
+
+    /// <summary>Křivka rychlého nástupu rozmazání – sdílí ji PoisonBlurFeature (prolnutí světa) i UI shader.</summary>
+    public static float EaseBlur(float blur)
+    {
+        return Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(blur * 2.5f));
+    }
+
+    private static Material uiMaterial;
+
+    /// <summary>
+    /// Sdílený materiál pro UI prvky, které mají zelenat a rozmazávat se s jedem
+    /// (overlay canvas post-processing z Volume nezasáhne). Null, pokud shader chybí.
+    /// </summary>
+    public static Material UIMaterial
+    {
+        get
+        {
+            if (uiMaterial == null)
+            {
+                Shader shader = Shader.Find("UI/Poison");
+                if (shader == null)
+                {
+                    Debug.LogWarning("Shader 'UI/Poison' nebyl nalezen.");
+                    return null;
+                }
+                uiMaterial = new Material(shader) { name = "UIPoison (runtime)" };
+            }
+            return uiMaterial;
+        }
+    }
+
+    /// <summary>Přiřadí Graphicu poison materiál (pokud existuje).</summary>
+    public static void ApplyTo(UnityEngine.UI.Graphic graphic)
+    {
+        if (graphic == null) return;
+        Material mat = UIMaterial;
+        if (mat == null) return;
+        graphic.material = mat;
+        // Průhledný okraj, aby rozmazání nebylo useknuté na hraně obdélníku.
+        if (graphic.GetComponent<PoisonUIPadding>() == null)
+            graphic.gameObject.AddComponent<PoisonUIPadding>();
+    }
 
     void Awake()
     {
@@ -62,6 +125,35 @@ public class PoisonEffect : MonoBehaviour
         }
 
         currentBlurEase = blurEaseDuration;
+        ApplyConstantGlobals();
+        SetBlurGlobals(0f, 0f);
+    }
+
+    // Konstanty se mění jen v Inspectoru – nastavují se v Awake a při úpravě, ne každý snímek.
+    void OnValidate()
+    {
+        if (Application.isPlaying) ApplyConstantGlobals();
+    }
+
+    void ApplyConstantGlobals()
+    {
+        Shader.SetGlobalColor(PoisonColorId, poisonColor);
+        Shader.SetGlobalFloat(PoisonBlurRadiusId, uiMaxBlurRadius);
+        Shader.SetGlobalFloat(PoisonMipBiasId, uiMaxMipBias);
+    }
+
+    void OnDestroy()
+    {
+        // Globální hodnoty přežijí změnu scény – vrátit do neutrálu.
+        SetBlurGlobals(0f, 0f);
+    }
+
+    void SetBlurGlobals(float tint, float blur)
+    {
+        Shader.SetGlobalFloat(PoisonTintId, tint);
+        Shader.SetGlobalFloat(PoisonBlurId, blur);
+        Shader.SetGlobalFloat(PoisonBlurEasedId, EaseBlur(blur));
+        Shader.SetGlobalFloat(PoisonWorldBlurId, useDepthOfField ? 0f : blur);
     }
     private void Start()
     {
@@ -85,6 +177,7 @@ public class PoisonEffect : MonoBehaviour
                     colorAdjust.saturation.value = 0f;
                 }
                 ApplyBlur(0f);
+                SetBlurGlobals(0f, 0f);
                 idleApplied = true;
             }
             return;
@@ -104,6 +197,8 @@ public class PoisonEffect : MonoBehaviour
 
         blurAmount = Mathf.SmoothDamp(blurAmount, poisonAmount, ref blurVelocity, currentBlurEase);
         ApplyBlur(blurAmount);
+
+        SetBlurGlobals(intensity, blurAmount);
     }
 
     void ApplyBlur(float amount)
@@ -111,7 +206,7 @@ public class PoisonEffect : MonoBehaviour
         if (depthOfField == null)
             return;
 
-        if (amount < 0.02f)
+        if (!useDepthOfField || amount < 0.02f)
         {
             depthOfField.mode.value = DepthOfFieldMode.Off;
             return;
