@@ -45,8 +45,10 @@ A wrong herb, or a spell traced under 10% accuracy, marks the potion "Broken". W
 
 **Persistence.**
 - `PlayerPrefs` holds settings (`SoundActive` / `MusicActive` stored as the strings "1"/"0"), `GemsCount`, `PlayerName`, achievement flags (key = achievement id) and the selected cosmetics.
-- Shop items (rooms, cauldrons, fires) use `ItemStateManager`. It stores JSON at `Application.persistentDataPath/Items/<name>.json` and generates items with `GenerateItems` as `<baseName><i>` with tiered prices. The root `Items/*.json` files are copies or samples of that data; the game does not read them.
-- Selected cosmetics are saved as `"<Name><n>_<m>"`. Code strips the suffix with `Substring(0, len-2)` before loading the sprite (see `RoomManager`, `CreatePotion.LoadSpriteFromResources`), so keep that format.
+- **Cosmetics (rooms, cauldrons, fires)** are `CosmeticItem` ScriptableObjects in `Assets/Cosmetics/Items/`, listed in `Assets/Resources/Cosmetics/CosmeticDatabase.asset`. Each item holds its sprite, price, default-owned flag and, for fires, the flame gradient. All ownership and selection goes through the static `Script/Cosmetics/Cosmetics.cs` (`GetSelected`, `IsOwned`, `BuyOrSelect`). That data is saved to `persistentDataPath/cosmetics.json`, with a `.bak` backup. Shop tabs use `RoomManager` (the name is kept for prefab refs), set to a `CosmeticType`.
+- **Never change a `CosmeticItem.Id` once it has shipped.** Ids are stored in player saves.
+- To add a cosmetic, drop `CauldronN.png` (or `RoomN` / `FireN`) into its `Resources/` folder and run **Tools > Magic Alchemist > Build Cosmetic Database**. The tool creates any missing items without overwriting your edits.
+- **Legacy migration:** builds before the database stored ownership in `persistentDataPath/Items/*Data.json` and the selection in PlayerPrefs `RoomName` / `Cauldron` / `Fire`, as `"Cauldron3_0"`. `Cosmetics.MigrateLegacy()` converts this once, when no `cosmetics.json` exists yet. Keep that code so players updating from old versions don't lose purchases. In this Editor `Application.persistentDataPath` is empty, so the Editor's own save data (`Items/`, `cosmetics.json`) ends up in the project root. Those paths are gitignored.
 
 **Ads.** `AdIns.cs` (interstitial) and `Rewarded.cs` use Google Mobile Ads with production ad unit IDs. `NoAds` in PlayerPrefs turns ads off.
 

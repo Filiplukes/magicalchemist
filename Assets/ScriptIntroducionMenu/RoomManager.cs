@@ -1,258 +1,109 @@
-using System;
 using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// Jedna z√°lo≈æka obchodu (m√≠stnosti / kotl√≠ky / ohnƒõ). Listuje polo≈ækami z <see cref="CosmeticDatabase"/>
+/// a p≈ôes <see cref="Cosmetics"/> je kupuje a vyb√≠r√°.
+/// N√°zev t≈ô√≠dy z≈Øst√°v√° kv≈Øli odkaz≈Øm v Shop.prefab.
+/// </summary>
 public class RoomManager : MonoBehaviour
 {
-    public string PlayerPrefsKey;
-    [Tooltip("Z·kladnÌ n·zev pro mÌstnost (bude pouûito jako prefix), nap¯. 'Room'")]
-    public string baseName;
-    public string baseName1 = "_0";
+    [SerializeField] private CosmeticType type;
     public Button applyBuyButton;
     public GameObject gemsTable;
-    public string managerName;
-    public string fileWithSprites;
-    public int basePrice;
 
-    private string _currentName;
-    private int max = 0;
-    private int assigned = 0;
-    private ItemStateManager itemManager;
-    private ItemState aktualItemData;
+    private int index;
     private Coroutine flashCoroutine;
+    private TMP_Text buttonText;
+    private GameObject gemIcon;
+    private Image previewImage;
+    private SpriteRenderer previewRenderer;
 
     private void Awake()
     {
-        // Pokud je v PlayerPrefs uloûenÈ vlastnÌ jmÈno, naËti ho (volitelnÈ chov·nÌ)
-        if (PlayerPrefs.HasKey(PlayerPrefsKey))
-        {
-            _currentName = PlayerPrefs.GetString(PlayerPrefsKey);
-            string numberPart = _currentName.Replace(baseName, "");
-            numberPart = numberPart.Split('_')[0];
-            assigned = int.Parse(numberPart);
-        }
-        else
-        {
-            _currentName = baseName+"0_0";
-            PlayerPrefs.SetString(PlayerPrefsKey, _currentName);
-        }    
-        max = GetMaxRoomNumber();
-        Debug.Log($"Awake: Loaded room name: {_currentName}, max room number: {max}");
-        itemManager = new ItemStateManager(managerName);
-        itemManager.GenerateItems(max, baseName, baseName, basePrice);
-        ApplySpriteByCurrentName(_currentName.Substring(0, _currentName.Length - 2));
+        previewImage = GetComponent<Image>();
+        previewRenderer = GetComponent<SpriteRenderer>();
 
+        if (applyBuyButton != null)
+        {
+            buttonText = applyBuyButton.GetComponentInChildren<TMP_Text>(true);
+            gemIcon = applyBuyButton.GetComponentsInChildren<RawImage>(true)
+                .FirstOrDefault(r => r.gameObject.name == "GemIcon")?.gameObject;
+        }
+
+        index = Cosmetics.GetSelectedIndex(type);
+        Refresh();
     }
 
-
-
-    // Vr·tÌ aktu·lnÌ (internÌ) uloûenÈ jmÈno Room
-    public string CurrentRoomName => _currentName;
-
-    // UloûÌ aktu·lnÌ jmÈno do PlayerPrefs
-    public void SaveRoomName()
+    private CosmeticItem Current
     {
-        if (string.IsNullOrEmpty(_currentName))
+        get
         {
-            Debug.LogWarning($"[{nameof(RoomManager)}] Nelze uloûit pr·zdnÈ jmÈno.");
-            return;
+            var items = Cosmetics.GetItems(type);
+            return items.Count == 0 ? null : items[Mathf.Clamp(index, 0, items.Count - 1)];
         }
-
-        PlayerPrefs.SetString(PlayerPrefsKey, _currentName);
-        PlayerPrefs.Save();
     }
 
-    // NastavÌ jmÈno ruËnÏ (pokud chcete)
-    public void SetRoomName(string name)
+    /// <summary>Vol√° se z tlaƒç√≠tek ≈°ipek (+1 / -1).</summary>
+    public void AssignNextRoomName(int step)
     {
-        if (string.IsNullOrEmpty(name))
-        {
-            Debug.LogWarning($"[{nameof(RoomManager)}] SetRoomName: neplatnÈ jmÈno.");
-            return;
-        }
-
-        _currentName = name;
- 
+        int count = Cosmetics.GetItems(type).Count;
+        if (count == 0) return;
+        index = ((index + step) % count + count) % count;
+        Refresh();
     }
 
-    public void AssignNextRoomName(int value)
-    {           
-   
-        if ((assigned <= 0) && (value == -1))
-        {
-            assigned = max;
-        }
-        else if ((assigned >= max) && (value == 1))
-        {
-            // pokud dos·hneme (nebo p¯ekroËÌme) maxim·lnÌ poËet, vr·tÌme na 0
-            assigned = 0;
-        }
-        else
-        {
-            assigned += value;
-        }
-
-        string newName = $"{baseName}{assigned}{baseName1}";
-        _currentName = newName;
-       
-        ApplySpriteByCurrentName( $"{baseName}{assigned}");
-        //SaveRoomName();
-        Debug.Log($"[{nameof(RoomManager)}] Assigned new room name: {newName} (value param: {assigned}, maxSprites: {max})");
-    }
-
-    // NaËte spritey z Resources/Rooms a vr·tÌ jejich poËet (pouûÌv· se jako 'max')
-    private int GetMaxRoomNumber()
-    {
-        try
-        {
-            var sprites = Resources.LoadAll<Sprite>(fileWithSprites);
-            Debug.Log(fileWithSprites);
-            Debug.Log(sprites.Length);
-            foreach (var sprite in sprites)
-            {
-                Debug.Log(sprite.name);
-            }
-            return sprites != null ? sprites.Length-1 : 0;
-        }
-        catch (Exception ex)
-        {
-            Debug.LogWarning($"[{nameof(RoomManager)}] Chyba p¯i naËÌt·nÌ Resources/: {ex.Message}");
-            return 0;
-        }
-    }
-
-    public void ApplySpriteByCurrentName(string shortName,bool setNativeSize = false)
-    {
-        if (string.IsNullOrEmpty(_currentName))
-        {
-            Debug.LogWarning($"[{nameof(RoomManager)}] ApplySpriteByCurrentName: _currentName je pr·zdnÈ.");
-            return;
-        }
-
-        aktualItemData = itemManager.GetById(shortName);
-        UpdateBuyButton(aktualItemData);
-        Sprite found = null;
-        try
-        {
-            var sprites = Resources.LoadAll<Sprite>(fileWithSprites);
-            if (sprites == null || sprites.Length == 0)
-            {
-                Debug.LogWarning($"[{nameof(RoomManager)}] Nebyly nalezeny û·dnÈ sprite v Resources/.");
-                return;
-            }
-
-            foreach (var s in sprites)
-            {
-                if (s != null && string.Equals(s.name, _currentName, StringComparison.OrdinalIgnoreCase))
-                {
-                    found = s;
-                    break;
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogWarning($"[{nameof(RoomManager)}] Chyba p¯i naËÌt·nÌ sprite z Resources/: {ex.Message}");
-            return;
-        }
-
-        if (found == null)
-        {
-            Debug.LogWarning($"[{nameof(RoomManager)}] Sprite s n·zvem '{_currentName}' nebyl nalezen v Resources/.");
-            return;
-        }
-
-        // Pokud je komponenta Image (UI), nastavÌme sprite
-        var img = GetComponent<Image>();
-        if (img != null)
-        {
-            img.sprite = found;
-            if (setNativeSize)
-            {
-                try { img.SetNativeSize(); } catch { /* ignorovat p¯ÌpadnÈ chyby */ }
-            }
-            return;
-        }
-
-        // Fallback na SpriteRenderer (2D)
-        var sr = GetComponent<SpriteRenderer>();
-        if (sr != null)
-        {
-            sr.sprite = found;
-            return;
-        }
-
-        Debug.LogWarning($"[{nameof(RoomManager)}] ApplySpriteByCurrentName: Tento GameObject nem· komponentu Image ani SpriteRenderer.");
-    }
-
-    public void UpdateBuyButton(ItemState item)
-    {
-        if (applyBuyButton == null) return;
-     
-        // najdi Text uvnit¯ buttonu
-        TMP_Text btnText = applyBuyButton.GetComponentInChildren<TMP_Text>();
-        // najdi RawImage s n·zvem GemIcon uvnit¯ buttonu
-        RawImage gemImage = applyBuyButton.GetComponentsInChildren<RawImage>(true)
-                            .FirstOrDefault(r => r.gameObject.name == "GemIcon");
-
-        if (btnText == null) Debug.LogWarning("Button nem· Text komponentu!");
-        if (gemImage == null) Debug.LogWarning("Button nem· RawImage s n·zvem GemIcon!");
-
-        // logika podle stavu itemu
-        if (item.Owned && item.Active)
-        {
-            // VlastnÏn˝ a aktivnÌ
-            applyBuyButton.interactable = false;
-            if (btnText != null) btnText.text = "Active";
-            if (gemImage != null) gemImage.gameObject.SetActive(false);
-        }
-        else if (item.Owned && !item.Active)
-        {
-            // VlastnÏn˝ ale neaktivnÌ
-            applyBuyButton.interactable = true;
-            if (btnText != null) btnText.text = "Apply";
-            if (gemImage != null) gemImage.gameObject.SetActive(false);
-        }
-        else if (!item.Owned)
-        {
-            // NevlastnÏn˝
-            applyBuyButton.interactable = true;
-            if (btnText != null) btnText.text = item.Price.ToString();
-            if (gemImage != null) gemImage.gameObject.SetActive(true);
-        }
-    }
-
+    /// <summary>Vol√° se z tlaƒç√≠tka Koupit / Pou≈æ√≠t.</summary>
     public void BuyAcitevRoom()
     {
-
-        if (aktualItemData == null)
+        var result = Cosmetics.BuyOrSelect(Current);
+        if (result == CosmeticPurchaseResult.NotEnoughGems || result == CosmeticPurchaseResult.Invalid)
         {
-            Debug.LogWarning($"[{nameof(RoomManager)}] BuyRoom: aktualItemData je null.");
+            FlashBuyButtonRed();
             return;
         }
 
-        if (itemManager.BuyOrActivate(aktualItemData.Id))
-        {
-            UpdateBuyButton(itemManager.GetById(aktualItemData.Id));
-            PlayerPrefs.SetString(PlayerPrefsKey, _currentName);
+        Refresh();
+        if (gemsTable != null)
             gemsTable.GetComponent<GemsTable>().UpdateGems();
+    }
+
+    private void Refresh()
+    {
+        var item = Current;
+        if (item == null)
+        {
+            Debug.LogWarning($"[{nameof(RoomManager)}] Datab√°ze neobsahuje ≈æ√°dn√© polo≈æky typu {type}.");
+            return;
         }
-        else {
-            FlashBuyButtonRed();
-        }
+
+        if (previewImage != null) previewImage.sprite = item.Sprite;
+        else if (previewRenderer != null) previewRenderer.sprite = item.Sprite;
+
+        UpdateBuyButton(item);
+    }
+
+    private void UpdateBuyButton(CosmeticItem item)
+    {
+        if (applyBuyButton == null) return;
+
+        bool owned = Cosmetics.IsOwned(item);
+        bool selected = Cosmetics.IsSelected(item);
+
+        applyBuyButton.interactable = !selected;
+        if (buttonText != null)
+            buttonText.text = selected ? "Active" : owned ? "Apply" : item.Price.ToString();
+        if (gemIcon != null)
+            gemIcon.SetActive(!owned);
     }
 
     public void FlashBuyButtonRed(float duration = 0.4f)
     {
         if (applyBuyButton == null) return;
-
-        if (flashCoroutine != null)
-            StopCoroutine(flashCoroutine);
-
+        if (flashCoroutine != null) StopCoroutine(flashCoroutine);
         flashCoroutine = StartCoroutine(FlashRoutine(duration));
     }
 
@@ -262,11 +113,9 @@ public class RoomManager : MonoBehaviour
         if (buttonImage == null) yield break;
 
         Color originalColor = buttonImage.color;
-
         buttonImage.color = Color.red;
-
         yield return new WaitForSeconds(duration);
-
         buttonImage.color = originalColor;
+        flashCoroutine = null;
     }
 }

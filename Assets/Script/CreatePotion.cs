@@ -9,12 +9,12 @@ public class CreatePotion : MonoBehaviour
     public AudioMixer mixer;
     private AudioSource boil;
     private float defaultVolume = 1f;
-    private const string PlayerPrefsKey = "Cauldron";
-
     private void Awake()
     {
-        LoadSpriteFromResources(PlayerPrefs.GetString(PlayerPrefsKey));
-
+        var cauldron = Cosmetics.GetSelected(CosmeticType.Cauldron);
+        var sr = GetComponent<SpriteRenderer>();
+        if (cauldron != null && cauldron.Sprite != null && sr != null)
+            sr.sprite = cauldron.Sprite;
     }
     private void Start()
     {   
@@ -53,36 +53,6 @@ public class CreatePotion : MonoBehaviour
     {
         mixer.SetFloat("PotionVolume", boostedDb);
         yield return new WaitForSeconds(duration);
-        mixer.SetFloat("PotionVolume", 0f);  // zpìt na normální hlasitost (0 dB)
-    }
-
-    public void LoadSpriteFromResources(string spriteName)
-    {
-        spriteName = spriteName.Substring(0, spriteName.Length - 2);
-        if (string.IsNullOrEmpty(spriteName))
-        {
-            Debug.LogWarning("LoadSpriteFromResources: spriteName je prázdný.");
-            return;
-        }
-
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-
-        if (sr == null)
-        {
-            Debug.LogWarning("Na objektu není SpriteRenderer!");
-            return;
-        }
-
-        Sprite loadedSprite = Resources.Load<Sprite>("Cauldrons/" + spriteName);
-
-        if (loadedSprite == null)
-        {
-            Debug.LogWarning($"Sprite '{spriteName}' nebyl nalezen v Resources/Cauldrons.");
-            return;
-        }
-
-        sr.sprite = loadedSprite;
+        mixer.SetFloat("PotionVolume", 0f);  // zpÄ›t na normÃ¡lnÃ­ hlasitost (0 dB)
     }
 }
-
-

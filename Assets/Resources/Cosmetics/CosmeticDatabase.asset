@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3178228ff8df72f498db8cfeb96be533, type: 3}
+  m_Name: CosmeticDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::CosmeticDatabase
+  rooms:
+  - {fileID: 11400000, guid: 6359b3e5a59157d409d2a696a349ae43, type: 2}
+  - {fileID: 11400000, guid: 3088caa18960add49a5dda97d79dfafe, type: 2}
+  - {fileID: 11400000, guid: 8a2e09207480421439ca87ca54ec5d82, type: 2}
+  - {fileID: 11400000, guid: a79c185acc2a4d04b9f086a4a05b69af, type: 2}
+  cauldrons:
+  - {fileID: 11400000, guid: adf4fcacd8f2a9a4e860b9b7a02b73ac, type: 2}
+  - {fileID: 11400000, guid: f390b1bf13a360d4e910fb992146f7f2, type: 2}
+  - {fileID: 11400000, guid: 9b0e1f38f796dfb4a916026fa52fa349, type: 2}
+  - {fileID: 11400000, guid: d7091548bf5b24a43ae0653e2da8428a, type: 2}
+  - {fileID: 11400000, guid: 18f8e19d18987804e965b73599d09f74, type: 2}
+  fires:
+  - {fileID: 11400000, guid: de459016b99846c4eb3bb090cd381d54, type: 2}
+  - {fileID: 11400000, guid: 7c6425d1c06acea4f9c846e1424b8a7e, type: 2}
+  - {fileID: 11400000, guid: 9700d3ef6979b7c42a14d8210147294d, type: 2}
+  - {fileID: 11400000, guid: d52de1c771255134b9f7a320899c399d, type: 2}
+  - {fileID: 11400000, guid: e4103619f408a0a42b3d5eacdfa596e3, type: 2}
+  - {fileID: 11400000, guid: dcdcd59ba4a5505458c234be79e59ff6, type: 2}

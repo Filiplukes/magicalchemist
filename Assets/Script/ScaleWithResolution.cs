@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.Windows;
 
 public class ScaleWithResolution : MonoBehaviour
 {
-    private const string PlayerPrefsKey = "RoomName";
     private void Awake()
     {
-        LoadSpriteFromResources(PlayerPrefs.GetString(PlayerPrefsKey));
-
+        var room = Cosmetics.GetSelected(CosmeticType.Room);
+        var sr = GetComponent<SpriteRenderer>();
+        if (room != null && room.Sprite != null && sr != null)
+            sr.sprite = room.Sprite;
     }
     void Start()
     {
@@ -27,33 +27,5 @@ public class ScaleWithResolution : MonoBehaviour
             worldScreenHeight / height,
             1f
         );
-    }
-
-    public void LoadSpriteFromResources(string spriteName)
-    {
-        spriteName = spriteName.Substring(0, spriteName.Length - 2);
-        if (string.IsNullOrEmpty(spriteName))
-        {
-            Debug.LogWarning("LoadSpriteFromResources: spriteName je prázdný.");
-            return;
-        }
-
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-
-        if (sr == null)
-        {
-            Debug.LogWarning("Na objektu není SpriteRenderer!");
-            return;
-        }
-
-        Sprite loadedSprite = Resources.Load<Sprite>("Rooms/" + spriteName);
-
-        if (loadedSprite == null)
-        {
-            Debug.LogWarning($"Sprite '{spriteName}' nebyl nalezen v Resources/Rooms.");
-            return;
-        }
-
-        sr.sprite = loadedSprite;
     }
 }
