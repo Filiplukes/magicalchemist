@@ -1,0 +1,1404 @@
+fileFormatVersion: 2
+guid: a80264eb797eaaa44943abb25312749f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6826291406462049697
+    second: HerbalCodex_0
+  - first:
+      213: 3270005580898543999
+    second: HerbalCodex_1
+  - first:
+      213: 2533444454173216383
+    second: HerbalCodex_2
+  - first:
+      213: -657580915769119531
+    second: HerbalCodex_3
+  - first:
+      213: 4622522285683581514
+    second: HerbalCodex_4
+  - first:
+      213: -3811484461547235345
+    second: HerbalCodex_5
+  - first:
+      213: 7771561232011130847
+    second: HerbalCodex_6
+  - first:
+      213: 2385794800716565387
+    second: HerbalCodex_7
+  - first:
+      213: 4242576884617143857
+    second: HerbalCodex_8
+  - first:
+      213: -3267520821760397167
+    second: HerbalCodex_9
+  - first:
+      213: -900372020913932339
+    second: HerbalCodex_10
+  - first:
+      213: -1677036398815691914
+    second: HerbalCodex_11
+  - first:
+      213: -8138308151839154800
+    second: HerbalCodex_12
+  - first:
+      213: 2847483883887565378
+    second: HerbalCodex_13
+  - first:
+      213: -7529074000237071602
+    second: HerbalCodex_14
+  - first:
+      213: 7460564073881729600
+    second: HerbalCodex_15
+  - first:
+      213: -8138980525041101992
+    second: HerbalCodex_16
+  - first:
+      213: -7192884943400876816
+    second: HerbalCodex_17
+  - first:
+      213: -9097002483419434502
+    second: HerbalCodex_18
+  - first:
+      213: 4619730138399037312
+    second: HerbalCodex_19
+  - first:
+      213: 870558856857824402
+    second: HerbalCodex_20
+  - first:
+      213: 1944955697734543077
+    second: HerbalCodex_21
+  - first:
+      213: 1834671713253108600
+    second: HerbalCodex_22
+  - first:
+      213: 1607195910359342152
+    second: HerbalCodex_23
+  - first:
+      213: -968170259461712816
+    second: HerbalCodex_24
+  - first:
+      213: -1212065986694949025
+    second: HerbalCodex_25
+  - first:
+      213: -7026226213257372117
+    second: HerbalCodex_26
+  - first:
+      213: -2225625470835175013
+    second: HerbalCodex_27
+  - first:
+      213: 8716060246917125067
+    second: HerbalCodex_28
+  - first:
+      213: -2913119291775271493
+    second: HerbalCodex_29
+  - first:
+      213: -2831472380732687162
+    second: HerbalCodex_30
+  - first:
+      213: 4650044024189316223
+    second: HerbalCodex_31
+  - first:
+      213: -6723780032476875080
+    second: HerbalCodex_32
+  - first:
+      213: 161450937302389517
+    second: HerbalCodex_33
+  - first:
+      213: 1368322869543797796
+    second: HerbalCodex_34
+  - first:
+      213: -6330858344571918913
+    second: HerbalCodex_35
+  - first:
+      213: 2605067856227774420
+    second: HerbalCodex_36
+  - first:
+      213: -2867750594336625101
+    second: HerbalCodex_37
+  - first:
+      213: 5454904232241233408
+    second: HerbalCodex_38
+  - first:
+      213: -5033491358120459273
+    second: HerbalCodex_39
+  - first:
+      213: 247728195975783638
+    second: HerbalCodex_40
+  - first:
+      213: -1504454978338701388
+    second: HerbalCodex_41
+  - first:
+      213: 4492558925628002433
+    second: HerbalCodex_42
+  - first:
+      213: -1837613453337015512
+    second: HerbalCodex_43
+  - first:
+      213: -8699253173319684030
+    second: HerbalCodex_44
+  - first:
+      213: 4954380523298575178
+    second: HerbalCodex_45
+  - first:
+      213: -7014405181560292906
+    second: HerbalCodex_46
+  - first:
+      213: 3030029678978516377
+    second: HerbalCodex_47
+  - first:
+      213: -5216437431108906590
+    second: HerbalCodex_48
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HerbalCodex_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 1533
+        height: 1024
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f52278012242441a0800000000000000
+      internalID: -6826291406462049697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_1
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 982
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f79a00720c4616d20800000000000000
+      internalID: 3270005580898543999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_2
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 974
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7e8d2dee4a982320800000000000000
+      internalID: 2533444454173216383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_3
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 958
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dc618024adcfd6f0800000000000000
+      internalID: -657580915769119531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_4
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 950
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a422f74178f762040800000000000000
+      internalID: 4622522285683581514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_5
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 934
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe75e8a8313ea1bc0800000000000000
+      internalID: -3811484461547235345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_6
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 814
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd77838d3c12adb60800000000000000
+      internalID: 7771561232011130847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_7
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 800
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8b4fa31bbb0c1120800000000000000
+      internalID: 2385794800716565387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_8
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 784
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13663ebc239a0ea30800000000000000
+      internalID: 4242576884617143857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_9
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 768
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19077caef1f67a2d0800000000000000
+      internalID: -3267520821760397167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_10
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 760
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc779b7da6c3183f0800000000000000
+      internalID: -900372020913932339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_11
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 750
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67bb035d748f9b8e0800000000000000
+      internalID: -1677036398815691914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_12
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 734
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09d16f0cadbee0f80800000000000000
+      internalID: -8138308151839154800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_13
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 741
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24a94ca718b448720800000000000000
+      internalID: 2847483883887565378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_14
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 726
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e037d38661b538790800000000000000
+      internalID: -7529074000237071602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_15
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 720
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04af2c75f7f398760800000000000000
+      internalID: 7460564073881729600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_16
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 710
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8535a1ba5588c0f80800000000000000
+      internalID: -8138980525041101992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_17
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 694
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f4c556e04dbd2c90800000000000000
+      internalID: -7192884943400876816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_18
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 670
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af130f67074f0c180800000000000000
+      internalID: -9097002483419434502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_19
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 678
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 087d071a5149c1040800000000000000
+      internalID: 4619730138399037312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_20
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 662
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29ca41bfaa8d41c00800000000000000
+      internalID: 870558856857824402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_21
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 646
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e6e65bf6eeddfa10800000000000000
+      internalID: 1944955697734543077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_22
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 574
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87ba8e3e330167910800000000000000
+      internalID: 1834671713253108600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_23
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 534
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84cdd694a28ed4610800000000000000
+      internalID: 1607195910359342152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_24
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 526
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 054dfa2574e5092f0800000000000000
+      internalID: -968170259461712816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_25
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 518
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f57d6ba2860ed2fe0800000000000000
+      internalID: -1212065986694949025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_26
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 448
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2e914f4c74dd7e90800000000000000
+      internalID: -7026226213257372117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_27
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 440
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b91dec71d6dfc11e0800000000000000
+      internalID: -2225625470835175013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_28
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 422
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc3166a6d9aa5f870800000000000000
+      internalID: 8716060246917125067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_29
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 406
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbdb56140758297d0800000000000000
+      internalID: -2913119291775271493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_30
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 398
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cc391b1fd694b8d0800000000000000
+      internalID: -2831472380732687162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_31
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 390
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c6bbb2766488040800000000000000
+      internalID: 4650044024189316223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_32
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 302
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b6f9504fa550b2a0800000000000000
+      internalID: -6723780032476875080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_33
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 286
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d031096a5c69d3200800000000000000
+      internalID: 161450937302389517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_34
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 278
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424833176624df210800000000000000
+      internalID: 1368322869543797796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_35
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 230
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb52970c0e54428a0800000000000000
+      internalID: -6330858344571918913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_36
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 237
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dfae3ab96f072420800000000000000
+      internalID: 2605067856227774420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_37
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 222
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33e66284704b338d0800000000000000
+      internalID: -2867750594336625101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_38
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 189
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00e73867f76b3bb40800000000000000
+      internalID: 5454904232241233408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_39
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 181
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f34b334742752ab0800000000000000
+      internalID: -5033491358120459273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_40
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 166
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d42cf15b7b107300800000000000000
+      internalID: 247728195975783638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_41
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 174
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bfbd8b0b2a1f1be0800000000000000
+      internalID: -1504454978338701388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_42
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 149
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 180519e4a86c85e30800000000000000
+      internalID: 4492558925628002433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_43
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 142
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82b4e5fdc4c7f76e0800000000000000
+      internalID: -1837613453337015512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_44
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 134
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2403719545b064780800000000000000
+      internalID: -8699253173319684030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_45
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 126
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a43535526de71c440800000000000000
+      internalID: 4954380523298575178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_46
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 95
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d9707ab6a3d7ae90800000000000000
+      internalID: -7014405181560292906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_47
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 87
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 995c76270f3dc0a20800000000000000
+      internalID: 3030029678978516377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HerbalCodex_48
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 78
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a1d3b55bcd7b97b0800000000000000
+      internalID: -5216437431108906590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HerbalCodex_0: -6826291406462049697
+      HerbalCodex_1: 3270005580898543999
+      HerbalCodex_10: -900372020913932339
+      HerbalCodex_11: -1677036398815691914
+      HerbalCodex_12: -8138308151839154800
+      HerbalCodex_13: 2847483883887565378
+      HerbalCodex_14: -7529074000237071602
+      HerbalCodex_15: 7460564073881729600
+      HerbalCodex_16: -8138980525041101992
+      HerbalCodex_17: -7192884943400876816
+      HerbalCodex_18: -9097002483419434502
+      HerbalCodex_19: 4619730138399037312
+      HerbalCodex_2: 2533444454173216383
+      HerbalCodex_20: 870558856857824402
+      HerbalCodex_21: 1944955697734543077
+      HerbalCodex_22: 1834671713253108600
+      HerbalCodex_23: 1607195910359342152
+      HerbalCodex_24: -968170259461712816
+      HerbalCodex_25: -1212065986694949025
+      HerbalCodex_26: -7026226213257372117
+      HerbalCodex_27: -2225625470835175013
+      HerbalCodex_28: 8716060246917125067
+      HerbalCodex_29: -2913119291775271493
+      HerbalCodex_3: -657580915769119531
+      HerbalCodex_30: -2831472380732687162
+      HerbalCodex_31: 4650044024189316223
+      HerbalCodex_32: -6723780032476875080
+      HerbalCodex_33: 161450937302389517
+      HerbalCodex_34: 1368322869543797796
+      HerbalCodex_35: -6330858344571918913
+      HerbalCodex_36: 2605067856227774420
+      HerbalCodex_37: -2867750594336625101
+      HerbalCodex_38: 5454904232241233408
+      HerbalCodex_39: -5033491358120459273
+      HerbalCodex_4: 4622522285683581514
+      HerbalCodex_40: 247728195975783638
+      HerbalCodex_41: -1504454978338701388
+      HerbalCodex_42: 4492558925628002433
+      HerbalCodex_43: -1837613453337015512
+      HerbalCodex_44: -8699253173319684030
+      HerbalCodex_45: 4954380523298575178
+      HerbalCodex_46: -7014405181560292906
+      HerbalCodex_47: 3030029678978516377
+      HerbalCodex_48: -5216437431108906590
+      HerbalCodex_5: -3811484461547235345
+      HerbalCodex_6: 7771561232011130847
+      HerbalCodex_7: 2385794800716565387
+      HerbalCodex_8: 4242576884617143857
+      HerbalCodex_9: -3267520821760397167
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,66 @@
+
+
+{
+    "achievements": [
+      {
+        "id": "first_brew",
+        "name": "First Brew",
+        "description": "You brewed your very first potion. And the cauldron survived!",
+        "unlocked": false
+      },
+      {
+        "id": "flower_thrower",
+        "name": "Flower Tosser",
+        "description": "You threw 50 flowers into the cauldron. Magic has never smelled better.",
+        "unlocked": false
+      },
+      {
+        "id": "perfect_trace",
+        "name": "Circle Master",
+        "description": "You traced 10 magic glyphs without a single mistake.",
+        "unlocked": false
+      },
+      {
+        "id": "explosion_chef",
+        "name": "It Blew Up!",
+        "description": "You used the wrong flower... and the cauldron did not appreciate it.",
+        "unlocked": false
+      },
+      {
+        "id": "failed_ten",
+        "name": "Cauldron of Despair",
+        "description": "You failed 10 potions in a row. At least you invented a new smell.",
+        "unlocked": false
+      },
+      {
+        "id": "fast_brewer",
+        "name": "Speed Brewer",
+        "description": "You brewed 10 potions in under a minute. Steam and power filled the air.",
+        "unlocked": false
+      },
+      {
+      "id": "perfect_spell",
+      "name": "100% Perfect Spell",
+      "description": "You flawlessly cast a spell with absolute precision. Magic bows to your skill.",
+      "unlocked": false
+      },
+      {
+      "id": "five_fumbles",
+      "name": "Five Fumbles",
+      "description": "You botched five spells in a row. Even wizards have off days.",
+      "unlocked": false
+      },
+      {
+      "id": "potion_marathon",
+      "name": "Potion Marathon",
+      "description": "You survived and played for 240 seconds straight. Your stamina rivals a true alchemist.",
+      "unlocked": false
+      },
+      {
+        "id": "master_alchemist",
+        "name": "Grand Alchemage",
+        "description": "You've unlocked all other achievements. Your name echoes through potion history.",
+        "unlocked": false
+      }
+    ]
+}

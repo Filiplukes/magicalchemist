@@ -1,0 +1,39 @@
+{
+    "Items": [
+        {
+            "Id": "Cauldron0",
+            "Name": "Cauldron0",
+            "Price": 500,
+            "Owned": true,
+            "Active": false
+        },
+        {
+            "Id": "Cauldron1",
+            "Name": "Cauldron1",
+            "Price": 500,
+            "Owned": false,
+            "Active": false
+        },
+        {
+            "Id": "Cauldron2",
+            "Name": "Cauldron2",
+            "Price": 500,
+            "Owned": false,
+            "Active": false
+        },
+        {
+            "Id": "Cauldron3",
+            "Name": "Cauldron3",
+            "Price": 500,
+            "Owned": true,
+            "Active": true
+        },
+        {
+            "Id": "Cauldron4",
+            "Name": "Cauldron4",
+            "Price": 500,
+            "Owned": true,
+            "Active": false
+        }
+    ]
+}

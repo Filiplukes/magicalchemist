@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Controll
+  - Cauldorn
+  - Scroll
+  - HerbsInventory
+  - ResultScore
+  - GameManager
+  - LeaderBoardPrefab
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - GameItems
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Cauldron
+    uniqueID: 2461635307
+    locked: 0
+  - name: Herbs
+    uniqueID: 2788527169
+    locked: 0
+  m_RenderingLayers:
+  - Default

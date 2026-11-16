@@ -1,0 +1,46 @@
+{
+    "Items": [
+        {
+            "Id": "Fire0",
+            "Name": "Fire0",
+            "Price": 250,
+            "Owned": true,
+            "Active": false
+        },
+        {
+            "Id": "Fire1",
+            "Name": "Fire1",
+            "Price": 250,
+            "Owned": false,
+            "Active": false
+        },
+        {
+            "Id": "Fire2",
+            "Name": "Fire2",
+            "Price": 250,
+            "Owned": false,
+            "Active": false
+        },
+        {
+            "Id": "Fire3",
+            "Name": "Fire3",
+            "Price": 250,
+            "Owned": true,
+            "Active": false
+        },
+        {
+            "Id": "Fire4",
+            "Name": "Fire4",
+            "Price": 250,
+            "Owned": false,
+            "Active": false
+        },
+        {
+            "Id": "Fire5",
+            "Name": "Fire5",
+            "Price": 375,
+            "Owned": true,
+            "Active": true
+        }
+    ]
+}

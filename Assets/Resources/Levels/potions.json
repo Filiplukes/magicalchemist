@@ -1,0 +1,126 @@
+{
+  "potions": [
+    {
+      "name": "Mana Potion",
+      "description": "Restores magical energy for casting spells.",
+      "steps": [
+        {
+          "herbs": ["Verdensage", "Aurabloom"],
+          "element": "Water"
+        }
+      ]
+    },
+    {
+      "name": "Health Potion",
+      "description": "Heals the drinker and restores vitality.",
+      "steps": [
+        {
+          "herbs": ["Silvarra", "Virelen"],
+          "element": "Life"
+        }
+      ]
+    },
+    {
+      "name": "Rejuvenation Brew",
+      "description": "Simultaneously restores health and mana.",
+      "steps": [
+        {
+          "herbs": ["Silvarra", "Verdensage"],
+          "element": "Time"
+        },
+        {
+          "herbs": ["Lysanthia", "Lumenveil"],
+          "element": "Light"
+        }
+      ]
+    },
+    {
+      "name": "Love Draught",
+      "description": "Stirs warm feelings and deep affection.",
+      "steps": [
+        {
+          "herbs": ["Lysanthia", "Menthira"],
+          "element": "Fire"
+        }
+      ]
+    },
+    {
+      "name": "Antidote Elixir",
+      "description": "Cures poisons and grants temporary resistance.",
+      "steps": [
+        {
+          "herbs": ["Frostria", "Lumenveil"],
+          "element": "Earth"
+        },
+        {
+          "herbs": ["Spottella"],
+          "element": "Dark"
+        }
+      ]
+    },
+    {
+      "name": "Flame Elixir",
+      "description": "Grants temporary fire powers to ignite objects or attack.",
+      "steps": [
+        {
+          "herbs": ["Virelen", "Emberroot"],
+          "element": "Fire"
+        }
+      ]
+    },
+    {
+      "name": "Mist Drop",
+      "description": "Creates a cloud of mist to obscure the player from enemies.",
+      "steps": [
+        {
+          "herbs": ["Spottella", "Aurabloom"],
+          "element": "Air"
+        },
+        {
+          "herbs": ["Lumenveil"],
+          "element": "Dark"
+        }
+      ]
+    },
+    {
+      "name": "Shadow Syrup",
+      "description": "Turns the player into a shadow, becoming invisible to enemies.",
+      "steps": [
+        {
+          "herbs": ["Silvarra", "Spottella"],
+          "element": "Dark"
+        }
+      ]
+    },
+    {
+      "name": "Lightning Tincture",
+      "description": "Boosts movement speed and reflexes temporarily.",
+      "steps": [
+        {
+          "herbs": ["Spottella", "Emberroot"],
+          "element": "Bolt"
+        }
+      ]
+    },
+    {
+      "name": "Wisdom Serum",
+      "description": "Enhances magical insight and puzzle-solving abilities.",
+      "steps": [
+        {
+          "herbs": ["Verdensage", "Lumenveil"],
+          "element": "Light"
+        }
+      ]
+    },
+    {
+      "name": "Frost Essence",
+      "description": "Slows down nearby enemies with a chilling effect.",
+      "steps": [
+        {
+          "herbs": ["Frostria", "Menthira"],
+          "element": "Water"
+        }
+      ]
+    }
+  ]
+}
