@@ -52,7 +52,10 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             {
                 Image image = currentHerbObj.GetComponent<Image>();
                 if (image != null)
+                {
                     image.sprite = sprite;
+                    PoisonEffect.ApplyTo(image); // tažená bylinka se otráví stejně jako výběr
+                }
                 else
                     Debug.LogWarning("Prefab nemá komponentu Image.");
             }

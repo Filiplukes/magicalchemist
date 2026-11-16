@@ -83,6 +83,7 @@ public class SetLevel : MonoBehaviour
             if (herbSprite != null)
             {
                 herbSlots[i].sprite = herbSprite;
+                PoisonEffect.ApplyTo(herbSlots[i]); // zelená/rozmazání při otravě
                 herbSlots[i].transform.gameObject.SetActive(true);
 
                 HerbItemScript script = herbSlots[i].GetComponent<HerbItemScript>();
