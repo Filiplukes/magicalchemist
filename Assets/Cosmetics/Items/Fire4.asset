@@ -18,6 +18,7 @@ MonoBehaviour:
   sprite: {fileID: 6518374090288481485, guid: 79ed2c8b754fa154b9a666d7fdec61d5, type: 3}
   price: 250
   ownedByDefault: 0
+  overrideFlameColor: 1
   flameGradient:
     serializedVersion: 2
     key0: {r: 0.8980392, g: 0.3254902, b: 0.07058824, a: 1}

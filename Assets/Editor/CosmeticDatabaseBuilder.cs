@@ -50,19 +50,21 @@ public static class CosmeticDatabaseBuilder
         int created = 0;
         foreach (var (type, prefix, spriteFolder, basePrice) in Sources)
         {
-            var items = new List<(int number, CosmeticItem item)>();
+            // Zachovat stávající pořadí i ručně přidané položky; nové jen připojit na konec.
+            var list = db.GetItems(type).Where(i => i != null).Distinct().ToList();
             var regex = new Regex("^" + prefix + @"(\d+)$");
+            var found = new List<(int number, CosmeticItem item)>();
 
             foreach (string guid in AssetDatabase.FindAssets("t:Texture2D", new[] { spriteFolder }))
             {
                 string texPath = AssetDatabase.GUIDToAssetPath(guid);
-                var match = regex.Match(Path.GetFileNameWithoutExtension(texPath));
+                string id = Path.GetFileNameWithoutExtension(texPath);
+                var match = regex.Match(id);
                 if (!match.Success) continue;
+                if (list.Any(i => i.Id == id)) continue;
 
                 int number = int.Parse(match.Groups[1].Value);
-                string id = prefix + number;
                 string itemPath = $"{ItemsFolder}/{id}.asset";
-
                 var item = AssetDatabase.LoadAssetAtPath<CosmeticItem>(itemPath);
                 if (item == null)
                 {
@@ -74,10 +76,11 @@ public static class CosmeticDatabaseBuilder
                     AssetDatabase.CreateAsset(item, itemPath);
                     created++;
                 }
-                items.Add((number, item));
+                found.Add((number, item));
             }
 
-            db.EditorSet(type, items.OrderBy(x => x.number).Select(x => x.item).ToList());
+            list.AddRange(found.OrderBy(x => x.number).Select(x => x.item));
+            db.EditorSet(type, list);
         }
 
         EditorUtility.SetDirty(db);

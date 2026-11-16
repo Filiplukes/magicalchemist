@@ -8,7 +8,7 @@ public class FlameColor : MonoBehaviour
     private void Awake()
     {
         var fire = Cosmetics.GetSelected(CosmeticType.Fire);
-        if (fire != null && particle != null)
+        if (fire != null && fire.OverrideFlameColor && particle != null)
         {
             var main = particle.main;
             main.startColor = fire.FlameGradient;

@@ -3,7 +3,7 @@ using TMPro;
 
 public class GemsTable : MonoBehaviour
 {
-    private const string PlayerPrefsKey = "GemsCount";
+    private const string PlayerPrefsKey = Cosmetics.GemsPrefsKey;
     private int gems;
     private TMP_Text countText;
 

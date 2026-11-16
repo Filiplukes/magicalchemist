@@ -7,6 +7,7 @@ public enum CosmeticPurchaseResult
 {
     Invalid,
     NotEnoughGems,
+    SaveFailed,
     Purchased,
     Selected
 }
@@ -36,9 +37,6 @@ public static class Cosmetics
         public string selectedFire;
     }
 
-    /// <summary>Vyvoláno po změně výběru nebo nákupu.</summary>
-    public static event Action<CosmeticType> Changed;
-
     private static CosmeticDatabase database;
     private static SaveData data;
     private static HashSet<string> ownedSet;
@@ -53,7 +51,6 @@ public static class Cosmetics
         database = null;
         data = null;
         ownedSet = null;
-        Changed = null;
     }
 
     public static CosmeticDatabase Database
@@ -94,9 +91,17 @@ public static class Cosmetics
     {
         EnsureLoaded();
         var item = Database.FindById(type, GetSelectedId(type));
-        if (item == null || !IsOwned(item))
-            item = Database.GetDefault(type);
-        return item;
+        if (item != null && IsOwned(item)) return item;
+
+        // Nikdy nevracet nevlastněnou položku (jinak by ji hra zobrazila zdarma).
+        var fallback = Database.GetDefault(type);
+        if (fallback != null && IsOwned(fallback)) return fallback;
+        foreach (var candidate in GetItems(type))
+            if (IsOwned(candidate)) return candidate;
+
+        if (fallback != null)
+            Debug.LogWarning($"[Cosmetics] Žádná položka typu {type} není vlastněná – zkontroluj ownedByDefault v databázi.");
+        return fallback;
     }
 
     public static int GetSelectedIndex(CosmeticType type)
@@ -114,43 +119,68 @@ public static class Cosmetics
         if (item == null) return CosmeticPurchaseResult.Invalid;
         EnsureLoaded();
 
-        var result = CosmeticPurchaseResult.Selected;
-        if (!IsOwned(item))
-        {
-            int gems = Gems;
-            if (gems < item.Price) return CosmeticPurchaseResult.NotEnoughGems;
+        bool buying = !IsOwned(item);
+        int gems = Gems;
+        if (buying && gems < item.Price) return CosmeticPurchaseResult.NotEnoughGems;
 
-            // Nejdřív uložit vlastnictví, pak odečíst gemy – při pádu mezi tím hráč nic neztratí.
+        string previousSelected = GetSelectedId(item.Type);
+        if (buying)
+        {
             ownedSet.Add(item.Id);
             data.owned.Add(item.Id);
-            SetSelectedIdOn(data, item.Type, item.Id);
-            Save();
-
-            PlayerPrefs.SetInt(GemsPrefsKey, gems - item.Price);
-            PlayerPrefs.Save();
-            result = CosmeticPurchaseResult.Purchased;
         }
-        else
+        SetSelectedIdOn(data, item.Type, item.Id);
+
+        // Nejdřív uložit vlastnictví; gemy se odečtou, jen když se uložení povedlo.
+        if (!Save())
         {
-            SetSelectedIdOn(data, item.Type, item.Id);
-            Save();
+            if (buying)
+            {
+                ownedSet.Remove(item.Id);
+                data.owned.Remove(item.Id);
+            }
+            SetSelectedIdOn(data, item.Type, previousSelected);
+            return CosmeticPurchaseResult.SaveFailed;
         }
 
-        Changed?.Invoke(item.Type);
-        return result;
+        if (!buying) return CosmeticPurchaseResult.Selected;
+
+        PlayerPrefs.SetInt(GemsPrefsKey, gems - item.Price);
+        PlayerPrefs.Save();
+        return CosmeticPurchaseResult.Purchased;
     }
 
     // ------------------------------------------------------------------
     // Načítání / ukládání
     // ------------------------------------------------------------------
 
+    private static string TempPath => SavePath + ".tmp";
+
     private static void EnsureLoaded()
     {
         if (data != null) return;
 
-        data = TryRead(SavePath) ?? TryRead(BackupPath);
+        data = TryRead(SavePath);
         if (data == null)
         {
+            // Hlavní soubor chybí nebo je poškozený. Pokud chybí, mohla aplikace spadnout uprostřed
+            // File.Replace – pak je .tmp kompletní a nejnovější.
+            if (!File.Exists(SavePath)) data = TryRead(TempPath);
+            data ??= TryRead(BackupPath);
+
+            if (data != null)
+            {
+                // Obnovit hlavní soubor hned, aby další Save() nepřepsal dobrou zálohu poškozenými daty.
+                Quarantine(SavePath);
+                Save();
+            }
+        }
+
+        if (data == null)
+        {
+            // Nečitelné soubory nepřepisovat – odložit stranou pro případnou ruční záchranu.
+            Quarantine(SavePath);
+            Quarantine(BackupPath);
             data = MigrateLegacy();
             Save();
         }
@@ -175,22 +205,35 @@ public static class Cosmetics
         }
     }
 
-    private static void Save()
+    private static void Quarantine(string path)
     {
         try
         {
-            string json = JsonUtility.ToJson(data, true);
-            string tmp = SavePath + ".tmp";
-            File.WriteAllText(tmp, json);
+            if (File.Exists(path))
+                File.Move(path, $"{path}.corrupt-{DateTime.UtcNow.Ticks}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[Cosmetics] Nelze odložit {path}: {e.Message}");
+        }
+    }
+
+    /// <summary>Zapíše data přes .tmp a File.Replace (stará verze → .bak).</summary>
+    private static bool Save()
+    {
+        try
+        {
+            File.WriteAllText(TempPath, JsonUtility.ToJson(data, true));
             if (File.Exists(SavePath))
-                File.Copy(SavePath, BackupPath, true);
-            if (File.Exists(SavePath))
-                File.Delete(SavePath);
-            File.Move(tmp, SavePath);
+                File.Replace(TempPath, SavePath, BackupPath);
+            else
+                File.Move(TempPath, SavePath);
+            return true;
         }
         catch (Exception e)
         {
             Debug.LogError($"[Cosmetics] Uložení selhalo: {e.Message}");
+            return false;
         }
     }
 

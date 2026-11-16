@@ -24,6 +24,8 @@ public class CosmeticItem : ScriptableObject
     [SerializeField] private bool ownedByDefault;
 
     [Header("Jen pro typ Fire")]
+    [Tooltip("Vypnuto = plamen si nechá barvu nastavenou v particle systému.")]
+    [SerializeField] private bool overrideFlameColor;
     [SerializeField] private Gradient flameGradient = new Gradient();
 
     public string Id => id;
@@ -32,6 +34,7 @@ public class CosmeticItem : ScriptableObject
     public Sprite Sprite => sprite;
     public int Price => price;
     public bool OwnedByDefault => ownedByDefault;
+    public bool OverrideFlameColor => overrideFlameColor && flameGradient != null;
     public Gradient FlameGradient => flameGradient;
 
 #if UNITY_EDITOR
@@ -44,6 +47,7 @@ public class CosmeticItem : ScriptableObject
         this.sprite = sprite;
         this.price = price;
         this.ownedByDefault = ownedByDefault;
+        this.overrideFlameColor = flameGradient != null;
         if (flameGradient != null) this.flameGradient = flameGradient;
     }
 #endif
