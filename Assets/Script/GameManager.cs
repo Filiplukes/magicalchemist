@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         if (poisonEffekt != null) poison = poisonEffekt.GetComponent<PoisonEffect>();
 
         UpdateScore();
-        totalFlowersThrown = int.Parse(PlayerPrefs.GetString("flower_thrower", "0"));
+        totalFlowersThrown = LoadFlowersThrown();
         setLevel = GetComponent<SetLevel>();
 
         if (setLevel != null)
@@ -62,6 +62,44 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("SetLevel not found on this GameObject.");
         }
+    }
+
+    // Počítadlo bylinek má vlastní klíč. Dřív se ukládalo pod "flower_thrower", což je zároveň
+    // id achievementu (příznak odemčení). Na Androidu má klíč jen jeden typ, takže se string
+    // počítadla a int příznaku navzájem přepisovaly a achievement se spouštěl každou hru.
+    private const string FlowersThrownKey = "flowers_thrown_count";
+    private const string FlowerAchievementId = "flower_thrower";
+    private const int FlowerAchievementThreshold = 50;
+
+    private static int LoadFlowersThrown()
+    {
+        if (PlayerPrefs.HasKey(FlowersThrownKey))
+            return PlayerPrefs.GetInt(FlowersThrownKey, 0);
+
+        // Jednorázová migrace ze starého klíče.
+        int count = 0;
+        if (PlayerPrefs.HasKey(FlowerAchievementId))
+        {
+            string old = PlayerPrefs.GetString(FlowerAchievementId, "");
+            if (int.TryParse(old, out int parsed))
+            {
+                // Pod klíčem bylo počítadlo → klíč vrátit achievementu.
+                count = parsed;
+                if (count > FlowerAchievementThreshold)
+                    PlayerPrefs.SetInt(FlowerAchievementId, 1);
+                else
+                    PlayerPrefs.DeleteKey(FlowerAchievementId);
+            }
+            else if (PlayerPrefs.GetInt(FlowerAchievementId, 0) == 1)
+            {
+                // Pod klíčem byl příznak odemčení → počítadlo je aspoň na hranici.
+                count = FlowerAchievementThreshold + 1;
+            }
+        }
+
+        PlayerPrefs.SetInt(FlowersThrownKey, count);
+        PlayerPrefs.Save();
+        return count;
     }
 
     void Update()
@@ -123,8 +161,8 @@ public class GameManager : MonoBehaviour
                 if (herbInputUpdated) {
                     cauldronPotion.BoostVolumeSmooth();
                     totalFlowersThrown++;
-                    if(totalFlowersThrown > 50) {
-                        AchievementsManagerScript.Instance.UnlockAchievement("flower_thrower");
+                    if (totalFlowersThrown > FlowerAchievementThreshold) {
+                        AchievementsManagerScript.Instance.UnlockAchievement(FlowerAchievementId);
                     }
                     if (herbIndex<step.herbs.Count && usedHerb == step.herbs[herbIndex])
                     {
@@ -217,9 +255,8 @@ public class GameManager : MonoBehaviour
     // 🔴 Veřejná metoda pro ukončení receptové coroutine
     async public void EndGame(string mode)
      {
-        if (totalFlowersThrown < 500) { 
-            PlayerPrefs.SetString("flower_thrower", totalFlowersThrown.ToString());
-        }
+        PlayerPrefs.SetInt(FlowersThrownKey, totalFlowersThrown);
+        PlayerPrefs.Save();
         if (stepCoroutine != null)
         {
             StopCoroutine(stepCoroutine);
