@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject spellSounds;
     public GameObject effectManager;
     public GameObject poisonEffekt;
+    [Tooltip("Zákazník, který si objednává aktuální recept. Může být prázdné.")]
+    public CustomerScript customer;
 
     private int totalFlowersThrown;
     private int perfectTrace;
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
     private Coroutine stepCoroutine;
     private int totalScore = 0;
     private int totalGems = 0;
+    private bool gameOver = false;
 
     // Komponenty se hledají jednou ve Start, ne při každé bylině/kouzlu.
     private CreatePotion cauldronPotion;
@@ -48,6 +51,7 @@ public class GameManager : MonoBehaviour
         effects = effectManager.GetComponent<EffectManagerScript>();
         sounds = spellSounds.GetComponent<SpellSounds>();
         if (poisonEffekt != null) poison = poisonEffekt.GetComponent<PoisonEffect>();
+        if (customer != null) customer.OnTimedOut = OnCustomerTimedOut;
 
         UpdateScore();
         totalFlowersThrown = LoadFlowersThrown();
@@ -104,7 +108,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (stepCoroutine == null)
+        if (stepCoroutine == null && !gameOver)
         {
             stepCoroutine = StartCoroutine(ExecuteReceptSteps());
         }
@@ -128,7 +132,21 @@ public class GameManager : MonoBehaviour
         aktualRecept = allRecepts[index];
         textNameOfCreatedPotion.text = aktualRecept.name;
         imageOfCreatedPotionl.sprite = ResourceCache.Load<Sprite>("Potions/" + aktualRecept.name);
-}
+        if (customer != null) customer.Arrive(aktualRecept);
+    }
+
+    // Zákazníkovi došla trpělivost: strhnout body a zahodit rozvařený recept.
+    // Update() pak spustí nový recept s novým zákazníkem.
+    private void OnCustomerTimedOut()
+    {
+        if (gameOver) return;
+        ApplyCustomerPenalty(CustomerScript.Outcome.TimedOut);
+        if (stepCoroutine != null)
+        {
+            StopCoroutine(stepCoroutine);
+            stepCoroutine = null;
+        }
+    }
 
     // Série Divine/Legendary lektvarů za sebou. Prahy odpovídají hodnocení
     // v RiseAndScalePotion.GetRating: Legendary (>= 80) a Divine (>= 65).
@@ -279,9 +297,12 @@ public class GameManager : MonoBehaviour
             OnPotionBrewed();
             failedTen = 0;
         }
+        if (customer != null)
+            customer.Leave(namePotion == "Broken" ? CustomerScript.Outcome.Broken : CustomerScript.Outcome.Served);
         int quality = Mathf.RoundToInt(((float)point / maxPoints) * 100f);
         cauldronPotion.CreateCompletePotion(namePotion,quality);
         totalScore = totalScore + ApplyQualityStreak(point, quality);
+        if (namePotion == "Broken") ApplyCustomerPenalty(CustomerScript.Outcome.Broken);
         if (quality > 10)
         {
 
@@ -304,6 +325,8 @@ public class GameManager : MonoBehaviour
     // 🔴 Veřejná metoda pro ukončení receptové coroutine
     async public void EndGame(string mode)
      {
+        gameOver = true;
+        if (customer != null) customer.Stop();
         PlayerPrefs.SetInt(FlowersThrownKey, totalFlowersThrown);
         PlayerPrefs.Save();
         if (stepCoroutine != null)
@@ -330,10 +353,43 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // Nesplněná objednávka: vypršel čas (-50) nebo zkažený lektvar (-30). Skóre nejde pod 0.
+    private void ApplyCustomerPenalty(CustomerScript.Outcome outcome)
+    {
+        if (customer == null) return;
+        int penalty = customer.PenaltyFor(outcome);
+        if (penalty <= 0) return;
+        totalScore = Mathf.Max(0, totalScore - penalty);
+        UpdateScore();
+        if (scoreFlash != null) StopCoroutine(scoreFlash);
+        scoreFlash = StartCoroutine(FlashScorePenalty());
+    }
+
     private void UpdateScore()
     {
         scoreTextUI.text = "Score: " + totalScore;
 
+    }
+
+    // Krátké červené bliknutí a „cuknutí“ ukazatele skóre, aby byl postih vidět.
+    private Coroutine scoreFlash;
+    private Color? scoreBaseColor;
+    private IEnumerator FlashScorePenalty()
+    {
+        if (scoreBaseColor == null) scoreBaseColor = scoreTextUI.color;
+        Color baseColor = scoreBaseColor.Value;
+        Transform t = scoreTextUI.transform;
+        const float duration = 0.8f;
+        for (float e = 0f; e < duration; e += Time.deltaTime)
+        {
+            float k = e / duration;
+            scoreTextUI.color = Color.Lerp(new Color(1f, 0.25f, 0.2f), baseColor, k * k);
+            t.localScale = Vector3.one * (1f + 0.25f * Mathf.Sin(k * Mathf.PI));
+            yield return null;
+        }
+        scoreTextUI.color = baseColor;
+        t.localScale = Vector3.one;
+        scoreFlash = null;
     }
 
 
