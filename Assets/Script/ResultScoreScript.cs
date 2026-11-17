@@ -73,7 +73,7 @@ public class ResultScoreScript : MonoBehaviour
         // PlayerPrefs.SetString("LastLevel", thisLevel);
         Time.timeScale = 1f;
         var sceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName);
+        SceneLoader.Load(sceneName);
         
     }
 
@@ -81,7 +81,7 @@ public class ResultScoreScript : MonoBehaviour
     public void EndGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu");
+        SceneLoader.Load("Menu");
     }
 
 

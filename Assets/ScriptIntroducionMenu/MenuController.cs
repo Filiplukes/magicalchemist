@@ -14,6 +14,10 @@ public class MenuController : MonoBehaviour
     private void Start()
     {
         gameObject.GetComponent<AudioSource>().volume = float.Parse(PlayerPrefs.GetString("MusicActive", "1"));
+        // Pozadi menu se pouzije i na nacitaci obrazovce.
+        var menuBackground = GameObject.Find("Background");
+        if (menuBackground != null && menuBackground.TryGetComponent<UnityEngine.UI.Image>(out var bgImage))
+            SceneLoader.SetBackground(bgImage.sprite);
     }
     public void LoadTimeMode()
     {
@@ -21,7 +25,7 @@ public class MenuController : MonoBehaviour
       //  PlayerPrefs.Save();
 
         if (nameChecker.GetComponent<NameChecker>().CheckName()) {
-            SceneManager.LoadScene("TimeMode");
+            SceneLoader.Load("TimeMode");
         }      
     }
 
@@ -32,7 +36,7 @@ public class MenuController : MonoBehaviour
 
         if (nameChecker.GetComponent<NameChecker>().CheckName())
         {
-            SceneManager.LoadScene("LifeMode");
+            SceneLoader.Load("LifeMode");
         }
     }
 
@@ -69,6 +73,6 @@ public class MenuController : MonoBehaviour
     public void LoadCampaign()
      {
         
-          SceneManager.LoadScene("Campaign");
+          SceneLoader.Load("Campaign");
     }
 }
