@@ -150,6 +150,8 @@ public static class CampaignSession
     public static bool Won { get; private set; }      // hraní skončilo úspěchem
     public static string Ending { get; private set; } // konec kampaně, který hraní zvolilo
     public static string Background { get; private set; } // pozadí, na kterém skončil úvod (hraní i závěr)
+    /// <summary>Hráč po výhře zvolil „Další“: po závěru rovnou další level, ne výběr levelů.</summary>
+    public static bool ContinueToNext { get; set; }
 
     public static bool IsPlaying => LevelId > 0;
 
@@ -159,6 +161,7 @@ public static class CampaignSession
         Background = background;
         Won = false;
         Ending = null;
+        ContinueToNext = false;
     }
 
     public static void Finish(string ending)
@@ -173,6 +176,7 @@ public static class CampaignSession
         Background = null;
         Won = false;
         Ending = null;
+        ContinueToNext = false;
     }
 }
 

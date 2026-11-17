@@ -56,8 +56,9 @@ public class CampaignController : MonoBehaviour
             ? data.levels.Find(l => l.id == CampaignSession.LevelId) : null;
         string ending = CampaignSession.Ending;
         string playedBackground = CampaignSession.Background;
+        bool continueToNext = CampaignSession.ContinueToNext;
         CampaignSession.Clear();
-        if (played != null) StartCoroutine(FinishLevel(played, ending, playedBackground));
+        if (played != null) StartCoroutine(FinishLevel(played, ending, playedBackground, continueToNext));
         else
         {
             SyncEndingAchievements();
@@ -124,7 +125,7 @@ public class CampaignController : MonoBehaviour
         }
     }
 
-    public void BackToMenu() => SceneLoader.Load("Menu");
+    public void BackToMenu() => SceneLoader.Load("Menu", fade: true);
 
     // ---------- Průběh levelu ----------
 
@@ -147,15 +148,18 @@ public class CampaignController : MonoBehaviour
         {
             // Hraní i závěr pokračují na pozadí, kde úvod skončil (level 1: z ulice do dílny).
             CampaignSession.Begin(level.id, currentBackground);
-            SceneLoader.Load(CampaignSession.GameScene);
+            SceneLoader.Load(CampaignSession.GameScene); // do hry s načítací obrazovkou
             yield break; // pokračuje FinishLevel po návratu
         }
 
-        yield return FinishLevel(level, null, currentBackground);
+        yield return FinishLevel(level, null, currentBackground, false);
     }
 
-    /// <summary>Po hraní: případný konec kampaně, závěrečný dialog, odemčení, výběr levelů.</summary>
-    private IEnumerator FinishLevel(CampaignLevel level, string endingId, string backgroundKey)
+    /// <summary>
+    /// Po hraní: případný konec kampaně, závěrečný dialog, odemčení. Pak výběr levelů,
+    /// nebo rovnou další level, když hráč na výsledkové tabuli zvolil „Další“.
+    /// </summary>
+    private IEnumerator FinishLevel(CampaignLevel level, string endingId, string backgroundKey, bool continueToNext)
     {
         levelSelectRoot.SetActive(false);
         SetBackground(string.IsNullOrEmpty(backgroundKey) ? level.background : backgroundKey);
@@ -166,7 +170,20 @@ public class CampaignController : MonoBehaviour
 
         CampaignProgress.Complete(level.id);
         yield return AnnounceRecipes(RecipeUnlocks.Unlock(level.unlocksRecipes));
-        ShowLevelSelect();
+
+        var next = continueToNext ? NextLevel(data, level) : null;
+        if (next != null) yield return PlayLevel(next);
+        else ShowLevelSelect();
+    }
+
+    /// <summary>Level po zadaném (podle pořadí v campaign.json), jen když už je odemčený.</summary>
+    public static CampaignLevel NextLevel(CampaignData data, CampaignLevel level)
+    {
+        if (data == null || level == null) return null;
+        int index = data.levels.IndexOf(level);
+        if (index < 0 || index + 1 >= data.levels.Count) return null;
+        var next = data.levels[index + 1];
+        return CampaignProgress.IsUnlocked(next.id) ? next : null;
     }
 
     /// <summary>Banner pro každý nově odemčený recept (kniha receptů, TimeMode, LifeMode).</summary>

@@ -358,6 +358,7 @@ public class GameManager : MonoBehaviour
      {
         StopGame();
         var result = Instantiate(resultScore);
+        result.GetComponent<ResultScoreScript>().SetTitle(mode == "TimeMode" ? "Time's up!" : mode == "LifeMode" ? "Out of lives!" : "Game over");
         if (mode == "Campaign") {
             // Kampaň do žebříčku nepíše.
         }

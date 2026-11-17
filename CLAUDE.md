@@ -56,6 +56,6 @@ A wrong herb, or a spell traced under 10% accuracy, marks the potion "Broken". W
 
 ## Gotchas
 
-- `ResultScoreScript` loads a scene named `"Game"`, and no scene has that name.
+- There is one results board for everything: the `ResultScore` prefab (`GameManager.resultScore`) with `ResultScoreScript`. It covers the TimeMode/LifeMode end screen, the campaign win/lose screen and the pause screen. Set it up with `SetTitle` and `SetButtons`; the visible buttons are centered automatically. In the campaign, **Next** sets `CampaignSession.ContinueToNext`, and after the outro `CampaignController` starts the next level instead of showing level select.
 - `AchievementNotification.cs` has `using NUnit.Framework;` in runtime code. It works in the Editor but can break player builds if the test framework isn't available.
 - `Assets/AssistantCustomInstructions.txt` is empty.

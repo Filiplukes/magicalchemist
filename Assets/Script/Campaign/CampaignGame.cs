@@ -34,9 +34,9 @@ public class CampaignGame : MonoBehaviour
     private bool finished;
 
     private TextMeshProUGUI goalText;
+    private RectTransform hudRoot;
     private int shownScore = -1;
     private int shownSeconds = -1;
-    private RectTransform canvasRoot;
 
     // ---------- Zavedení do scény ----------
 
@@ -284,6 +284,7 @@ public class CampaignGame : MonoBehaviour
         if (finished) return;
         finished = true;
         game.StopGame();
+        BlockInput();
         CampaignSession.Finish(ending);
         CampaignProgress.RecordWin(level.id, ending);
         UpdateHud();
@@ -294,20 +295,20 @@ public class CampaignGame : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(FinishDelay);
 
-        // Gemy jen za výhru, ať se kampaň nedá farmit opakovanými prohrami.
-        int gems = game.TotalGems;
-        Cosmetics.AddGems(gems);
-
-        // Finále rovnou pokračuje koncem příběhu, bez „Level complete“.
+        // Finále rovnou pokračuje koncem příběhu, bez výsledkové tabule.
         if (silent)
         {
-            SceneLoader.Load(CampaignSession.StoryScene);
+            Cosmetics.AddGems(game.TotalGems);
+            SceneLoader.Load(CampaignSession.StoryScene, fade: true);
             yield break;
         }
 
-        string sub = gems > 0 ? $"+{gems} gems" : "";
-        ShowOverlay("Level complete!", sub, new Color(1f, 0.84f, 0.3f),
-            ("Continue", () => SceneLoader.Load(CampaignSession.StoryScene)));
+        // Gemy jen za výhru, ať se kampaň nedá farmit opakovanými prohrami (SetGems je připíše).
+        // Domů = závěrečný dialog a výběr levelů, Další = závěrečný dialog a hned další level.
+        var board = ShowBoard("Level complete!", $"{level.id}. {level.title}");
+        board.SetGems(game.TotalGems);
+        bool hasNext = CampaignController.NextLevel(data, level) != null;
+        board.SetButtons(home: true, restart: false, next: hasNext, play: false);
     }
 
     private void Lose(string reason)
@@ -315,6 +316,7 @@ public class CampaignGame : MonoBehaviour
         if (finished) return;
         finished = true;
         game.StopGame();
+        BlockInput();
         UpdateHud();
         StartCoroutine(LoseRoutine(reason));
     }
@@ -322,16 +324,33 @@ public class CampaignGame : MonoBehaviour
     private IEnumerator LoseRoutine(string reason)
     {
         yield return new WaitForSecondsRealtime(1f);
-        ShowOverlay("Level failed", reason, new Color(1f, 0.45f, 0.4f),
-            ("Try again", () => SceneLoader.Load(CampaignSession.GameScene)),
-            ("Back", () =>
-            {
-                CampaignSession.Clear();
-                SceneLoader.Load(CampaignSession.StoryScene);
-            }));
+        var board = ShowBoard("Level failed", reason);
+        board.SetButtons(home: true, restart: true, next: false, play: false);
+    }
+
+    /// <summary>Stejná výsledková tabule jako v TimeMode a LifeMode (prefab GameManager.resultScore).</summary>
+    private ResultScoreScript ShowBoard(string title, string subtitle)
+    {
+        var board = Instantiate(game.resultScore).GetComponent<ResultScoreScript>();
+        board.SetTitle(title, subtitle);
+        board.SetScore(game.TotalScore);
+        return board;
     }
 
     // ---------- UI ----------
+
+    /// <summary>
+    /// Po konci levelu ještě chvíli běží dovaření a hodnocení, než naskočí tabule.
+    /// Neviditelná vrstva přes celou obrazovku zatím chytá dotyky, ať hráč nemůže
+    /// házet bylinky ani kreslit kouzla, jako by se vařilo dál.
+    /// </summary>
+    private void BlockInput()
+    {
+        if (hudRoot == null) return;
+        var blocker = CreateImage("InputBlocker", hudRoot, Color.clear);
+        blocker.raycastTarget = true;
+        Stretch(blocker.rectTransform, 0f);
+    }
 
     private string GoalLine()
     {
@@ -381,7 +400,7 @@ public class CampaignGame : MonoBehaviour
             scaler.referenceResolution = new Vector2(2880, 1620);
             scaler.matchWidthOrHeight = 0.5f;
         }
-        canvasRoot = (RectTransform)go.transform;
+        var canvasRoot = hudRoot = (RectTransform)go.transform;
 
         // Cíl levelu vlevo pod skóre (nahoře uprostřed je tabule receptu). Panel nechytá dotyky.
         var panel = CreateImage("Goal", canvasRoot, new Color(0f, 0f, 0f, 0.55f));
@@ -398,49 +417,6 @@ public class CampaignGame : MonoBehaviour
         goalText.fontSizeMin = 40f;
         goalText.fontSizeMax = 70f;
         Stretch(goalText.rectTransform, 20f);
-    }
-
-    private void ShowOverlay(string title, string subtitle, Color titleColor, params (string label, System.Action action)[] buttons)
-    {
-        var dim = CreateImage("Overlay", canvasRoot, new Color(0f, 0f, 0f, 0.7f)); // blokuje dotyky do hry
-        Stretch(dim.rectTransform, 0f);
-
-        var box = CreateImage("Box", dim.rectTransform, new Color(0.12f, 0.09f, 0.07f, 0.95f));
-        var boxRt = box.rectTransform;
-        boxRt.anchorMin = boxRt.anchorMax = new Vector2(0.5f, 0.5f);
-        boxRt.sizeDelta = new Vector2(1500f, 1000f);
-
-        var titleText = CreateText("Title", boxRt, 150f, titleColor);
-        titleText.fontStyle = FontStyles.Bold;
-        Place(titleText.rectTransform, new Vector2(0f, 290f), new Vector2(1400f, 220f));
-
-        var subText = CreateText("Subtitle", boxRt, 80f, Color.white);
-        Place(subText.rectTransform, new Vector2(0f, 70f), new Vector2(1400f, 200f));
-        subText.text = subtitle;
-        titleText.text = title;
-
-        float width = 560f, gap = 80f;
-        float total = buttons.Length * width + (buttons.Length - 1) * gap;
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            var (label, action) = buttons[i];
-            var img = CreateImage(label, boxRt, new Color(0.85f, 0.66f, 0.3f));
-            float x = -total / 2f + width / 2f + i * (width + gap);
-            Place(img.rectTransform, new Vector2(x, -290f), new Vector2(width, 200f));
-            var button = img.gameObject.AddComponent<Button>();
-            bool clicked = false;
-            button.onClick.AddListener(() =>
-            {
-                if (clicked) return;
-                clicked = true;
-                Time.timeScale = 1f;
-                action();
-            });
-            var text = CreateText("Label", img.rectTransform, 90f, new Color(0.15f, 0.08f, 0.02f));
-            text.fontStyle = FontStyles.Bold;
-            text.text = label;
-            Stretch(text.rectTransform, 6f);
-        }
     }
 
     private TextMeshProUGUI CreateText(string name, RectTransform parent, float size, Color color)
@@ -471,12 +447,5 @@ public class CampaignGame : MonoBehaviour
         rt.anchorMax = Vector2.one;
         rt.offsetMin = new Vector2(padding, padding);
         rt.offsetMax = new Vector2(-padding, -padding);
-    }
-
-    private static void Place(RectTransform rt, Vector2 position, Vector2 size)
-    {
-        rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
-        rt.sizeDelta = size;
-        rt.anchoredPosition = position;
     }
 }

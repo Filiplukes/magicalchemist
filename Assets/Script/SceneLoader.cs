@@ -9,6 +9,9 @@ using UnityEngine.UI;
 /// prvních snímcích nové scény, kdy proběhnou Start() metody (např. příprava
 /// předloh kouzel), takže hráč nevidí zamrzlou hru.
 /// Volání: SceneLoader.Load("TimeMode");
+///
+/// S fade = true se místo načítací obrazovky jen ztmaví do černa a zase rozjasní
+/// (menu ↔ výběr levelů kampaně, návrat ze hry do příběhu), ať to působí jako střih.
 /// </summary>
 public class SceneLoader : MonoBehaviour
 {
@@ -21,9 +24,13 @@ public class SceneLoader : MonoBehaviour
     private const float BarBottomFraction = 0.08f;   // odsazení lišty od spodního okraje
     private const float MinShowTime = 0.4f;          // ať obrazovka jen neblikne
     private const float FillSpeed = 2.5f;            // plynulost dojezdu lišty
+    private const float FadeOutTime = 0.25f;         // ztmavení před načtením (fade)
+    private const float FadeInTime = 0.35f;          // rozjasnění nové scény (fade)
 
     private RectTransform fill;
     private float shown;
+    private bool fade;
+    private CanvasGroup group;
 
     /// <summary>Nastaví obrázek, který se zobrazí při načítání.</summary>
     public static void SetBackground(Sprite sprite)
@@ -31,15 +38,16 @@ public class SceneLoader : MonoBehaviour
         if (sprite != null) background = sprite;
     }
 
-    public static void Load(string sceneName)
+    public static void Load(string sceneName, bool fade = false)
     {
         if (active != null) return; // už se něco načítá
 
         var go = new GameObject("SceneLoader");
         DontDestroyOnLoad(go);
         active = go.AddComponent<SceneLoader>();
+        active.fade = fade;
         active.BuildUI();
-        active.StartCoroutine(active.LoadRoutine(sceneName));
+        active.StartCoroutine(fade ? active.FadeRoutine(sceneName) : active.LoadRoutine(sceneName));
     }
 
     private void BuildUI()
@@ -50,10 +58,16 @@ public class SceneLoader : MonoBehaviour
         var scaler = gameObject.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
         gameObject.AddComponent<GraphicRaycaster>(); // blokuje dotyky během načítání
+        group = gameObject.AddComponent<CanvasGroup>();
 
-        // Černý podklad pro případ, že obrázek chybí.
+        // Černý podklad pro případ, že obrázek chybí (u fade je to celá obrazovka).
         var backdrop = CreateImage("Backdrop", transform, Color.black);
         Stretch(backdrop.rectTransform);
+        if (fade)
+        {
+            group.alpha = 0f;
+            return;
+        }
 
         if (background != null)
         {
@@ -108,6 +122,37 @@ public class SceneLoader : MonoBehaviour
         {
             display = Mathf.MoveTowards(display, 1f, FillSpeed * Time.unscaledDeltaTime);
             SetProgress(display);
+            yield return null;
+        }
+
+        active = null;
+        Destroy(gameObject);
+    }
+
+    private IEnumerator FadeRoutine(string sceneName)
+    {
+        // Načítat už během ztmavení, aktivovat až v plné černé.
+        var op = SceneManager.LoadSceneAsync(sceneName);
+        op.allowSceneActivation = false;
+
+        for (float t = 0f; t < FadeOutTime; t += Time.unscaledDeltaTime)
+        {
+            group.alpha = t / FadeOutTime;
+            yield return null;
+        }
+        group.alpha = 1f;
+
+        while (op.progress < 0.9f) yield return null;
+        op.allowSceneActivation = true;
+        while (!op.isDone) yield return null;
+
+        // Počkat, až nová scéna doběhne Start() a vykreslí první snímek.
+        yield return null;
+        yield return new WaitForEndOfFrame();
+
+        for (float t = 0f; t < FadeInTime; t += Time.unscaledDeltaTime)
+        {
+            group.alpha = 1f - t / FadeInTime;
             yield return null;
         }
 
