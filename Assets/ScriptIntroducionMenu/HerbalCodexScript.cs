@@ -10,10 +10,22 @@ public class HerbalCodexScript : MonoBehaviour
     public TextMeshProUGUI steps;
     public TextMeshProUGUI description;
     public Image potionsImage;
+    [Tooltip("Výška pole popisu, aby se delší popisy (recepty z kampaně) vešly na stránku.")]
+    public float descriptionHeight = 300f;
+    public float descriptionMinFontSize = 26f;
     AllReceptsData allRecepts;
 
     void Start()
     {
+        var rt = description.rectTransform;
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, descriptionHeight);
+        // V prefabu má popis záporný spodní okraj, takže text přetékal pod rámeček. Teď je místo dané výškou.
+        var m = description.margin;
+        description.margin = new Vector4(m.x, m.y, m.z, 0f);
+        description.fontSizeMax = description.fontSize;
+        description.fontSizeMin = descriptionMinFontSize;
+        description.enableAutoSizing = true;
+
         TextAsset jsonRecepts = Resources.Load<TextAsset>("Levels/potions");
 
         if (jsonRecepts == null)
@@ -22,6 +34,8 @@ public class HerbalCodexScript : MonoBehaviour
             return;
         }
         allRecepts = JsonUtility.FromJson<AllReceptsData>(jsonRecepts.text);
+        // Recepty z kampaně jsou vidět až po dohrání levelu, kde se poprvé objeví.
+        allRecepts.potions = allRecepts.potions.FindAll(r => RecipeUnlocks.IsUnlocked(r.name));
 
         LoadPotion();
     }

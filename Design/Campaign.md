@@ -23,27 +23,32 @@ Jméno Wren je neutrální, sedí na kluka i holku.
 
 ## Kniha (level 2)
 
-Wren najde v mistrově pracovně knihu. Hráč ji otevře a přečte si **stranu 1**.
-Když chytne roh a začne otáčet, na okamžik (cca 1,5 s) se ukáže **půlka strany 2**,
-pak mistr knihu vytrhne a následuje scéna, kde Wrena seřve. Celou stranu 2 hráč nikdy nepřečte.
+Wren najde v mistrově pracovně knihu a hráč si přečte **stranu 1** (levá stránka, pravá je
+prázdná). Jakmile hráč zkusí otočit stránku, mistr knihu hned vytrhne a Wrena seřve.
+**Stranu 2 hráč v kampani nikdy neuvidí.**
+
+Strana 1 má vypadat nevinně: lektvar pro sílu a mládí z obyčejné mladé krve. To, k čemu ho
+Aldric doopravdy chce, je jen v poznámkách na straně 2.
 
 **Strana 1** (čitelná, roztržená):
 
 > **THE USURPER'S DRAUGHT**
-> *To take back what the years have stolen.*
-> *To bind every will to one.*
+> *Restores lost strength and the vigour of youth.*
 >
 > **I.** Silvarra and Virelen, beneath the sign of Life.
 > **II.** Moonpetal and … *(the corner is torn away)* … the sign of Dark.
-> **III.** The blood of one touched by the Light,
-> sealed with … beneath the sign of Blood.
+> **III.** A few drops of young blood, sealed with Gravecup beneath the sign of Blood.
+> *Never let Mandrake take the place of Gravecup, or the draught will turn upon the one who drinks it.*
+> *(see the notes overleaf)*
 
-**Strana 2** (jen záblesk, text uťatý v půlce):
+Varování před Mandrake je jediná nápověda ke třetímu konci: ve finále v kroku III dát místo
+Gravecupu Mandrake.
 
-> … Gravecup, to seal the blood. Never let Mandrake
-> take its place, for the rite would turn upon the one who …
+**Strana 2** (poznámky, ve hře se neukáže, hráč se to dozví až v koncích):
 
-Tohle je jediná nápověda ke třetímu konci: ve finále v kroku III místo Gravecupu hodit Mandrake.
+> **Notes**
+> With the blood of one touched by the Light, the draught does far more than restore youth.
+> It takes the life and power of the one blessed by the Light… but in the one who drinks it, the Light will be corrupted.
 
 ---
 
@@ -379,7 +384,7 @@ Hrdinové z družiny si objednávají lektvary podle situace.
 - **Aldric:** Yes… the power… The world will kneel. Humans, beasts, every will bound to mine!
 - **Aldric:** And it was all built on your blood, my foolish little—
 - **Aldric:** What… what did you put in it?
-- **Wren:** Mandrake. Your book warned me. You just never let me finish reading.
+- **Wren:** Mandrake. Your own book warned me.
 - **Aldric:** NO! My power… it's leaving me!
 - **Corin:** It's over, Aldric.
 - **Torvin:** You'll answer to humans and Beastfolk alike.
@@ -431,7 +436,10 @@ Platí v kampani i v TimeMode a LifeMode.
 
 ## Nové recepty
 
-Všechny jsou zamčené pro TimeMode a LifeMode, dokud je hráč nedokončí v kampani.
+Všechny jsou zamčené, dokud hráč nedohraje level kampaně ze sloupce Level. Pak se recept objeví
+v knize receptů v menu a zároveň se přidá do TimeMode a LifeMode (jeho byliny se přidají do obměny
+talíře). Zobrazí se banner „New recipe!“. Data: `unlocksRecipes` u levelů a konců v `campaign.json`,
+logika v `Script/RecipeUnlocks.cs`, odemčení je v PlayerPrefs a vydrží i reset kampaně.
 Sprite: ✅ hotový (kopie nepoužitého obrázku), 🟡 přebarvený stávající, dá se nahradit.
 U každého je seznam kroků: byliny → element.
 
@@ -449,9 +457,11 @@ U každého je seznam kroků: byliny → element.
 | Silent Step | 14 | Gravecup + Moonpetal → **Spirit** / Aurabloom → Air | Footsteps make no sound. | 🟡 |
 | Featherfall Draught | 14 | Aurabloom + Moonpetal → Air | Fall from any height like a leaf. | 🟡 |
 | Moonlit Cure | 15 | Moonpetal + Silvarra → Life / Lumenveil → **Spirit** | Purges beast poison from the blood. | 🟡 |
-| **The Usurper's Draught** | 16 | viz níže | To take back what the years have stolen. | 🟡 |
+| **The Usurper's Draught** | konec 3 | viz níže | Celý text knihy včetně poznámek ze strany 2. | 🟡 |
 
-**The Usurper's Draught** (jen kampaň, nikdy se neodemkne do ostatních módů):
+**The Usurper's Draught** se nikdy nepřidá do TimeMode ani LifeMode (`codexOnlyRecipes`). Do knihy
+receptů se odemkne až po konci **Kořen zrady**. Jeho popis v knize receptů obsahuje varování před
+Mandrake i poznámky ze strany 2, které hráč v kampani nikdy neuvidí. Kroky:
 1. Silvarra + Virelen → Life
 2. Moonpetal + Spottella → Dark
 3. Blessed Blood + **Gravecup** → **Blood**

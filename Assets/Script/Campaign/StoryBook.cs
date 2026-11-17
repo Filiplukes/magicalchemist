@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Scéna s knihou (level 2). Kniha je otevřená: vlevo text knihy, vpravo (volitelně) jeho překlad.
+/// Scéna s knihou (level 2). Kniha je otevřená: vlevo text knihy, vpravo prázdná stránka.
 /// Jakmile se hráč pokusí otočit stránku, mistr mu knihu hned vytrhne a scéna skončí.
 /// </summary>
 public class StoryBook : MonoBehaviour
@@ -28,7 +28,6 @@ public class StoryBook : MonoBehaviour
     {
         turnButton.onClick.AddListener(() => turned = true);
         ApplyPageFont(page1Text);
-        ApplyPageFont(page2Text);
         root.SetActive(false);
     }
 
@@ -41,14 +40,12 @@ public class StoryBook : MonoBehaviour
     }
 
     /// <param name="page">Text knihy na levé stránce.</param>
-    /// <param name="facingPage">Text na pravé stránce (překlad); prázdný = pravá stránka se neukáže.</param>
-    public IEnumerator Play(string page, string facingPage)
+    public IEnumerator Play(string page)
     {
         page1Text.text = page;
-        bool facing = !string.IsNullOrEmpty(facingPage);
-        page2Text.text = facing ? facingPage : "";
+        page2Text.text = "";
         page2.localScale = Vector3.one;
-        page2.gameObject.SetActive(facing);
+        page2.gameObject.SetActive(true);
         bookBody.anchoredPosition = Vector2.zero;
         bookBody.localRotation = Quaternion.identity;
         turnButton.gameObject.SetActive(true);

@@ -42,6 +42,8 @@ public class SetLevel : MonoBehaviour
     public string levelFile = "Levels/levelTime";
     [Tooltip("Kolik bylin se při obměně talíře vymění navíc kromě těch, které chybí.")]
     public int extraHerbSwaps = 2;
+    [Tooltip("Přidat recepty odemčené v kampani (a jejich byliny) k receptům levelu. Pro TimeMode a LifeMode.")]
+    public bool addUnlockedCampaignRecipes = true;
 
     // Všechny byliny levelu. Když jich je víc než slotů, talíř se mezi recepty obměňuje.
     private List<string> herbPool = new List<string>();
@@ -165,8 +167,24 @@ public class SetLevel : MonoBehaviour
             }
         }
 
-        // Nastav byliny na UI
         herbPool = new List<string>(levelData.herbs);
+
+        // Recepty odemčené v kampani. Jejich byliny jdou jen do zásoby, na talíř se dostanou
+        // při obměně před receptem, který je potřebuje (PrepareHerbsFor).
+        if (addUnlockedCampaignRecipes)
+        {
+            foreach (var recept in allRecepts.potions)
+            {
+                if (!RecipeUnlocks.IsCampaignRecipe(recept.name) || !RecipeUnlocks.IsAvailableInModes(recept.name)) continue;
+                if (loadedRecepts.Exists(r => r.name == recept.name)) continue;
+                loadedRecepts.Add(recept);
+                foreach (var step in recept.steps)
+                    foreach (var herb in step.herbs)
+                        if (!herbPool.Contains(herb)) herbPool.Add(herb);
+            }
+        }
+
+        // Nastav byliny na UI
         for (int i = 0; i < levelData.herbs.Count && i < herbSlots.Count; i++)
         {
             string herbName = levelData.herbs[i];

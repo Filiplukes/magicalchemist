@@ -29,6 +29,7 @@ Game code is only in two folders. Everything else under `Assets/` is third-party
 **Data-driven content via `Resources/`.** Almost all content is loaded at runtime by string name with `Resources.Load`, so asset file names work as identifiers:
 - `Resources/Levels/potions.json`: every recipe (`Recept`: name, description, a list of `ReceptStep`, where each step is herbs[] plus an element). `Resources/Levels/levelTime.json` picks which herbs and recipes a level uses. The schema classes (`LevelData`, `Recept`, `ReceptStep`, `AllReceptsData`) live in `Script/SetLevel.cs` and are parsed with `JsonUtility`.
 - Sprites are looked up by name: `Potions/<recipe name>`, `Herbs/<herb name>`, `Spells/<element>`, `Cauldrons/…`, `Fires/…`, `Rooms/…`. If you rename a recipe, herb or element, rename the matching sprite too.
+- Campaign recipes are locked until the player finishes the campaign level (or ending) that lists them in `unlocksRecipes` in `Resources/Campaign/campaign.json`. `Script/RecipeUnlocks.cs` filters the herbal codex and adds unlocked recipes (and their herbs) to TimeMode/LifeMode in `SetLevel`. Recipes in `codexOnlyRecipes` (The Usurper's Draught) never reach the modes.
 - `Resources/Achievements/achievements.json` defines achievements. Achievement ids are hard-coded at the unlock call sites.
 
 **Brewing loop (`Script/GameManager.cs`).** `SetLevel` loads the recipes. `GameManager.ExecuteReceptSteps()` is a coroutine that picks a random recipe and, for each step, waits on one of two input flags:

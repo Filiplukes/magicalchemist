@@ -272,7 +272,7 @@
     },
     {
       "name": "The Usurper's Draught",
-      "description": "To take back what the years have stolen.",
+      "description": "Restores lost strength and the vigour of youth. Never let Mandrake take the place of Gravecup, or the draught will turn upon the one who drinks it.\n<i>Notes: Brewed with the blood of one touched by the Light, it takes their life and power… but in the one who drinks it, the Light will be corrupted.</i>",
       "steps": [
         {
           "herbs": ["Silvarra", "Virelen"],

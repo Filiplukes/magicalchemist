@@ -83,7 +83,7 @@ public class CampaignController : MonoBehaviour
 
             var texts = button.GetComponentsInChildren<TextMeshProUGUI>(true);
             texts[0].text = level.id.ToString();
-            texts[1].text = unlocked ? CampaignText.With(level.title, level.titleCs) : "Locked";
+            texts[1].text = unlocked ? level.title : "Locked";
 
             button.interactable = unlocked;
             var colors = button.colors;
@@ -117,9 +117,9 @@ public class CampaignController : MonoBehaviour
         SetBackground(level.background);
         endingPlayed = false;
 
-        titleChapter.text = CampaignText.With(level.chapter, level.chapterCs);
-        titleName.text = CampaignText.With($"{level.id}. {level.title}", level.titleCs);
-        titleGoal.text = CampaignText.With(level.goal, level.goalCs);
+        titleChapter.text = level.chapter;
+        titleName.text = $"{level.id}. {level.title}";
+        titleGoal.text = level.goal;
         titleCardRoot.SetActive(true);
         titleTapped = false;
         while (!titleTapped) yield return null;
@@ -133,7 +133,15 @@ public class CampaignController : MonoBehaviour
         yield return dialogue.Play(level.outro, HandleAction);
 
         CampaignProgress.Complete(level.id);
+        yield return AnnounceRecipes(RecipeUnlocks.Unlock(level.unlocksRecipes));
         ShowLevelSelect();
+    }
+
+    /// <summary>Banner pro každý nově odemčený recept (kniha receptů, TimeMode, LifeMode).</summary>
+    private IEnumerator AnnounceRecipes(List<string> recipes)
+    {
+        foreach (var recipe in recipes)
+            yield return Banner($"New recipe!\n<size=60%>{recipe}</size>", 2f);
     }
 
     private IEnumerator HandleAction(CampaignLine line)
@@ -141,8 +149,8 @@ public class CampaignController : MonoBehaviour
         switch (line.action)
         {
             case "book":
-                // Vlevo kniha, vpravo překlad. Druhou stranu knihy hráč nikdy neuvidí, mistr ji vytrhne dřív.
-                yield return book.Play(data.bookPage1, CampaignText.ShowCzech ? data.bookPage1Cs : null);
+                // Druhou stranu knihy hráč nikdy neuvidí, mistr ji vytrhne dřív.
+                yield return book.Play(data.bookPage1);
                 break;
             case "choice":
                 yield return PlayEnding();
@@ -171,7 +179,9 @@ public class CampaignController : MonoBehaviour
         if (data.endings.TrueForAll(e => CampaignProgress.HasSeenEnding(e.id)))
             Unlock(data.allEndingsAchievement);
 
-        yield return Banner($"The End\n<size=60%>{CampaignText.With(ending.title, ending.titleCs)}</size>", 2.5f);
+        var recipes = RecipeUnlocks.Unlock(ending.unlocksRecipes);
+        yield return Banner($"The End\n<size=60%>{ending.title}</size>", 2.5f);
+        yield return AnnounceRecipes(recipes);
     }
 
     private static void Unlock(string id)

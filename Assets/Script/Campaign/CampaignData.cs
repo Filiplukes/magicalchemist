@@ -8,7 +8,6 @@ public class CampaignLine
 {
     public string who;      // id postavy, "narrator" = vypravěč bez portrétu
     public string text;
-    public string cs;       // český překlad (pomůcka pro vývoj, viz CampaignText)
     public string action;   // "book" = scéna s knihou, "choice" = volba konce (prototyp)
 }
 
@@ -26,12 +25,10 @@ public class CampaignLevel
 {
     public int id;
     public string chapter;
-    public string chapterCs;
     public string title;
-    public string titleCs;
     public string background; // Street / Workshop / Clinic / WarCamp / Dungeon
     public string goal;
-    public string goalCs;
+    public List<string> unlocksRecipes; // recepty, které se dohráním levelu odemknou (viz RecipeUnlocks)
     public List<CampaignLine> intro;
     public List<CampaignLine> outro;
 }
@@ -41,8 +38,8 @@ public class CampaignEnding
 {
     public string id;           // failure / obedience / betrayal
     public string title;
-    public string titleCs;
     public string achievement;
+    public List<string> unlocksRecipes;
     public List<CampaignLine> lines;
 }
 
@@ -53,12 +50,11 @@ public class CampaignData
     public List<CampaignLevel> levels;
     public List<CampaignEnding> endings;
     public string bookPage1;
-    public string bookPage1Cs;
-    // Druhá strana knihy (varování před Mandrake). Ve hře se teď neukazuje, mistr knihu
-    // vytrhne dřív, než ji hráč otočí. Zůstává jako podklad pro děj.
+    // Druhá strana knihy (poznámky o krvi obdarovaného Světlem). V kampani se nikdy neukáže,
+    // mistr knihu vytrhne dřív. Celý text uvidí hráč v knize receptů po konci Root of Betrayal.
     public string bookPage2;
-    public string bookPage2Cs;
     public string allEndingsAchievement;
+    public List<string> codexOnlyRecipes; // odemknou se jen do knihy receptů, nikdy do TimeMode/LifeMode
 
     public static CampaignData Load()
     {
@@ -69,27 +65,6 @@ public class CampaignData
             return null;
         }
         return JsonUtility.FromJson<CampaignData>(json.text);
-    }
-}
-
-/// <summary>
-/// Český překlad pod anglickým textem kampaně. Pomůcka pro vývoj: před vydáním vypnout
-/// (ShowCzech = false), nebo nahradit skutečnou lokalizací.
-/// </summary>
-public static class CampaignText
-{
-    public static bool ShowCzech = true;
-
-    // Bez vlastní barvy: přebírá barvu textového pole (tmavá na bublině, zlatá na kartách),
-    // takže je čitelná na světlém i tmavém podkladu.
-    private const string CsStyle = "<size=76%><b><i>";
-    private const string CsStyleEnd = "</i></b></size>";
-
-    /// <summary>Anglický text a pod ním menší tučná kurzíva s češtinou.</summary>
-    public static string With(string en, string cs)
-    {
-        if (!ShowCzech || string.IsNullOrEmpty(cs)) return en;
-        return $"{en}\n{CsStyle}{cs}{CsStyleEnd}";
     }
 }
 
