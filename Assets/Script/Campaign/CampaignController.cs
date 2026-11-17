@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Kampaň: výběr levelů a průběh příběhu. Prototyp: hratelnost se zatím přeskakuje,
-/// level = úvodní karta, úvodní dialog, "level splněn", závěrečný dialog.
-/// Ve finále se konec volí tlačítkem, dokud nebude napojené vaření.
+/// Kampaň: výběr levelů a průběh příběhu. Level = úvodní karta, úvodní dialog, hraní ve scéně
+/// Campaign (CampaignGame), závěrečný dialog. Po výhře se scéna CampaignStory načte znovu
+/// a podle CampaignSession pokračuje závěrem. Ve finále určí konec výsledek vaření.
 /// </summary>
 public class CampaignController : MonoBehaviour
 {
@@ -34,16 +34,8 @@ public class CampaignController : MonoBehaviour
     public GameObject bannerRoot;
     public TextMeshProUGUI bannerText;
 
-    [Header("Volba konce (prototyp)")]
-    public GameObject choiceRoot;
-    public Button choiceFailure;
-    public Button choiceObedience;
-    public Button choiceBetrayal;
-
     private CampaignData data;
     private bool titleTapped;
-    private string chosenEnding;
-    private bool endingPlayed;
 
     void Start()
     {
@@ -53,15 +45,47 @@ public class CampaignController : MonoBehaviour
 
         dialogue.Init(data.characters);
         titleTap.onClick.AddListener(() => titleTapped = true);
-        choiceFailure.onClick.AddListener(() => chosenEnding = "failure");
-        choiceObedience.onClick.AddListener(() => chosenEnding = "obedience");
-        choiceBetrayal.onClick.AddListener(() => chosenEnding = "betrayal");
 
         titleCardRoot.SetActive(false);
         bannerRoot.SetActive(false);
-        choiceRoot.SetActive(false);
         levelButtonTemplate.gameObject.SetActive(false);
-        ShowLevelSelect();
+
+        // Návrat z hraní: vyhraný level pokračuje závěrem, jinak zpět na výběr.
+        var played = CampaignSession.IsPlaying && CampaignSession.Won
+            ? data.levels.Find(l => l.id == CampaignSession.LevelId) : null;
+        string ending = CampaignSession.Ending;
+        CampaignSession.Clear();
+        if (played != null) StartCoroutine(FinishLevel(played, ending));
+        else
+        {
+            SyncEndingAchievements();
+            ShowLevelSelect();
+        }
+    }
+
+    /// <summary>
+    /// Konec se zapisuje hned po hraní (CampaignProgress.RecordWin), achievement až po jeho dialogu.
+    /// Když hráč aplikaci zavřel uprostřed konce, achievement se tu doplní potichu.
+    /// Nevolat před přehráním čerstvého konce, jinak by se nezobrazilo oznámení.
+    /// </summary>
+    private void SyncEndingAchievements()
+    {
+        bool any = false;
+        foreach (var e in data.endings)
+        {
+            if (!CampaignProgress.HasSeenEnding(e.id) || string.IsNullOrEmpty(e.achievement)) continue;
+            if (PlayerPrefs.GetInt(e.achievement, 0) == 1) continue;
+            PlayerPrefs.SetInt(e.achievement, 1);
+            any = true;
+        }
+        if (!string.IsNullOrEmpty(data.allEndingsAchievement)
+            && data.endings.TrueForAll(e => CampaignProgress.HasSeenEnding(e.id))
+            && PlayerPrefs.GetInt(data.allEndingsAchievement, 0) == 0)
+        {
+            PlayerPrefs.SetInt(data.allEndingsAchievement, 1);
+            any = true;
+        }
+        if (any) PlayerPrefs.Save();
     }
 
     // ---------- Výběr levelů ----------
@@ -115,7 +139,6 @@ public class CampaignController : MonoBehaviour
     {
         levelSelectRoot.SetActive(false);
         SetBackground(level.background);
-        endingPlayed = false;
 
         titleChapter.text = level.chapter;
         titleName.text = $"{level.id}. {level.title}";
@@ -127,8 +150,23 @@ public class CampaignController : MonoBehaviour
 
         yield return dialogue.Play(level.intro, HandleAction);
 
-        // Tady bude hratelnost. Prototyp ji přeskočí.
-        if (!endingPlayed) yield return Banner("Level complete!", 1.3f);
+        if (level.game != null && level.game.HasGameplay)
+        {
+            CampaignSession.Begin(level.id);
+            SceneLoader.Load(CampaignSession.GameScene);
+            yield break; // pokračuje FinishLevel po návratu
+        }
+
+        yield return FinishLevel(level, null);
+    }
+
+    /// <summary>Po hraní: případný konec kampaně, závěrečný dialog, odemčení, výběr levelů.</summary>
+    private IEnumerator FinishLevel(CampaignLevel level, string endingId)
+    {
+        levelSelectRoot.SetActive(false);
+        SetBackground(level.background);
+
+        if (!string.IsNullOrEmpty(endingId)) yield return PlayEnding(endingId);
 
         yield return dialogue.Play(level.outro, HandleAction);
 
@@ -152,27 +190,22 @@ public class CampaignController : MonoBehaviour
                 // Druhou stranu knihy hráč nikdy neuvidí, mistr ji vytrhne dřív.
                 yield return book.Play(data.bookPage1);
                 break;
-            case "choice":
-                yield return PlayEnding();
-                break;
             default:
                 Debug.LogWarning("Neznámá akce v kampani: " + line.action);
                 break;
         }
     }
 
-    private IEnumerator PlayEnding()
+    private IEnumerator PlayEnding(string endingId)
     {
-        chosenEnding = null;
-        choiceRoot.SetActive(true);
-        while (chosenEnding == null) yield return null;
-        choiceRoot.SetActive(false);
-
-        var ending = data.endings.Find(e => e.id == chosenEnding);
-        if (ending == null) yield break;
+        var ending = data.endings.Find(e => e.id == endingId);
+        if (ending == null)
+        {
+            Debug.LogWarning("Neznámý konec kampaně: " + endingId);
+            yield break;
+        }
 
         yield return dialogue.Play(ending.lines, HandleAction);
-        endingPlayed = true;
 
         CampaignProgress.MarkEnding(ending.id);
         Unlock(ending.achievement);

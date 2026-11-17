@@ -224,6 +224,15 @@ public class PoisonEffect : MonoBehaviour
         currentBlurEase = fromError ? errorBlurEaseDuration : blurEaseDuration;
     }
 
+    /// <summary>
+    /// Plynulý přírůstek (otrava stoupající sama od sebe, volá se každý snímek). Na rozdíl od AddPoison
+    /// nemění rychlost náběhu rozmazání, takže nepřepíše rychlý náběh po zkaženém lektvaru.
+    /// </summary>
+    public void AddPoisonGradual(float amount)
+    {
+        poisonAmount = Mathf.Clamp01(poisonAmount + amount);
+    }
+
     // 🔽 Sníží poison
     public void RemovePoison(float amount)
     {

@@ -44,6 +44,8 @@ public class SetLevel : MonoBehaviour
     public int extraHerbSwaps = 2;
     [Tooltip("Přidat recepty odemčené v kampani (a jejich byliny) k receptům levelu. Pro TimeMode a LifeMode.")]
     public bool addUnlockedCampaignRecipes = true;
+    /// <summary>Byliny a recepty místo levelFile (level kampaně). Nastavit před Start.</summary>
+    [System.NonSerialized] public LevelData levelOverride;
 
     // Všechny byliny levelu. Když jich je víc než slotů, talíř se mezi recepty obměňuje.
     private List<string> herbPool = new List<string>();
@@ -136,17 +138,17 @@ public class SetLevel : MonoBehaviour
 
     void LoadLevel(string levelFileName)
     {
-        TextAsset jsonText = Resources.Load<TextAsset>(levelFileName);
+        TextAsset jsonText = levelOverride == null ? Resources.Load<TextAsset>(levelFileName) : null;
         TextAsset jsonRecepts = Resources.Load<TextAsset>("Levels/potions");
 
-        if (jsonText == null || jsonRecepts == null)
+        if ((levelOverride == null && jsonText == null) || jsonRecepts == null)
         {
             Debug.LogError("Missing JSON file!");
             return;
         }
 
         // Načti level data
-        LevelData levelData = JsonUtility.FromJson<LevelData>(jsonText.text);
+        LevelData levelData = levelOverride ?? JsonUtility.FromJson<LevelData>(jsonText.text);
 
         // Načti všechy recepty
         AllReceptsData allRecepts = JsonUtility.FromJson<AllReceptsData>(jsonRecepts.text);

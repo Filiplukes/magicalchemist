@@ -72,6 +72,14 @@ public static class Cosmetics
 
     public static int Gems => PlayerPrefs.GetInt(GemsPrefsKey, 0);
 
+    /// <summary>Přičte gemy (odměna za hru) a hned uloží.</summary>
+    public static void AddGems(int amount)
+    {
+        if (amount <= 0) return;
+        PlayerPrefs.SetInt(GemsPrefsKey, Gems + amount);
+        PlayerPrefs.Save();
+    }
+
     public static IReadOnlyList<CosmeticItem> GetItems(CosmeticType type) => Database.GetItems(type);
 
     public static bool IsOwned(CosmeticItem item)

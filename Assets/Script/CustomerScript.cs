@@ -211,4 +211,19 @@ public class CustomerScript : MonoBehaviour
     }
 
     public bool IsWaiting => waiting;
+
+    /// <summary>Zákazníci s vlastními portréty (kampaň: družina). Volat před prvním příchodem.</summary>
+    public void SetPortraits(Sprite[] sprites)
+    {
+        if (sprites == null || sprites.Length == 0) return;
+        portraits = sprites;
+        lastPortrait = -1;
+    }
+
+    /// <summary>Vynásobí trpělivost všech zákazníků (kampaň: nápor raněných).</summary>
+    public void ScalePatience(float factor)
+    {
+        if (factor <= 0f || Mathf.Approximately(factor, 1f)) return;
+        foreach (var h in hastes) h.patienceMultiplier *= factor;
+    }
 }

@@ -44,6 +44,12 @@ public static class RecipeUnlocks
         foreach (var name in names) PlayerPrefs.SetInt(Prefix + name, 1);
     }
 
+    /// <summary>
+    /// Načte seznam receptů hned. Volat před zápisem dohraného levelu: první načtení potichu
+    /// odemkne recepty už dohraných levelů a oznámení „New recipe!“ by se pak neukázalo.
+    /// </summary>
+    public static void Preload() => EnsureLoaded();
+
     /// <summary>Patří recept mezi ty, které se odemykají v kampani?</summary>
     public static bool IsCampaignRecipe(string name)
     {

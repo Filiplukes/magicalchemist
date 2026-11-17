@@ -22,6 +22,23 @@ public class GameManager : MonoBehaviour
     public bool sequentialRecipes = false;
     private int nextReceptIndex = 0;
 
+    // ---- Háčky pro kampaň (CampaignGame). TimeMode a LifeMode je nepoužívají. ----
+    [Tooltip("Ukazovat, kterou bylinu hodit dál. Kampaň ji v levelu „zpaměti“ schová.")]
+    public bool showHerbHints = true;
+    [Tooltip("O kolik stoupne otrava po dobrém lektvaru (záporné číslo otravu léčí).")]
+    public float poisonOnSuccess = 0.05f;
+    [Tooltip("O kolik stoupne otrava po zkaženém lektvaru.")]
+    public float poisonOnFailure = 0.15f;
+    /// <summary>Lektvar dovařen: název ("Broken" = zkažený), kvalita 0–100, recept.</summary>
+    public System.Action<string, int, Recept> OnPotionFinished;
+    /// <summary>Zákazníkovi došla trpělivost.</summary>
+    public System.Action OnOrderMissed;
+    /// <summary>(očekávaná bylina, použitá bylina) → true = použitá bylina se počítá jako správná.</summary>
+    public System.Func<string, string, bool> AcceptHerbSubstitute;
+
+    public int TotalScore => totalScore;
+    public int TotalGems => totalGems;
+
     private int totalFlowersThrown;
     private int perfectTrace;
     private int failedTen;
@@ -159,6 +176,7 @@ public class GameManager : MonoBehaviour
             StopCoroutine(stepCoroutine);
             stepCoroutine = null;
         }
+        OnOrderMissed?.Invoke();
     }
 
     // Série Divine/Legendary lektvarů za sebou. Prahy odpovídají hodnocení
@@ -227,7 +245,7 @@ public class GameManager : MonoBehaviour
             while (step.herbs.Count+1 > countSteps) {              
                 spellInputUpdated = false;
                 herbInputUpdated = false;
-                if (herbIndex<step.herbs.Count) {
+                if (herbIndex<step.herbs.Count && showHerbHints) {
                     useHerbImage.gameObject.SetActive(true);
                     useHerbImage.sprite = ResourceCache.Load<Sprite>("Herbs/" + step.herbs[herbIndex]);
                 }
@@ -244,7 +262,8 @@ public class GameManager : MonoBehaviour
                     if (totalFlowersThrown > FlowerAchievementThreshold) {
                         AchievementsManagerScript.Instance.UnlockAchievement(FlowerAchievementId);
                     }
-                    if (herbIndex<step.herbs.Count && usedHerb == step.herbs[herbIndex])
+                    if (herbIndex<step.herbs.Count && (usedHerb == step.herbs[herbIndex]
+                        || (AcceptHerbSubstitute != null && AcceptHerbSubstitute(step.herbs[herbIndex], usedHerb))))
                     {
                         point = point + 25;                      
                     }
@@ -326,10 +345,11 @@ public class GameManager : MonoBehaviour
         if (poison != null)
         {
             bool failed = namePotion == "Broken";
-            float poisonGain = failed ? 0.15f : 0.05f;
+            float poisonGain = failed ? poisonOnFailure : poisonOnSuccess;
             poison.AddPoison(poisonGain, failed);
         }
         stepCoroutine = null;
+        OnPotionFinished?.Invoke(namePotion, quality, aktualRecept);
 
         yield break;
 
@@ -338,16 +358,7 @@ public class GameManager : MonoBehaviour
     // 🔴 Veřejná metoda pro ukončení receptové coroutine
     async public void EndGame(string mode)
      {
-        gameOver = true;
-        if (customer != null) customer.Stop();
-        PlayerPrefs.SetInt(FlowersThrownKey, totalFlowersThrown);
-        PlayerPrefs.Save();
-        if (stepCoroutine != null)
-        {
-            StopCoroutine(stepCoroutine);
-            stepCoroutine = null;
-           
-        }
+        StopGame();
         var result = Instantiate(resultScore);
         if (mode == "Campaign") {
             // Kampaň do žebříčku nepíše.
@@ -363,7 +374,25 @@ public class GameManager : MonoBehaviour
         result.GetComponent<ResultScoreScript>().SetGems(totalGems);
     }
 
+    /// <summary>Zastaví vaření i zákazníky bez výsledkové obrazovky (konec levelu kampaně).</summary>
+    public void StopGame()
+    {
+        if (gameOver) return;
+        gameOver = true;
+        if (customer != null) customer.Stop();
+        PlayerPrefs.SetInt(FlowersThrownKey, totalFlowersThrown);
+        PlayerPrefs.Save();
+        if (stepCoroutine != null)
+        {
+            StopCoroutine(stepCoroutine);
+            stepCoroutine = null;
+        }
+    }
+
     public void PauseGame() {
+        // Po konci hry (výhra/prohra v kampani, výsledková obrazovka) už pauza nemá co přerušit.
+        // Z pauzy by šlo odejít a v kampani by se tím ztratila právě vyhraná úroveň.
+        if (gameOver) return;
         var result = Instantiate(resultScore);
         result.GetComponent<ResultScoreScript>().SetPause();
 

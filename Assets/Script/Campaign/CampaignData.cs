@@ -8,7 +8,7 @@ public class CampaignLine
 {
     public string who;      // id postavy, "narrator" = vypravěč bez portrétu
     public string text;
-    public string action;   // "book" = scéna s knihou, "choice" = volba konce (prototyp)
+    public string action;   // "book" = scéna s knihou
 }
 
 [System.Serializable]
@@ -28,9 +28,47 @@ public class CampaignLevel
     public string title;
     public string background; // Street / Workshop / Clinic / WarCamp / Dungeon
     public string goal;
+    public CampaignGameRules game;      // hratelnost levelu (scéna Campaign), viz CampaignGame
     public List<string> unlocksRecipes; // recepty, které se dohráním levelu odemknou (viz RecipeUnlocks)
     public List<CampaignLine> intro;
     public List<CampaignLine> outro;
+}
+
+/// <summary>
+/// Pravidla hraní levelu kampaně. Nevyplněná čísla (0) znamenají "bez omezení".
+/// Cíl: "potions" (uvařit target lektvarů), "score" (získat target bodů), "survive" (vydržet timeLimit).
+/// </summary>
+[System.Serializable]
+public class CampaignGameRules
+{
+    public List<string> recipes;    // recepty levelu; stejný název víckrát = častěji
+    public List<string> herbs;      // byliny v pořadí slotů talíře (zleva doprava, shora dolů)
+    public string goal;
+    public int target;
+    public int minQuality;          // počítají se jen lektvary s kvalitou aspoň takovou (Divine = 65)
+    public int minSteps;            // počítají se jen recepty s aspoň tolika kroky
+    public float timeLimit;         // sekundy, 0 = bez časového limitu
+    public int lives;               // 0 = bez životů; život stojí zkažený lektvar a odešlý zákazník
+    public bool customers;          // objednávky od zákazníků (pacienti, družina)
+    public float customerPatience;  // násobič trpělivosti zákazníků, 0 = 1
+    public List<string> customerPortraits; // id postav místo náhodných zákazníků
+    public bool sequential;         // recepty popořadě místo náhodně
+    public bool hideHerbHints;      // "zpaměti": nápověda byliny se ukáže až po zkaženém lektvaru
+    public bool poison;             // otrava z výparů (až od levelu 5, kdy ji mistr vysvětlí)
+    public float poisonPerSecond;   // otrava stoupá sama od sebe
+    public bool poisonKills;        // plná otrava = prohra
+    // Finále: bylina substituteHerb smí nahradit substituteFor a změní konec (substituteEnding).
+    public string substituteFor;
+    public string substituteHerb;
+    public string substituteEnding;
+    // Level končí jedním z konců kampaně: zkažený lektvar nebo kvalita pod failBelowQuality
+    // = failEnding, jinak successEnding (nebo substituteEnding).
+    public bool endsCampaign;
+    public int failBelowQuality;
+    public string failEnding;
+    public string successEnding;
+
+    public bool HasGameplay => recipes != null && recipes.Count > 0;
 }
 
 [System.Serializable]
@@ -68,6 +106,42 @@ public class CampaignData
     }
 }
 
+/// <summary>
+/// Předává rozehraný level mezi scénami: CampaignStory (dialogy) → Campaign (hraní) → zpět.
+/// Žije jen v paměti, po restartu hry se level hraje znovu od úvodu.
+/// </summary>
+public static class CampaignSession
+{
+    public const string GameScene = "Campaign";
+    public const string StoryScene = "CampaignStory";
+
+    public static int LevelId { get; private set; }   // 0 = žádný level neběží
+    public static bool Won { get; private set; }      // hraní skončilo úspěchem
+    public static string Ending { get; private set; } // konec kampaně, který hraní zvolilo
+
+    public static bool IsPlaying => LevelId > 0;
+
+    public static void Begin(int levelId)
+    {
+        LevelId = levelId;
+        Won = false;
+        Ending = null;
+    }
+
+    public static void Finish(string ending)
+    {
+        Won = true;
+        Ending = ending;
+    }
+
+    public static void Clear()
+    {
+        LevelId = 0;
+        Won = false;
+        Ending = null;
+    }
+}
+
 /// <summary>Postup v kampani a zhlédnuté konce (PlayerPrefs).</summary>
 public static class CampaignProgress
 {
@@ -92,6 +166,18 @@ public static class CampaignProgress
     {
         PlayerPrefs.SetInt(EndingPrefix + id, 1);
         PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Zapíše výhru hned po hraní, ještě před závěrečným dialogem, aby se neztratila,
+    /// když hráč během závěru aplikaci zavře. Recepty dorovná RecipeUnlocks při dalším
+    /// spuštění, achievementy za konce CampaignController.SyncEndingAchievements.
+    /// </summary>
+    public static void RecordWin(int level, string endingId)
+    {
+        RecipeUnlocks.Preload(); // před zápisem, jinak by se nové recepty neoznámily
+        if (!string.IsNullOrEmpty(endingId)) PlayerPrefs.SetInt(EndingPrefix + endingId, 1);
+        Complete(level); // ukládá PlayerPrefs
     }
 
     /// <summary>Smaže postup v kampani (achievementy zůstanou).</summary>

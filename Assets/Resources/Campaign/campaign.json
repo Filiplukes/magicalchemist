@@ -56,6 +56,20 @@
       "title": "The Gutter",
       "background": "Street",
       "goal": "Play as the master and brew one potion.",
+      "game": {
+        "recipes": [
+          "Health Potion"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen"
+        ],
+        "goal": "potions",
+        "target": 1,
+        "sequential": true
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -90,7 +104,7 @@
         },
         {
           "who": "aldric",
-          "text": "Stop staring and make yourself useful. Second shelf: the first herb, then the fourth.",
+          "text": "Stop staring and make yourself useful. The first herb, then the fourth.",
           "action": ""
         },
         {
@@ -148,6 +162,22 @@
       "title": "Forbidden Pages",
       "background": "Workshop",
       "goal": "Brew 2 simple potions from memory.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen"
+        ],
+        "goal": "potions",
+        "target": 2,
+        "sequential": true,
+        "hideHerbHints": true
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -220,6 +250,21 @@
       "title": "Caught Red-Handed",
       "background": "Workshop",
       "goal": "Brew 3 potions before the candle burns out.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen"
+        ],
+        "goal": "potions",
+        "target": 3,
+        "timeLimit": 90
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -287,6 +332,25 @@
       "title": "First Lesson",
       "background": "Workshop",
       "goal": "Brew 4 potions from the recipe book.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Calming Tonic",
+          "Calming Tonic"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira"
+        ],
+        "goal": "potions",
+        "target": 4
+      },
       "unlocksRecipes": [
         "Calming Tonic"
       ],
@@ -346,6 +410,31 @@
       "title": "The Apprentice",
       "background": "Workshop",
       "goal": "Reach 600 points in 120 seconds.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot"
+        ],
+        "goal": "score",
+        "target": 600,
+        "timeLimit": 120,
+        "poison": true
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -356,6 +445,31 @@
         {
           "who": "aldric",
           "text": "Speed matters, but precision matters more.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "One more thing. Every brew gives off fumes, and a ruined one far more.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Breathe in too much and your eyes will swim. Everything turns green and blurry.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Is it dangerous?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "For a careless alchemist. Ruin fewer brews and your head stays clearer.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Every new task, you start with fresh air. Now, to work.",
           "action": ""
         }
       ],
@@ -373,6 +487,37 @@
       "title": "A Drop of Blood",
       "background": "Workshop",
       "goal": "Brew 5 potions of Divine quality or better.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Fever Breaker",
+          "Fever Breaker"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia"
+        ],
+        "goal": "potions",
+        "target": 5,
+        "minQuality": 65,
+        "poison": true
+      },
       "unlocksRecipes": [
         "Fever Breaker"
       ],
@@ -422,6 +567,42 @@
       "title": "Sister Maren's Clinic",
       "background": "Clinic",
       "goal": "Treat 6 patients. You have 3 lives.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Bone Mender",
+          "Bone Mender"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella"
+        ],
+        "goal": "potions",
+        "target": 6,
+        "lives": 3,
+        "customers": true,
+        "poison": true
+      },
       "unlocksRecipes": [
         "Bone Mender"
       ],
@@ -461,6 +642,43 @@
       "title": "The Wolf at the Door",
       "background": "Clinic",
       "goal": "Treat 8 patients.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught",
+          "Sleep Draught",
+          "Sleep Draught"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup"
+        ],
+        "goal": "potions",
+        "target": 8,
+        "customers": true,
+        "poison": true
+      },
       "unlocksRecipes": [
         "Sleep Draught"
       ],
@@ -505,6 +723,43 @@
       "title": "War Breaks Out",
       "background": "Clinic",
       "goal": "Survive 150 seconds of wounded.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup"
+        ],
+        "goal": "survive",
+        "timeLimit": 150,
+        "lives": 3,
+        "customers": true,
+        "customerPatience": 0.8,
+        "poison": true
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -542,6 +797,47 @@
       "title": "The Front Line",
       "background": "WarCamp",
       "goal": "Reach 1200 points in 150 seconds.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught",
+          "Lightning Tincture",
+          "Shadow Syrup",
+          "Ironskin Elixir",
+          "Ironskin Elixir",
+          "Ironskin Elixir"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup",
+          "Embercap"
+        ],
+        "goal": "score",
+        "target": 1200,
+        "timeLimit": 150,
+        "poison": true
+      },
       "unlocksRecipes": [
         "Ironskin Elixir"
       ],
@@ -571,6 +867,42 @@
       "title": "The Same Seal",
       "background": "WarCamp",
       "goal": "Brew 6 multi-step potions.",
+      "game": {
+        "recipes": [
+          "Rejuvenation Brew",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Ironskin Elixir",
+          "Mist Drop",
+          "Beastbane Oil",
+          "Battle Fervor",
+          "Beastbane Oil",
+          "Battle Fervor",
+          "Beastbane Oil",
+          "Battle Fervor"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup",
+          "Embercap",
+          "Wolfsbane"
+        ],
+        "goal": "potions",
+        "target": 6,
+        "minSteps": 2,
+        "poison": true
+      },
       "unlocksRecipes": [
         "Beastbane Oil",
         "Battle Fervor"
@@ -621,6 +953,50 @@
       "title": "Taken",
       "background": "WarCamp",
       "goal": "Survive 120 seconds. The poison spreads faster.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught",
+          "Lightning Tincture",
+          "Shadow Syrup",
+          "Ironskin Elixir",
+          "Mist Drop",
+          "Beastbane Oil",
+          "Battle Fervor"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup",
+          "Embercap",
+          "Wolfsbane"
+        ],
+        "goal": "survive",
+        "timeLimit": 120,
+        "poisonPerSecond": 0.009,
+        "poisonKills": true,
+        "poison": true
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -668,6 +1044,61 @@
       "title": "Into the Dark",
       "background": "Dungeon",
       "goal": "Fill 6 orders for the warband.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught",
+          "Lightning Tincture",
+          "Shadow Syrup",
+          "Ironskin Elixir",
+          "Mist Drop",
+          "Beastbane Oil",
+          "Battle Fervor",
+          "Night Eye Drops",
+          "Lockbreaker Acid",
+          "Night Eye Drops",
+          "Lockbreaker Acid",
+          "Night Eye Drops",
+          "Lockbreaker Acid"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup",
+          "Embercap",
+          "Wolfsbane",
+          "Moonpetal"
+        ],
+        "goal": "potions",
+        "target": 6,
+        "customers": true,
+        "customerPortraits": [
+          "brask",
+          "nim",
+          "odo"
+        ],
+        "poison": true
+      },
       "unlocksRecipes": [
         "Night Eye Drops",
         "Lockbreaker Acid"
@@ -703,6 +1134,64 @@
       "title": "Lies of the Captors",
       "background": "Dungeon",
       "goal": "Fill 8 orders. You have 3 lives.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught",
+          "Lightning Tincture",
+          "Shadow Syrup",
+          "Ironskin Elixir",
+          "Mist Drop",
+          "Beastbane Oil",
+          "Battle Fervor",
+          "Night Eye Drops",
+          "Lockbreaker Acid",
+          "Silent Step",
+          "Featherfall Draught",
+          "Silent Step",
+          "Featherfall Draught",
+          "Silent Step",
+          "Featherfall Draught"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup",
+          "Embercap",
+          "Wolfsbane",
+          "Moonpetal"
+        ],
+        "goal": "potions",
+        "target": 8,
+        "lives": 3,
+        "customers": true,
+        "customerPortraits": [
+          "brask",
+          "nim",
+          "odo"
+        ],
+        "poison": true
+      },
       "unlocksRecipes": [
         "Silent Step",
         "Featherfall Draught"
@@ -763,6 +1252,57 @@
       "title": "The Last Gate",
       "background": "Dungeon",
       "goal": "Reach 1500 points in 150 seconds.",
+      "game": {
+        "recipes": [
+          "Health Potion",
+          "Mana Potion",
+          "Calming Tonic",
+          "Wisdom Serum",
+          "Frost Essence",
+          "Flame Elixir",
+          "Love Draught",
+          "Rejuvenation Brew",
+          "Fever Breaker",
+          "Antidote Elixir",
+          "Bone Mender",
+          "Sleep Draught",
+          "Lightning Tincture",
+          "Shadow Syrup",
+          "Ironskin Elixir",
+          "Mist Drop",
+          "Beastbane Oil",
+          "Battle Fervor",
+          "Night Eye Drops",
+          "Lockbreaker Acid",
+          "Silent Step",
+          "Featherfall Draught",
+          "Moonlit Cure",
+          "Moonlit Cure",
+          "Moonlit Cure"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Aurabloom",
+          "Verdensage",
+          "Virelen",
+          "Basil",
+          "Menthira",
+          "Lumenveil",
+          "Frostria",
+          "Emberroot",
+          "Lysanthia",
+          "Heparil",
+          "Spottella",
+          "Gravecup",
+          "Embercap",
+          "Wolfsbane",
+          "Moonpetal"
+        ],
+        "goal": "score",
+        "target": 1500,
+        "timeLimit": 150,
+        "poison": true
+      },
       "unlocksRecipes": [
         "Moonlit Cure"
       ],
@@ -812,6 +1352,30 @@
       "title": "The Usurper's Draught",
       "background": "Dungeon",
       "goal": "Brew one last potion.",
+      "game": {
+        "recipes": [
+          "The Usurper's Draught"
+        ],
+        "herbs": [
+          "Silvarra",
+          "Moonpetal",
+          "Gravecup",
+          "Virelen",
+          "Blessed Blood",
+          "Spottella",
+          "Mandrake"
+        ],
+        "goal": "potions",
+        "target": 1,
+        "substituteFor": "Gravecup",
+        "substituteHerb": "Mandrake",
+        "substituteEnding": "betrayal",
+        "endsCampaign": true,
+        "failBelowQuality": 35,
+        "failEnding": "failure",
+        "successEnding": "obedience",
+        "poison": true
+      },
       "unlocksRecipes": [],
       "intro": [
         {
@@ -843,11 +1407,6 @@
           "who": "aldric",
           "text": "It needs a drop of your blood. Please. Save me.",
           "action": ""
-        },
-        {
-          "who": "",
-          "text": "",
-          "action": "choice"
         }
       ],
       "outro": []

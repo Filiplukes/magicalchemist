@@ -15,7 +15,7 @@ Magic Alchemist Master is a 2D mobile (Android, `com.PalAthGame.unity.MagicAlche
 There is no test suite and no lint setup. Compile, run and build through the Unity Editor:
 - Use the `unity` CLI (on PATH) or the `unity-editor-mcp` tools to talk to a running Editor: `script_recompile`, `console_get`, `editor_playmode_start`, `build_run`. Check the console after editing scripts, because compile errors only show up there.
 - `Packages/com.unity.pipeline` (experimental) and `com.coplaydev.unity-mcp` are installed for Editor automation.
-- Build scenes, in order: `Menu`, `TimeMode`, `LifeMode`. `Campaign.unity` exists but is **not** in Build Settings, even though `MenuController.LoadCampaign()` loads it.
+- Build scenes, in order: `Menu`, `TimeMode`, `LifeMode`, `Campaign`, `CampaignStory`.
 - Android release artifacts (`magic.aab`, `user.keystore`) are in the repo root. Do not modify or commit the keystore.
 
 ## Code layout
@@ -30,6 +30,7 @@ Game code is only in two folders. Everything else under `Assets/` is third-party
 - `Resources/Levels/potions.json`: every recipe (`Recept`: name, description, a list of `ReceptStep`, where each step is herbs[] plus an element). `Resources/Levels/levelTime.json` picks which herbs and recipes a level uses. The schema classes (`LevelData`, `Recept`, `ReceptStep`, `AllReceptsData`) live in `Script/SetLevel.cs` and are parsed with `JsonUtility`.
 - Sprites are looked up by name: `Potions/<recipe name>`, `Herbs/<herb name>`, `Spells/<element>`, `Cauldrons/…`, `Fires/…`, `Rooms/…`. If you rename a recipe, herb or element, rename the matching sprite too.
 - Campaign recipes are locked until the player finishes the campaign level (or ending) that lists them in `unlocksRecipes` in `Resources/Campaign/campaign.json`. `Script/RecipeUnlocks.cs` filters the herbal codex and adds unlocked recipes (and their herbs) to TimeMode/LifeMode in `SetLevel`. Recipes in `codexOnlyRecipes` (The Usurper's Draught) never reach the modes.
+- **Campaign flow.** `MenuController.LoadCampaign()` opens `CampaignStory` (`Script/Campaign/CampaignController.cs`: level select, title card, dialogue). After the intro it calls `CampaignSession.Begin(id)` and loads the `Campaign` scene. There `CampaignGame` adds itself on `sceneLoaded` and applies the level's `game` rules from `campaign.json` (recipes, plate herbs in slot order, goal `potions`/`score`/`survive`, time limit, lives, customers, poison, the finale's Mandrake substitution and ending). It drives its own clock (it disables `TimerInGame`) and draws its own HUD. A win reloads `CampaignStory`, which plays the ending (finale only) and the outro. With no session, the `Campaign` scene is the recipe test scene (`levelCampaignTest.json`).
 - `Resources/Achievements/achievements.json` defines achievements. Achievement ids are hard-coded at the unlock call sites.
 
 **Brewing loop (`Script/GameManager.cs`).** `SetLevel` loads the recipes. `GameManager.ExecuteReceptSteps()` is a coroutine that picks a random recipe and, for each step, waits on one of two input flags:

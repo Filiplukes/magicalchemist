@@ -76,7 +76,7 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Aldric:** Sweep. Carry. Obey. And never touch my books.
 
 **Hraní (mistr neučí, jen poroučí)**
-- **Aldric:** Stop staring and make yourself useful. Second shelf: the first herb, then the fourth.
+- **Aldric:** Stop staring and make yourself useful. The first herb, then the fourth.
 - **Wren:** These ones?
 - **Aldric:** Not those! You counted from the right. Always from the left, just like reading a book.
 - **Wren:** But I can't read.
@@ -85,8 +85,8 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Vypravěč:** Wren steps back into the shadows… but secretly watches every move the master makes.
 - **Vypravěč:** Just this once, you are the master. Brew the potion.
 
-> Wren jména bylin ještě nezná, mistr je posílá jen podle police a pořadí. Až se napojí hratelnost,
-> musí Silvarra ležet na druhé polici jako první zleva a Virelen jako čtvrtý.
+> Wren jména bylin ještě nezná, mistr je posílá jen podle pořadí. Talíř má dva sloupce, počítá se
+> zleva doprava a shora dolů: Silvarra je první, Virelen čtvrtý (Aurabloom a Verdensage jsou mezi nimi).
 
 **Závěr**
 - **Wren:** It's… glowing.
@@ -166,6 +166,14 @@ Mistr Wrena poprvé opravdu učí. Na konci ho vezme za učně.
 **Úvod**
 - **Aldric:** Fire, water and light. The basic spells for every potion.
 - **Aldric:** Speed matters, but precision matters more.
+- **Aldric:** One more thing. Every brew gives off fumes, and a ruined one far more.
+- **Aldric:** Breathe in too much and your eyes will swim. Everything turns green and blurry.
+- **Wren:** Is it dangerous?
+- **Aldric:** For a careless alchemist. Ruin fewer brews and your head stays clearer.
+- **Aldric:** Every new task, you start with fresh air. Now, to work.
+
+> Od tohoto levelu platí otrava z výparů (`poison` v pravidlech levelu), v levelech 1–4 není vůbec.
+> Každý level začíná bez otravy.
 
 **Závěr**
 - **Aldric:** Better. Your hand is learning faster than your head.

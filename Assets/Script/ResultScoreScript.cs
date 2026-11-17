@@ -38,11 +38,7 @@ public class ResultScoreScript : MonoBehaviour
 
     public void SetGems(int gems)
     {
-        int newTotal;
-
-        newTotal = PlayerPrefs.GetInt(Cosmetics.GemsPrefsKey, 0) + gems;
-        PlayerPrefs.SetInt(Cosmetics.GemsPrefsKey, newTotal);
-        PlayerPrefs.Save();
+        Cosmetics.AddGems(gems);
 
 
         gemsText.text = gems.ToString();
@@ -81,6 +77,13 @@ public class ResultScoreScript : MonoBehaviour
     public void EndGame()
     {
         Time.timeScale = 1f;
+        // Z levelu kampaně zpět na výběr levelů, ne do menu.
+        if (CampaignSession.IsPlaying)
+        {
+            CampaignSession.Clear();
+            SceneLoader.Load(CampaignSession.StoryScene);
+            return;
+        }
         SceneLoader.Load("Menu");
     }
 
