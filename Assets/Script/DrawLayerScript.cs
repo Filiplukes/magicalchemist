@@ -28,6 +28,9 @@ public class SpellDrawScript : MonoBehaviour,
     [Header("Vyhodnocení")]
     public TextMeshProUGUI resultText;
     public GameManager gameManager;
+    [Tooltip("Jaký podíl délky tvaru (středové čáry předlohy) musí hráč obtáhnout, jinak je kouzlo nedokončené (0 %).")]
+    [Range(0f, 1f)]
+    public float minLengthCoverage = 0.9f;
 
     private const float InterpolationStep = 2.4f;
     private static readonly Color32 BackgroundBlack = new Color32(0, 0, 0, 255);
@@ -62,6 +65,8 @@ public class SpellDrawScript : MonoBehaviour,
         public bool[] isBlack;
         public int[] blackIndices;
         public int blackCount => blackIndices.Length;
+        // Středová čára (1 px) předlohy = "délka" tvaru. Podle ní se pozná, jestli hráč tvar dokreslil.
+        public int[] skeletonIndices;
     }
 
     readonly Dictionary<string, int> spellMove = new Dictionary<string, int> {
@@ -111,6 +116,11 @@ public class SpellDrawScript : MonoBehaviour,
             brushSize = Mathf.Max(1, Mathf.RoundToInt(texW * 0.04f));
         }
         EnsureBrush();
+
+        // Masky a středové čáry všech kouzel spočítat hned při načtení scény,
+        // ať se během hraní nic nepočítá.
+        foreach (var name in spellMove.Keys)
+            GetMask(name);
     }
 
     void OnDestroy()
@@ -182,9 +192,109 @@ public class SpellDrawScript : MonoBehaviour,
             }
         }
 
-        var mask = new ReferenceMask { isBlack = isBlack, blackIndices = blackIndices.ToArray() };
+        var blackArr = blackIndices.ToArray();
+        var mask = new ReferenceMask
+        {
+            isBlack = isBlack,
+            blackIndices = blackArr,
+            skeletonIndices = Skeletonize(isBlack, texW, texH, blackArr, brushRadiusCached * 2)
+        };
         maskCache[name] = mask;
         return mask;
+    }
+
+    /// <summary>
+    /// Ztenčí masku na středovou čáru širokou 1 px (Zhang-Suen thinning).
+    /// Potom zkrátí všechny volné konce o pruneLength px: thinning dělá výběžky do ostrých
+    /// rohů (cípy hvězdy, rohy blesku), kam hráč prstem nedojede. Uzavřené tvary se nezkrátí,
+    /// otevřené čáry jen na koncích, které štětec stejně pokryje.
+    /// </summary>
+    private static int[] Skeletonize(bool[] src, int w, int h, int[] blackIndices, int pruneLength)
+    {
+        var img = (bool[])src.Clone();
+        var candidates = new List<int>(blackIndices.Length);
+        foreach (int i in blackIndices)
+        {
+            int x = i % w, y = i / w;
+            if (x > 0 && y > 0 && x < w - 1 && y < h - 1) candidates.Add(i);
+        }
+
+        var toRemove = new List<int>();
+        bool changed = true;
+        while (changed)
+        {
+            changed = false;
+            for (int pass = 0; pass < 2; pass++)
+            {
+                toRemove.Clear();
+                foreach (int i in candidates)
+                {
+                    if (!img[i]) continue;
+
+                    bool p2 = img[i + w], p3 = img[i + w + 1], p4 = img[i + 1], p5 = img[i - w + 1];
+                    bool p6 = img[i - w], p7 = img[i - w - 1], p8 = img[i - 1], p9 = img[i + w - 1];
+
+                    int b = (p2 ? 1 : 0) + (p3 ? 1 : 0) + (p4 ? 1 : 0) + (p5 ? 1 : 0)
+                          + (p6 ? 1 : 0) + (p7 ? 1 : 0) + (p8 ? 1 : 0) + (p9 ? 1 : 0);
+                    if (b < 2 || b > 6) continue;
+
+                    int a = (!p2 && p3 ? 1 : 0) + (!p3 && p4 ? 1 : 0) + (!p4 && p5 ? 1 : 0) + (!p5 && p6 ? 1 : 0)
+                          + (!p6 && p7 ? 1 : 0) + (!p7 && p8 ? 1 : 0) + (!p8 && p9 ? 1 : 0) + (!p9 && p2 ? 1 : 0);
+                    if (a != 1) continue;
+
+                    if (pass == 0)
+                    {
+                        if (p2 && p4 && p6) continue;
+                        if (p4 && p6 && p8) continue;
+                    }
+                    else
+                    {
+                        if (p2 && p4 && p8) continue;
+                        if (p2 && p6 && p8) continue;
+                    }
+                    toRemove.Add(i);
+                }
+
+                if (toRemove.Count > 0)
+                {
+                    foreach (int i in toRemove) img[i] = false;
+                    changed = true;
+                }
+            }
+            if (changed) candidates.RemoveAll(i => !img[i]);
+        }
+
+        // Pixely na okraji textury se neztenčovaly; vezmou se všechny, co zůstaly.
+        var skeleton = new List<int>();
+        foreach (int i in blackIndices)
+            if (img[i]) skeleton.Add(i);
+
+        // Zkracování volných konců. Konec = pixel s nejvýš jedním sousedem, nebo se dvěma sousedy,
+        // kteří spolu sousedí (schodovitý konec čáry).
+        var ends = new List<int>();
+        int[] ring = { w, w + 1, 1, -w + 1, -w, -w - 1, -1, w - 1 };
+        for (int step = 0; step < pruneLength; step++)
+        {
+            ends.Clear();
+            foreach (int i in skeleton)
+            {
+                int x = i % w, y = i / w;
+                if (x == 0 || y == 0 || x == w - 1 || y == h - 1) continue;
+                int n = 0, first = -1, second = -1;
+                for (int k = 0; k < 8; k++)
+                {
+                    if (!img[i + ring[k]]) continue;
+                    if (n == 0) first = k; else if (n == 1) second = k;
+                    n++;
+                }
+                bool isEnd = n <= 1 || (n == 2 && (second - first == 1 || (first == 0 && second == 7)));
+                if (isEnd) ends.Add(i);
+            }
+            if (ends.Count == 0) break;
+            foreach (int i in ends) img[i] = false;
+            skeleton.RemoveAll(i => !img[i]);
+        }
+        return skeleton.ToArray();
     }
 
     void FillBackgroundWithReference()
@@ -220,11 +330,16 @@ public class SpellDrawScript : MonoBehaviour,
         {
             if (canDraw)
             {
-                float correctness = EvaluateCorrectness();
+                float lengthCoverage = EvaluateLengthCoverage();
+                bool finished = lengthCoverage >= minLengthCoverage;
+                // Nedokončený tvar = 0 % (lektvar se zkazí), i kdyby byla obtažená část přesná.
+                float correctness = finished ? EvaluateCorrectness() : 0f;
                 gameManager.SetPecentSpell(correctness * 100f);
 
                 if (resultText != null)
-                    resultText.text = $"Přesnost: {(correctness * 100f):0}%";
+                    resultText.text = finished
+                        ? $"Přesnost: {(correctness * 100f):0}%"
+                        : $"Nedokončeno: {(lengthCoverage * 100f):0}% tvaru";
                 canDraw = false;
                 movesToSpell = 0;
                 ClearTexture();
@@ -324,6 +439,50 @@ public class SpellDrawScript : MonoBehaviour,
         }
 
         if (changed) textureDirty = true;
+    }
+
+    /// <summary>
+    /// Podíl středové čáry předlohy, přes který hráč přetáhl (0..1).
+    /// Bod se počítá jako obtažený, když je nakreslený pixel do vzdálenosti poloměru štětce
+    /// (aby hráč nemusel dojet až do samé špičky ostrých cípů).
+    /// </summary>
+    float EvaluateLengthCoverage()
+    {
+        if (currentMask == null || currentMask.skeletonIndices.Length == 0) return 1f;
+
+        EnsureCoverageOffsets();
+        int covered = 0;
+        foreach (int i in currentMask.skeletonIndices)
+        {
+            int cx = i % texW, cy = i / texW;
+            for (int k = 0; k < coverageOffsets.Length; k++)
+            {
+                Vector2Int o = coverageOffsets[k];
+                int x = cx + o.x, y = cy + o.y;
+                if (x < 0 || y < 0 || x >= texW || y >= texH) continue;
+                if (drawn[y * texW + x]) { covered++; break; }
+            }
+        }
+        return (float)covered / currentMask.skeletonIndices.Length;
+    }
+
+    // Vzorky kruhu o poloměru štětce s krokem 3 px, seřazené od středu (rychlý nález zásahu).
+    private Vector2Int[] coverageOffsets;
+    private int coverageOffsetsRadius = -1;
+
+    private void EnsureCoverageOffsets()
+    {
+        int rad = brushRadiusCached;
+        if (coverageOffsets != null && coverageOffsetsRadius == rad) return;
+
+        const int Step = 3;
+        var list = new List<Vector2Int>();
+        for (int dy = -rad; dy <= rad; dy += Step)
+            for (int dx = -rad; dx <= rad; dx += Step)
+                if (dx * dx + dy * dy <= rad * rad) list.Add(new Vector2Int(dx, dy));
+        list.Sort((a, b) => a.sqrMagnitude.CompareTo(b.sqrMagnitude));
+        coverageOffsets = list.ToArray();
+        coverageOffsetsRadius = rad;
     }
 
     /// <summary>
