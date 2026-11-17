@@ -94,7 +94,6 @@ public class CampaignGame : MonoBehaviour
             };
         }
         game.sequentialRecipes = rules.sequential;
-        game.showHerbHints = !rules.hideHerbHints;
 
         // Otrava se objeví až od levelu, kde Wren začíná jako učeň (mistr ji tam vysvětlí).
         // Do té doby se vypne úplně. Jinak platí výchozí hodnoty GameManageru jako v TimeMode,
@@ -161,13 +160,16 @@ public class CampaignGame : MonoBehaviour
         }
     }
 
+    // Pozadí, na kterém skončil úvodní dialog (level 1 začíná na ulici, vaří se v dílně).
     private void SetupBackground()
     {
-        if (string.IsNullOrEmpty(level.background) || level.background == "Workshop") return; // dílna = vybraný pokoj
-        var sprite = Resources.Load<Sprite>("Campaign/Backgrounds/" + level.background);
+        string key = !string.IsNullOrEmpty(CampaignSession.Background) ? CampaignSession.Background : level.background;
         var room = FindFirstObjectByType<ScaleWithResolution>();
         var sr = room != null ? room.GetComponent<SpriteRenderer>() : null;
-        if (sprite != null && sr != null) sr.sprite = sprite; // měřítko dopočítá ScaleWithResolution.Start
+        if (sr == null) return;
+        var sprite = CampaignBackgrounds.Resolve(key, out var tint);
+        if (sprite != null) sr.sprite = sprite; // měřítko dopočítá ScaleWithResolution.Start
+        sr.color = tint;
     }
 
     private void HookGame()
@@ -245,9 +247,6 @@ public class CampaignGame : MonoBehaviour
             Win(ending);
             return;
         }
-
-        // Level „zpaměti“: po chybě se nápověda na jeden lektvar ukáže.
-        if (rules.hideHerbHints) game.showHerbHints = broken;
 
         if (broken)
         {

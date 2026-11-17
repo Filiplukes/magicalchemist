@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChatGPT Image 10. 8. 2025 23_52_48_0
+      name: Frostria
       rect:
         serializedVersion: 2
         x: 10
@@ -121,7 +121,7 @@ TextureImporter:
         width: 589
         height: 430
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c75e51d27765d9c49912d55f60d44039
     internalID: 0
     vertices: []
     indices: 
@@ -149,6 +149,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       ChatGPT Image 10. 8. 2025 23_52_48_0: 2269869801248350196
+      Frostria: 2269869801248350196
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

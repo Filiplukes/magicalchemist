@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
     private int nextReceptIndex = 0;
 
     // ---- Háčky pro kampaň (CampaignGame). TimeMode a LifeMode je nepoužívají. ----
-    [Tooltip("Ukazovat, kterou bylinu hodit dál. Kampaň ji v levelu „zpaměti“ schová.")]
-    public bool showHerbHints = true;
     [Tooltip("O kolik stoupne otrava po dobrém lektvaru (záporné číslo otravu léčí).")]
     public float poisonOnSuccess = 0.05f;
     [Tooltip("O kolik stoupne otrava po zkaženém lektvaru.")]
@@ -245,7 +243,7 @@ public class GameManager : MonoBehaviour
             while (step.herbs.Count+1 > countSteps) {              
                 spellInputUpdated = false;
                 herbInputUpdated = false;
-                if (herbIndex<step.herbs.Count && showHerbHints) {
+                if (herbIndex<step.herbs.Count) {
                     useHerbImage.gameObject.SetActive(true);
                     useHerbImage.sprite = ResourceCache.Load<Sprite>("Herbs/" + step.herbs[herbIndex]);
                 }

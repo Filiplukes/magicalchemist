@@ -23,8 +23,8 @@ Jméno Wren je neutrální, sedí na kluka i holku.
 
 ## Kniha (level 2)
 
-Wren najde v mistrově pracovně knihu a hráč si přečte **stranu 1** (levá stránka, pravá je
-prázdná). Jakmile hráč zkusí otočit stránku, mistr knihu hned vytrhne a Wrena seřve.
+Wren najde v mistrově pracovně knihu a hráč si přečte **stranu 1**, rozloženou na obě otevřené
+stránky (kroky I–II vlevo, krok III a varování vpravo; dělí je značka `<page>` v `bookPage1`). Jakmile hráč zkusí otočit stránku, mistr knihu hned vytrhne a Wrena seřve.
 **Stranu 2 hráč v kampani nikdy neuvidí.**
 
 Strana 1 má vypadat nevinně: lektvar pro sílu a mládí z obyčejné mladé krve. To, k čemu ho
@@ -39,7 +39,7 @@ Aldric doopravdy chce, je jen v poznámkách na straně 2.
 > **II.** Moonpetal and … *(the corner is torn away)* … the sign of Dark.
 > **III.** A few drops of young blood, sealed with Gravecup beneath the sign of Blood.
 > *Never let Mandrake take the place of Gravecup, or the draught will turn upon the one who drinks it.*
-> *(see the notes overleaf)*
+> *(see the notes on the next page)*
 
 Varování před Mandrake je jediná nápověda ke třetímu konci: ve finále v kroku III dát místo
 Gravecupu Mandrake.
@@ -74,6 +74,7 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Aldric:** I need hands in my workshop. Follow me, and you'll never starve again.
 - **Wren:** What do I have to do?
 - **Aldric:** Sweep. Carry. Obey. And never touch my books.
+- *(pozadí se prolne z ulice do Aldricovy dílny, akce `background` v `campaign.json`; vaří se už v dílně)*
 
 **Hraní (mistr neučí, jen poroučí)**
 - **Aldric:** Stop staring and make yourself useful. The first herb, then the fourth.
@@ -93,10 +94,11 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Aldric:** A Health Potion. Nothing special. Now go and scrub the floor.
 
 #### Level 2: Forbidden Pages
-- **Cíl:** uvařit zpaměti 2 jednoduché lektvary (oba mají jen 1 krok; receptury nejsou vidět, jen nápověda „zkus…“)
+- **Cíl:** uvařit 2 jednoduché lektvary (oba mají jen 1 krok; nápověda bylin je vidět jako všude)
 - **Recepty:** Mana Potion, Health Potion
 - **Byliny:** Silvarra, Virelen, Verdensage, Aurabloom
 - **Událost:** po hraní scéna s knihou (viz výše)
+- **Pozadí:** noční dílna (`WorkshopNight`), mistr spí
 
 **Úvod**
 - **Wren:** *(whispering)* He's asleep…
@@ -118,6 +120,7 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Cíl:** uvařit 3 lektvary za 90 s (svíčka = časomíra)
 - **Recepty:** Health Potion, Mana Potion (jen to, co Wren odkoukal, nic nového)
 - **Byliny:** stejné jako v levelu 2
+- **Pozadí:** noční dílna (`WorkshopNight`)
 
 Wren se dál učí potají, mistr ho přistihne a poprvé v něm uvidí talent.
 

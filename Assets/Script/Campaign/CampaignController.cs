@@ -36,6 +36,7 @@ public class CampaignController : MonoBehaviour
 
     private CampaignData data;
     private bool titleTapped;
+    private string currentBackground; // klíč pozadí, které je právě vidět
 
     void Start()
     {
@@ -54,8 +55,9 @@ public class CampaignController : MonoBehaviour
         var played = CampaignSession.IsPlaying && CampaignSession.Won
             ? data.levels.Find(l => l.id == CampaignSession.LevelId) : null;
         string ending = CampaignSession.Ending;
+        string playedBackground = CampaignSession.Background;
         CampaignSession.Clear();
-        if (played != null) StartCoroutine(FinishLevel(played, ending));
+        if (played != null) StartCoroutine(FinishLevel(played, ending, playedBackground));
         else
         {
             SyncEndingAchievements();
@@ -92,7 +94,7 @@ public class CampaignController : MonoBehaviour
 
     private void ShowLevelSelect()
     {
-        SetBackground("Workshop");
+        SetBackground(CampaignBackgrounds.Workshop);
         levelSelectRoot.SetActive(true);
 
         foreach (Transform child in levelGrid)
@@ -124,15 +126,6 @@ public class CampaignController : MonoBehaviour
 
     public void BackToMenu() => SceneLoader.Load("Menu");
 
-    /// <summary>Testovací scéna se všemi novými recepty.</summary>
-    public void OpenRecipeTest() => SceneLoader.Load("Campaign");
-
-    public void ResetProgress()
-    {
-        CampaignProgress.Reset(data.levels, data.endings);
-        ShowLevelSelect();
-    }
-
     // ---------- Průběh levelu ----------
 
     private IEnumerator PlayLevel(CampaignLevel level)
@@ -152,19 +145,20 @@ public class CampaignController : MonoBehaviour
 
         if (level.game != null && level.game.HasGameplay)
         {
-            CampaignSession.Begin(level.id);
+            // Hraní i závěr pokračují na pozadí, kde úvod skončil (level 1: z ulice do dílny).
+            CampaignSession.Begin(level.id, currentBackground);
             SceneLoader.Load(CampaignSession.GameScene);
             yield break; // pokračuje FinishLevel po návratu
         }
 
-        yield return FinishLevel(level, null);
+        yield return FinishLevel(level, null, currentBackground);
     }
 
     /// <summary>Po hraní: případný konec kampaně, závěrečný dialog, odemčení, výběr levelů.</summary>
-    private IEnumerator FinishLevel(CampaignLevel level, string endingId)
+    private IEnumerator FinishLevel(CampaignLevel level, string endingId, string backgroundKey)
     {
         levelSelectRoot.SetActive(false);
-        SetBackground(level.background);
+        SetBackground(string.IsNullOrEmpty(backgroundKey) ? level.background : backgroundKey);
 
         if (!string.IsNullOrEmpty(endingId)) yield return PlayEnding(endingId);
 
@@ -186,6 +180,9 @@ public class CampaignController : MonoBehaviour
     {
         switch (line.action)
         {
+            case "background":
+                yield return FadeBackground(line.background);
+                break;
             case "book":
                 // Druhou stranu knihy hráč nikdy neuvidí, mistr ji vytrhne dřív.
                 yield return book.Play(data.bookPage1);
@@ -238,18 +235,34 @@ public class CampaignController : MonoBehaviour
 
     private void SetBackground(string key)
     {
-        Sprite sprite = null;
-        if (key != "Workshop")
-            sprite = Resources.Load<Sprite>("Campaign/Backgrounds/" + key);
-        if (sprite == null)
-        {
-            var room = Cosmetics.GetSelected(CosmeticType.Room);
-            if (room != null) sprite = room.Sprite;
-        }
+        currentBackground = key;
+        var sprite = CampaignBackgrounds.Resolve(key, out var tint);
+        background.color = tint;
         if (sprite == null) return;
 
         background.sprite = sprite;
         if (backgroundFitter != null)
             backgroundFitter.aspectRatio = sprite.rect.width / sprite.rect.height;
+    }
+
+    private const float BackgroundFade = 0.4f;
+
+    /// <summary>Změna pozadí uprostřed dialogu: ztmavne do černa, vymění se a zase se rozjasní.</summary>
+    private IEnumerator FadeBackground(string key)
+    {
+        Color from = background.color;
+        for (float t = 0f; t < BackgroundFade; t += Time.unscaledDeltaTime)
+        {
+            background.color = Color.Lerp(from, Color.black, t / BackgroundFade);
+            yield return null;
+        }
+        SetBackground(key);
+        Color to = background.color;
+        for (float t = 0f; t < BackgroundFade; t += Time.unscaledDeltaTime)
+        {
+            background.color = Color.Lerp(Color.black, to, t / BackgroundFade);
+            yield return null;
+        }
+        background.color = to;
     }
 }

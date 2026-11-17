@@ -8,7 +8,8 @@ public class CampaignLine
 {
     public string who;      // id postavy, "narrator" = vypravěč bez portrétu
     public string text;
-    public string action;   // "book" = scéna s knihou
+    public string action;   // "book" = scéna s knihou, "background" = změna pozadí (viz background)
+    public string background; // pro action "background": nové pozadí, prolne se přes tmu
 }
 
 [System.Serializable]
@@ -26,7 +27,7 @@ public class CampaignLevel
     public int id;
     public string chapter;
     public string title;
-    public string background; // Street / Workshop / Clinic / WarCamp / Dungeon
+    public string background; // pozadí na začátku levelu, viz CampaignBackgrounds
     public string goal;
     public CampaignGameRules game;      // hratelnost levelu (scéna Campaign), viz CampaignGame
     public List<string> unlocksRecipes; // recepty, které se dohráním levelu odemknou (viz RecipeUnlocks)
@@ -53,7 +54,6 @@ public class CampaignGameRules
     public float customerPatience;  // násobič trpělivosti zákazníků, 0 = 1
     public List<string> customerPortraits; // id postav místo náhodných zákazníků
     public bool sequential;         // recepty popořadě místo náhodně
-    public bool hideHerbHints;      // "zpaměti": nápověda byliny se ukáže až po zkaženém lektvaru
     public bool poison;             // otrava z výparů (až od levelu 5, kdy ji mistr vysvětlí)
     public float poisonPerSecond;   // otrava stoupá sama od sebe
     public bool poisonKills;        // plná otrava = prohra
@@ -87,7 +87,7 @@ public class CampaignData
     public List<CampaignCharacter> characters;
     public List<CampaignLevel> levels;
     public List<CampaignEnding> endings;
-    public string bookPage1;
+    public string bookPage1;  // text knihy v levelu 2; <page> ho dělí na levou a pravou stránku
     // Druhá strana knihy (poznámky o krvi obdarovaného Světlem). V kampani se nikdy neukáže,
     // mistr knihu vytrhne dřív. Celý text uvidí hráč v knize receptů po konci Root of Betrayal.
     public string bookPage2;
@@ -107,6 +107,37 @@ public class CampaignData
 }
 
 /// <summary>
+/// Pozadí kampaně podle klíče. "Workshop" = pokoj, který si hráč vybral v obchodě, jinak obrázek
+/// z Resources/Campaign/Backgrounds. Přípona "Night" (třeba "WorkshopNight") pozadí ztmaví do noci.
+/// </summary>
+public static class CampaignBackgrounds
+{
+    public const string Workshop = "Workshop";
+    private const string NightSuffix = "Night";
+    public static readonly Color NightTint = new Color(0.4f, 0.46f, 0.72f);
+
+    /// <summary>Vrátí obrázek pozadí a barvu, kterou se má obarvit (bílá = beze změny).</summary>
+    public static Sprite Resolve(string key, out Color tint)
+    {
+        tint = Color.white;
+        if (string.IsNullOrEmpty(key)) key = Workshop;
+        if (key.Length > NightSuffix.Length && key.EndsWith(NightSuffix, System.StringComparison.Ordinal))
+        {
+            tint = NightTint;
+            key = key.Substring(0, key.Length - NightSuffix.Length);
+        }
+
+        Sprite sprite = key == Workshop ? null : Resources.Load<Sprite>("Campaign/Backgrounds/" + key);
+        if (sprite == null)
+        {
+            var room = Cosmetics.GetSelected(CosmeticType.Room);
+            if (room != null) sprite = room.Sprite;
+        }
+        return sprite;
+    }
+}
+
+/// <summary>
 /// Předává rozehraný level mezi scénami: CampaignStory (dialogy) → Campaign (hraní) → zpět.
 /// Žije jen v paměti, po restartu hry se level hraje znovu od úvodu.
 /// </summary>
@@ -118,12 +149,14 @@ public static class CampaignSession
     public static int LevelId { get; private set; }   // 0 = žádný level neběží
     public static bool Won { get; private set; }      // hraní skončilo úspěchem
     public static string Ending { get; private set; } // konec kampaně, který hraní zvolilo
+    public static string Background { get; private set; } // pozadí, na kterém skončil úvod (hraní i závěr)
 
     public static bool IsPlaying => LevelId > 0;
 
-    public static void Begin(int levelId)
+    public static void Begin(int levelId, string background)
     {
         LevelId = levelId;
+        Background = background;
         Won = false;
         Ending = null;
     }
@@ -137,6 +170,7 @@ public static class CampaignSession
     public static void Clear()
     {
         LevelId = 0;
+        Background = null;
         Won = false;
         Ending = null;
     }
@@ -180,7 +214,7 @@ public static class CampaignProgress
         Complete(level); // ukládá PlayerPrefs
     }
 
-    /// <summary>Smaže postup v kampani (achievementy zůstanou).</summary>
+    /// <summary>Smaže postup v kampani (achievementy zůstanou). Jen pro Editor: Tools > Magic Alchemist.</summary>
     public static void Reset(IEnumerable<CampaignLevel> levels, IEnumerable<CampaignEnding> endings)
     {
         PlayerPrefs.DeleteKey(ReachedKey);

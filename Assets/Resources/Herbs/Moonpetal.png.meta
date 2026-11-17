@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Moonpetal_0
+      name: Moonpetal
       rect:
         serializedVersion: 2
         x: 10
@@ -134,7 +134,7 @@ TextureImporter:
         width: 589
         height: 430
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0ca43e895acee904abab697187448ab5
     internalID: 0
     vertices: []
     indices: 
@@ -161,6 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Moonpetal: -9043716253624934685
       Moonpetal_0: -9043716253624934685
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

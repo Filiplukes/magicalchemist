@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Scéna s knihou (level 2). Kniha je otevřená: vlevo text knihy, vpravo prázdná stránka.
+/// Scéna s knihou (level 2). Kniha je otevřená, text se dělí značkou &lt;page&gt; na levou a pravou stránku.
 /// Jakmile se hráč pokusí otočit stránku, mistr mu knihu hned vytrhne a scéna skončí.
 /// </summary>
 public class StoryBook : MonoBehaviour
@@ -17,17 +17,21 @@ public class StoryBook : MonoBehaviour
     public Button turnButton;
 
     [Header("Písmo stránek")]
-    public float pageFontMin = 50f;
-    public float pageFontMax = 80f;
+    public float pageFontMin = 60f;
+    public float pageFontMax = 96f;
     [Tooltip("Řádkování v TMP jednotkách, záporné = řádky blíž u sebe.")]
     public float pageLineSpacing = -12f;
 
     private bool turned;
 
+    /// <summary>Značka v textu knihy, kde končí levá stránka a začíná pravá.</summary>
+    public const string PageBreak = "<page>";
+
     void Awake()
     {
         turnButton.onClick.AddListener(() => turned = true);
         ApplyPageFont(page1Text);
+        ApplyPageFont(page2Text);
         root.SetActive(false);
     }
 
@@ -39,11 +43,12 @@ public class StoryBook : MonoBehaviour
         text.lineSpacing = pageLineSpacing;
     }
 
-    /// <param name="page">Text knihy na levé stránce.</param>
+    /// <param name="page">Text knihy; část za značkou PageBreak jde na pravou stránku.</param>
     public IEnumerator Play(string page)
     {
-        page1Text.text = page;
-        page2Text.text = "";
+        int split = page.IndexOf(PageBreak, System.StringComparison.Ordinal);
+        page1Text.text = split < 0 ? page : page.Substring(0, split).TrimEnd('\n');
+        page2Text.text = split < 0 ? "" : page.Substring(split + PageBreak.Length).TrimStart('\n');
         page2.localScale = Vector3.one;
         page2.gameObject.SetActive(true);
         bookBody.anchoredPosition = Vector2.zero;

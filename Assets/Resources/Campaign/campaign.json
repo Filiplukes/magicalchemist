@@ -103,6 +103,12 @@
           "action": ""
         },
         {
+          "who": "",
+          "text": "",
+          "action": "background",
+          "background": "Workshop"
+        },
+        {
           "who": "aldric",
           "text": "Stop staring and make yourself useful. The first herb, then the fourth.",
           "action": ""
@@ -160,8 +166,8 @@
       "id": 2,
       "chapter": "Chapter 1 · The Gutter",
       "title": "Forbidden Pages",
-      "background": "Workshop",
-      "goal": "Brew 2 simple potions from memory.",
+      "background": "WorkshopNight",
+      "goal": "Brew 2 simple potions.",
       "game": {
         "recipes": [
           "Health Potion",
@@ -175,8 +181,7 @@
         ],
         "goal": "potions",
         "target": 2,
-        "sequential": true,
-        "hideHerbHints": true
+        "sequential": true
       },
       "unlocksRecipes": [],
       "intro": [
@@ -248,7 +253,7 @@
       "id": 3,
       "chapter": "Chapter 1 · The Gutter",
       "title": "Caught Red-Handed",
-      "background": "Workshop",
+      "background": "WorkshopNight",
       "goal": "Brew 3 potions before the candle burns out.",
       "game": {
         "recipes": [
@@ -1350,7 +1355,7 @@
       "id": 16,
       "chapter": "Chapter 6 · The Usurper",
       "title": "The Usurper's Draught",
-      "background": "Dungeon",
+      "background": "DungeonFinal",
       "goal": "Brew one last potion.",
       "game": {
         "recipes": [
@@ -1615,7 +1620,7 @@
       ]
     }
   ],
-  "bookPage1": "<align=center><b>THE USURPER'S DRAUGHT</b></align>\n<i>Restores lost strength and the vigour of youth.</i>\n<b>I.</b> Silvarra and Virelen, beneath the sign of Life.\n<b>II.</b> Moonpetal and … <color=#7a6a55><i>(the corner is torn away)</i></color> … the sign of Dark.\n<b>III.</b> A few drops of young blood, sealed with Gravecup beneath the sign of Blood.\n<i>Never let Mandrake take the place of Gravecup, or the draught will turn upon the one who drinks it.</i>\n<color=#7a6a55><i>(see the notes overleaf)</i></color>",
+  "bookPage1": "<align=center><b>THE USURPER'S DRAUGHT</b></align>\n<i>Restores lost strength and the vigour of youth.</i>\n<b>I.</b> Silvarra and Virelen, beneath the sign of Life.\n<b>II.</b> Moonpetal and … <color=#7a6a55><i>(the corner is torn away)</i></color> … the sign of Dark.\n<page>\n<b>III.</b> A few drops of young blood, sealed with Gravecup beneath the sign of Blood.\n<i>Never let Mandrake take the place of Gravecup, or the draught will turn upon the one who drinks it.</i>\n<color=#7a6a55><i>(see the notes on the next page)</i></color>",
   "bookPage2": "<b>Notes</b>\nWith the blood of one touched by the Light, the draught does far more than restore youth.\nIt takes the life and power of the one blessed by the Light… but in the one who drinks it, the Light will be corrupted.",
   "allEndingsAchievement": "three_fates",
   "codexOnlyRecipes": [
