@@ -56,8 +56,10 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 ### Kapitola 1: Ulice a sluha
 
 #### Level 1: The Gutter
-- **Cíl:** uvařit 1 lektvar (bez časového limitu, bez zákazníků)
-- **Recepty:** Health Potion (mistr ho vede krok za krokem)
+- **Cíl:** hrát za mistra a uvařit 1 lektvar (bez časového limitu, bez zákazníků)
+- **Recepty:** Health Potion. Jako jediný level se hraje za Aldrica: hráč vloží byliny
+  i nakreslí kouzlo Života, ale jen tenhle jeden lektvar. Wren nesmí kreslit nic, jen potají
+  přihlíží. Sám to poprvé zkusí v levelu 2.
 - **Byliny:** Silvarra, Virelen
 
 **Úvod**
@@ -68,23 +70,34 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Wren:** What do I have to do?
 - **Aldric:** Sweep. Carry. Obey. And never touch my books.
 
-**Hraní (mistr vysvětluje)**
-- **Aldric:** Watch closely. Silvarra first, then Virelen.
-- **Aldric:** Now trace the sign of Life on the scroll. Steady hand.
+**Hraní (mistr neučí, jen poroučí)**
+- **Aldric:** Stop staring and make yourself useful. Second shelf: the first herb, then the fourth.
+- **Wren:** These ones?
+- **Aldric:** Not those! You counted from the right. Always from the left, just like reading a book.
+- **Wren:** But I can't read.
+- **Aldric:** Well, now you know. Left to right.
+- **Aldric:** Now step back. Spells are not for a servant's hands. Don't even touch the scroll.
+- **Vypravěč:** Wren steps back into the shadows… but secretly watches every move the master makes.
+- **Vypravěč:** Just this once, you are the master. Brew the potion.
+
+> Wren jména bylin ještě nezná, mistr je posílá jen podle police a pořadí. Až se napojí hratelnost,
+> musí Silvarra ležet na druhé polici jako první zleva a Virelen jako čtvrtý.
 
 **Závěr**
 - **Wren:** It's… glowing.
 - **Aldric:** A Health Potion. Nothing special. Now go and scrub the floor.
 
 #### Level 2: Forbidden Pages
-- **Cíl:** uvařit 2 lektvary metodou pokus-omyl (receptury nejsou vidět, jen nápověda „zkus…“)
+- **Cíl:** uvařit zpaměti 2 jednoduché lektvary (oba mají jen 1 krok; receptury nejsou vidět, jen nápověda „zkus…“)
 - **Recepty:** Mana Potion, Health Potion
 - **Byliny:** Silvarra, Virelen, Verdensage, Aurabloom
 - **Událost:** po hraní scéna s knihou (viz výše)
 
 **Úvod**
-- **Wren:** *(whispering)* He's asleep. Just one try…
-- **Wren:** If I mix what he mixed… maybe I can learn too.
+- **Wren:** *(whispering)* He's asleep…
+- **Wren:** What he does is amazing. If only I could do that too.
+- **Wren:** What if I tried? I've watched him a few times. I remember a few things.
+- **Wren:** Just a quick try. He'll never know.
 
 **Po druhém lektvaru**
 - **Wren:** What's this book? It was hidden under the table.
@@ -97,36 +110,62 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 - **Aldric:** Get out. Now.
 
 #### Level 3: Caught Red-Handed
-- **Cíl:** uvařit 3 lektvary za 90 s
+- **Cíl:** uvařit 3 lektvary za 90 s (svíčka = časomíra)
+- **Recepty:** Health Potion, Mana Potion (jen to, co Wren odkoukal, nic nového)
+- **Byliny:** stejné jako v levelu 2
+
+Wren se dál učí potají, mistr ho přistihne a poprvé v něm uvidí talent.
+
+**Úvod**
+- **Vypravěč:** Wren is sent to sleep in the storeroom. But the herbs are right next door…
+- **Wren:** He said I can barely read. Fine. I don't need to read.
+- **Wren:** I remember how he did it. Which shelf, which herb, which sign.
+- **Wren:** Quickly, before the candle burns out.
+
+**Závěr**
+- **Aldric:** So this is where my herbs keep disappearing.
+- **Wren:** I'm sorry! I'll leave, I promise!
+- **Aldric:** Wait. Hand me that flask.
+- **Aldric:** You brewed this? Alone? Without a single book?
+- **Wren:** I just watched you. And remembered.
+- **Aldric:** Hm. Clumsy, but potent. Unusually potent.
+- **Aldric:** Go to sleep. Tomorrow at dawn, you'll be at my table.
+
+#### Level 4: First Lesson
+- **Cíl:** uvařit 4 lektvary podle knihy receptů (bez časového limitu)
 - **Recepty:** Health Potion, Mana Potion, **Nový: Calming Tonic**
 - **Byliny:** + Basil, Menthira
 
+Mistr Wrena poprvé opravdu učí. Na konci ho vezme za učně.
+
 **Úvod**
-- **Wren:** He hasn't spoken to me in two days.
-- **Wren:** If I make something on my own… maybe he'll forgive me.
+- **Aldric:** Sit. If you're going to steal my craft, you'll at least learn it properly.
+- **Aldric:** Here, a book you *are* allowed to read. Basic recipes.
+- **Wren:** I can't read many of the words… but the pictures help.
+- **Aldric:** Then look carefully. Herbs first, then the sign. Always in that order.
+- **Wren:** But it works for me the other way round too. I just can't rush too far ahead with the herbs.
+- **Aldric:** *(quietly)* The other way round? …Unusual. Very interesting.
 
 **Závěr**
-- **Aldric:** You brewed this? Alone?
-- **Wren:** I… yes. I'm sorry about the book.
-- **Aldric:** Hm. Clumsy, but potent. Unusually potent.
-- **Aldric:** Very well. Here, a book you *are* allowed to read. Basic recipes.
-- **Aldric:** From tomorrow, you are my apprentice.
+- **Aldric:** Not bad for a first lesson. Not bad at all.
+- **Wren:** Does that mean… I can stay?
+- **Aldric:** It means more than that. From tomorrow, you are my apprentice.
 
 ### Kapitola 2: Učeň
 
-#### Level 4: The Apprentice
+#### Level 5: The Apprentice
 - **Cíl:** skóre 600 za 120 s
 - **Recepty:** + Wisdom Serum, Frost Essence, Flame Elixir
 - **Byliny:** + Lumenveil, Frostria, Emberroot
 
 **Úvod**
-- **Aldric:** Fire, frost and light. The three tempers of every brew.
+- **Aldric:** Fire, water and light. The basic spells for every potion.
 - **Aldric:** Speed matters, but precision matters more.
 
 **Závěr**
 - **Aldric:** Better. Your hand is learning faster than your head.
 
-#### Level 5: A Drop of Blood
+#### Level 6: A Drop of Blood
 - **Cíl:** 5 lektvarů s kvalitou alespoň Divine
 - **Recepty:** + Love Draught, Rejuvenation Brew, **Nový: Fever Breaker**
 - **Byliny:** + Lysanthia
@@ -146,7 +185,7 @@ a od té doby jsou odemčené i v TimeMode a LifeMode.
 
 Režim se životy, zákazníci jsou pacienti.
 
-#### Level 6: Sister Maren's Clinic
+#### Level 7: Sister Maren's Clinic
 - **Cíl:** obsloužit 6 pacientů, přežít (3 životy)
 - **Recepty:** + Antidote Elixir, **Nový: Bone Mender**
 - **Byliny:** + Heparil, Spottella
@@ -160,7 +199,7 @@ Režim se životy, zákazníci jsou pacienti.
 **Závěr**
 - **Maren:** Not bad. Your potions heal faster than mine. Strange.
 
-#### Level 7: The Wolf at the Door
+#### Level 8: The Wolf at the Door
 - **Cíl:** obsloužit 8 pacientů
 - **Recepty:** + **Nový: Sleep Draught**
 - **Byliny:** + Gravecup
@@ -175,7 +214,7 @@ Režim se životy, zákazníci jsou pacienti.
 - **Torvin:** Thank you, little alchemist. I won't forget this.
 - **Torvin:** Tell your master… no. Never mind.
 
-#### Level 8: War Breaks Out
+#### Level 9: War Breaks Out
 - **Cíl:** přežít 150 s náporu raněných
 - **Recepty:** všechny dosud naučené
 - **Byliny:** všechny dosud naučené
@@ -193,7 +232,7 @@ Režim se životy, zákazníci jsou pacienti.
 
 Režim s časem, rychlé vícekrokové objednávky.
 
-#### Level 9: The Front Line
+#### Level 10: The Front Line
 - **Cíl:** skóre 1200 za 150 s
 - **Recepty:** + Lightning Tincture, Shadow Syrup, **Nový: Ironskin Elixir**
 - **Byliny:** + Embercap
@@ -205,7 +244,7 @@ Režim s časem, rychlé vícekrokové objednávky.
 **Závěr**
 - **Brask:** We held the line. You've earned your rations.
 
-#### Level 10: The Same Seal
+#### Level 11: The Same Seal
 - **Cíl:** 6 vícekrokových lektvarů
 - **Recepty:** + Mist Drop, **Nový: Beastbane Oil**, **Nový: Battle Fervor**
 - **Byliny:** + Wolfsbane
@@ -221,7 +260,7 @@ Režim s časem, rychlé vícekrokové objednávky.
 - **Wren:** It's the same seal that's on our oil. An alchemist's seal.
 - **Brask:** Probably stole it. Don't think so much, kid.
 
-#### Level 11: Taken
+#### Level 12: Taken
 - **Cíl:** přežít 120 s (otrava se zrychluje)
 - **Recepty:** všechny dosud naučené
 
@@ -240,7 +279,7 @@ Režim s časem, rychlé vícekrokové objednávky.
 
 Hrdinové z družiny si objednávají lektvary podle situace.
 
-#### Level 12: Into the Dark
+#### Level 13: Into the Dark
 - **Cíl:** splnit 6 objednávek družiny
 - **Recepty:** + **Nový: Night Eye Drops**, **Nový: Lockbreaker Acid**
 - **Byliny:** + Moonpetal
@@ -253,7 +292,7 @@ Hrdinové z družiny si objednávají lektvary podle situace.
 **Závěr**
 - **Nim:** We're through the first gate. Your brews actually work.
 
-#### Level 13: Lies of the Captors
+#### Level 14: Lies of the Captors
 - **Cíl:** splnit 8 objednávek, 3 životy
 - **Recepty:** + **Nový: Silent Step**, **Nový: Featherfall Draught**
 
@@ -262,15 +301,16 @@ Hrdinové z družiny si objednávají lektvary podle situace.
 
 **Uprostřed levelu (zaslechnutý rozhovor)**
 - **Corin:** If the boy comes, we tell him the truth.
-- **Torvin:** That Aldric lit this war? He'll never believe it.
-- **Corin:** Then he'll die believing a lie.
+- **Torvin:** The truth? That this whole war was started by—
+- **Vypravěč:** A roar of battle drowns out the rest of the words…
+- **Corin:** …or he'll die believing a lie.
 
 **Závěr**
-- **Wren:** They said Master started the war.
-- **Brask:** Of course they did. Beasts lie, kid. Keep moving.
+- **Wren:** They said someone started this war on purpose. But who?
+- **Brask:** Who cares? Beasts lie, kid. Keep moving.
 - **Wren:** …Right. Of course.
 
-#### Level 14: The Last Gate
+#### Level 15: The Last Gate
 - **Cíl:** skóre 1500 za 150 s
 - **Recepty:** + **Nový: Moonlit Cure**
 
@@ -280,14 +320,17 @@ Hrdinové z družiny si objednávají lektvary podle situace.
 
 **Závěr**
 - **Torvin:** Wren, stop! You saved my life once, now listen to me!
-- **Brask:** Cut him down!
-- **Torvin:** Aldric needs your blood! Don't give him what he asks for!
-- *(Torvin padne nebo uteče, podle toho, jak to bude graficky lépe)*
-- **Wren:** …My blood?
+- **Torvin:** Aldric needs your—
+- **Brask:** Enough talk! Get him!
+- **Vypravěč:** Brask charges. Torvin leaps aside and vanishes into the dark.
+- **Wren:** Master needs my… what?
+
+> Brask Torvina přeruší útokem dřív, než stihne říct „krev“. Torvin musí utéct, ne padnout,
+> protože v konci 3 se znovu objeví.
 
 ### Kapitola 6: Finále
 
-#### Level 15: The Usurper's Draught
+#### Level 16: The Usurper's Draught
 - **Cíl:** uvařit jediný lektvar, The Usurper's Draught
 - **Byliny:** Silvarra, Virelen, Moonpetal, Spottella, Gravecup, **Blessed Blood**, **Mandrake**
 - **Zvláštní pravidlo:** Mandrake v posledním kroku na místě Gravecupu lektvar **nezkazí**, ale spustí konec 3.
@@ -305,18 +348,32 @@ Hrdinové z družiny si objednávají lektvary podle situace.
 - **Wren:** Master? MASTER!
 - *(mistr umírá)*
 - **Wren:** I was too slow. Too clumsy. I killed him.
+- **Wren:** I failed you, Master… I'm useless. Completely useless.
+- **Wren:** No… no, no… NOOO!
 - **Wren:** *(laughing quietly)* Again. Let me try again. Silvarra first… then…
-- *Wren never left the dungeon. Some say they still brew there, in the dark.*
+- **Brask:** Kid, it's over. Come on, we're getting you out of here.
+- **Nim:** Please, Wren. There's nothing more you can do.
+- **Wren:** Go away! Leave me alone! All of you, just GO!
+- **Odo:** …As you wish, alchemist.
+- *Wren never left the dungeon. It was his own choice. Some say he still brews there, in the dark.*
 
 **Konec 2: Poslušnost** (lektvar správně)
 - **Aldric:** Yes… YES! I can feel the years falling away!
 - **Wren:** Master, you're… young?
 - **Aldric:** Forty years I searched for blood touched by the Light. And it walked into my workshop, starving.
-- **Wren:** You started the war. Torvin was telling the truth.
-- **Aldric:** War brings blood, gold, and chaos. Perfect cover for an old man's work.
+- **Wren:** Touched by the Light? I don't understand…
+- **Aldric:** You never did. That's what made you perfect.
+- **Aldric:** Humans, Beastfolk… I set them at each other's throats, and not one of them ever looked at me.
+- **Wren:** You… you started the war?
+- **Aldric:** War is perfect cover for an old man's work.
 - **Wren:** I… can't… stand…
-- **Aldric:** Your blood is drained, child. You were a good apprentice. Thank you.
-- *The Usurper rose that night. The war never ended.*
+- **Aldric:** Your blood has done its work, child. You were a good apprentice. Thank you.
+- *That night, the Usurper rose.*
+- *Land by land, kingdom by kingdom, he took everything. Humans and Beastfolk alike knelt before him.*
+- *And there was no hope left anywhere.*
+
+> Wren se pravdu o válce dozví až tady, přímo od Aldrica (zaslechnutý rozhovor v levelu 14
+> přehlušil boj). Válka nekončí věčným bojem: Uchvatitel postupně dobude všechny země.
 
 **Konec 3: Zrada** (Mandrake místo Gravecupu)
 - **Aldric:** Yes… the power… The world will kneel. Humans, beasts, every will bound to mine!
@@ -380,19 +437,19 @@ U každého je seznam kroků: byliny → element.
 
 | Recept | Level | Kroky | Popis | Sprite |
 |---|---|---|---|---|
-| Calming Tonic | 3 | Basil + Menthira → Water | Soothes nerves and quiets a racing heart. | ✅ `potion3` |
-| Fever Breaker | 5 | Frostria + Basil → Life | Cools the blood and breaks the worst fever. | 🟡 |
-| Bone Mender | 6 | Heparil + Silvarra → Earth / Virelen → Life | Knits broken bones overnight. | 🟡 |
-| Sleep Draught | 7 | Gravecup + Lysanthia → Dark | A dreamless sleep, deep enough for surgery. | ✅ `elixir6` |
-| Ironskin Elixir | 9 | Heparil + Embercap → Earth / Emberroot → Fire | Hardens skin against blade and claw. | ✅ `elixir0` |
-| Beastbane Oil | 10 | Wolfsbane + Embercap → Fire / Spottella → **Venom** | Coats a blade so beast wounds won't close. | ✅ `elixir7` |
-| Battle Fervor | 10 | Embercap + Emberroot → Bolt / Virelen → Life | Fearless strength for one desperate charge. | 🟡 |
-| Night Eye Drops | 12 | Moonpetal + Lumenveil → Light | See in the dark like a cat. | 🟡 |
-| Lockbreaker Acid | 12 | Embercap + Spottella → Fire / Frostria → Water | Eats through iron and warded locks. | ✅ `elixir3` |
-| Silent Step | 13 | Gravecup + Moonpetal → **Spirit** / Aurabloom → Air | Footsteps make no sound. | 🟡 |
-| Featherfall Draught | 13 | Aurabloom + Moonpetal → Air | Fall from any height like a leaf. | 🟡 |
-| Moonlit Cure | 14 | Moonpetal + Silvarra → Life / Lumenveil → **Spirit** | Purges beast poison from the blood. | 🟡 |
-| **The Usurper's Draught** | 15 | viz níže | To take back what the years have stolen. | 🟡 |
+| Calming Tonic | 4 | Basil + Menthira → Water | Soothes nerves and quiets a racing heart. | ✅ `potion3` |
+| Fever Breaker | 6 | Frostria + Basil → Life | Cools the blood and breaks the worst fever. | 🟡 |
+| Bone Mender | 7 | Heparil + Silvarra → Earth / Virelen → Life | Knits broken bones overnight. | 🟡 |
+| Sleep Draught | 8 | Gravecup + Lysanthia → Dark | A dreamless sleep, deep enough for surgery. | ✅ `elixir6` |
+| Ironskin Elixir | 10 | Heparil + Embercap → Earth / Emberroot → Fire | Hardens skin against blade and claw. | ✅ `elixir0` |
+| Beastbane Oil | 11 | Wolfsbane + Embercap → Fire / Spottella → **Venom** | Coats a blade so beast wounds won't close. | ✅ `elixir7` |
+| Battle Fervor | 11 | Embercap + Emberroot → Bolt / Virelen → Life | Fearless strength for one desperate charge. | 🟡 |
+| Night Eye Drops | 13 | Moonpetal + Lumenveil → Light | See in the dark like a cat. | 🟡 |
+| Lockbreaker Acid | 13 | Embercap + Spottella → Fire / Frostria → Water | Eats through iron and warded locks. | ✅ `elixir3` |
+| Silent Step | 14 | Gravecup + Moonpetal → **Spirit** / Aurabloom → Air | Footsteps make no sound. | 🟡 |
+| Featherfall Draught | 14 | Aurabloom + Moonpetal → Air | Fall from any height like a leaf. | 🟡 |
+| Moonlit Cure | 15 | Moonpetal + Silvarra → Life / Lumenveil → **Spirit** | Purges beast poison from the blood. | 🟡 |
+| **The Usurper's Draught** | 16 | viz níže | To take back what the years have stolen. | 🟡 |
 
 **The Usurper's Draught** (jen kampaň, nikdy se neodemkne do ostatních módů):
 1. Silvarra + Virelen → Life

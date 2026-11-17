@@ -83,7 +83,7 @@ public class CampaignController : MonoBehaviour
 
             var texts = button.GetComponentsInChildren<TextMeshProUGUI>(true);
             texts[0].text = level.id.ToString();
-            texts[1].text = unlocked ? level.title : "Locked";
+            texts[1].text = unlocked ? CampaignText.With(level.title, level.titleCs) : "Locked";
 
             button.interactable = unlocked;
             var colors = button.colors;
@@ -117,9 +117,9 @@ public class CampaignController : MonoBehaviour
         SetBackground(level.background);
         endingPlayed = false;
 
-        titleChapter.text = level.chapter;
-        titleName.text = $"{level.id}. {level.title}";
-        titleGoal.text = level.goal;
+        titleChapter.text = CampaignText.With(level.chapter, level.chapterCs);
+        titleName.text = CampaignText.With($"{level.id}. {level.title}", level.titleCs);
+        titleGoal.text = CampaignText.With(level.goal, level.goalCs);
         titleCardRoot.SetActive(true);
         titleTapped = false;
         while (!titleTapped) yield return null;
@@ -141,7 +141,8 @@ public class CampaignController : MonoBehaviour
         switch (line.action)
         {
             case "book":
-                yield return book.Play(data.bookPage1, data.bookPage2);
+                // Vlevo kniha, vpravo překlad. Druhou stranu knihy hráč nikdy neuvidí, mistr ji vytrhne dřív.
+                yield return book.Play(data.bookPage1, CampaignText.ShowCzech ? data.bookPage1Cs : null);
                 break;
             case "choice":
                 yield return PlayEnding();
@@ -170,7 +171,7 @@ public class CampaignController : MonoBehaviour
         if (data.endings.TrueForAll(e => CampaignProgress.HasSeenEnding(e.id)))
             Unlock(data.allEndingsAchievement);
 
-        yield return Banner($"The End\n<size=60%>{ending.title}</size>", 2.5f);
+        yield return Banner($"The End\n<size=60%>{CampaignText.With(ending.title, ending.titleCs)}</size>", 2.5f);
     }
 
     private static void Unlock(string id)

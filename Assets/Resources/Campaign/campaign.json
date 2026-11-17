@@ -53,48 +53,95 @@
     {
       "id": 1,
       "chapter": "Chapter 1 · The Gutter",
+      "chapterCs": "Kapitola 1 · Stoka",
       "title": "The Gutter",
+      "titleCs": "Stoka",
       "background": "Street",
-      "goal": "Brew your first potion.",
+      "goal": "Play as the master and brew one potion.",
+      "goalCs": "Hraj za mistra a uvař jeden lektvar.",
       "intro": [
         {
           "who": "aldric",
           "text": "You there. How long since you last ate?",
+          "cs": "Ty tam. Kdy jsi naposledy jedl?",
           "action": ""
         },
         {
           "who": "wren",
           "text": "…Three days. Maybe four.",
+          "cs": "…Před třemi dny. Možná čtyřmi.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "The street will kill you before winter does.",
+          "cs": "Ulice tě zabije dřív než zima.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "I need hands in my workshop. Follow me, and you'll never starve again.",
+          "cs": "Potřebuju v dílně pomocné ruce. Pojď se mnou a už nikdy nebudeš hladovět.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "What do I have to do?",
+          "cs": "Co budu muset dělat?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Sweep. Carry. Obey. And never touch my books.",
+          "cs": "Zametat. Nosit. Poslouchat. A nikdy nesahat na moje knihy.",
           "action": ""
         },
         {
           "who": "aldric",
-          "text": "Watch closely. Silvarra first, then Virelen.",
+          "text": "Stop staring and make yourself useful. Second shelf: the first herb, then the fourth.",
+          "cs": "Nezírej a dělej něco užitečného. Druhá police: první kytka, pak čtvrtá.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "These ones?",
+          "cs": "Tyhle?",
           "action": ""
         },
         {
           "who": "aldric",
-          "text": "Now trace the sign of Life on the scroll. Steady hand.",
+          "text": "Not those! You counted from the right. Always from the left, just like reading a book.",
+          "cs": "Tyhle ne! Počítal jsi zprava. Vždycky zleva, stejně jako když čteš knihu.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "But I can't read.",
+          "cs": "Ale já neumím číst.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Well, now you know. Left to right.",
+          "cs": "Tak teď už to víš. Zleva doprava.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Now step back. Spells are not for a servant's hands. Don't even touch the scroll.",
+          "cs": "A teď ustup. Kouzla nejsou pro ruce sluhy. Na svitek ani nesahej.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Wren steps back into the shadows… but secretly watches every move the master makes.",
+          "cs": "Wren ustoupí do stínu… ale potají sleduje každý mistrův pohyb.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Just this once, you are the master. Brew the potion.",
+          "cs": "Jen tentokrát jsi mistrem ty. Uvař lektvar.",
           "action": ""
         }
       ],
@@ -102,11 +149,13 @@
         {
           "who": "wren",
           "text": "It's… glowing.",
+          "cs": "Ono to… září.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "A Health Potion. Nothing special. Now go and scrub the floor.",
+          "cs": "Lektvar zdraví. Nic zvláštního. A teď jdi vydrhnout podlahu.",
           "action": ""
         }
       ]
@@ -114,18 +163,35 @@
     {
       "id": 2,
       "chapter": "Chapter 1 · The Gutter",
+      "chapterCs": "Kapitola 1 · Stoka",
       "title": "Forbidden Pages",
+      "titleCs": "Zakázané stránky",
       "background": "Workshop",
-      "goal": "Brew 2 potions by trial and error.",
+      "goal": "Brew 2 simple potions from memory.",
+      "goalCs": "Uvař zpaměti 2 jednoduché lektvary.",
       "intro": [
         {
           "who": "wren",
-          "text": "He's asleep. Just one try…",
+          "text": "He's asleep…",
+          "cs": "Spí…",
           "action": ""
         },
         {
           "who": "wren",
-          "text": "If I mix what he mixed… maybe I can learn too.",
+          "text": "What he does is amazing. If only I could do that too.",
+          "cs": "To, co dělá, je úžasné. Kdybych to tak uměl taky.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "What if I tried? I've watched him a few times. I remember a few things.",
+          "cs": "Co kdybych to zkusil? Už jsem ho párkrát viděl. Pár věcí si pamatuju.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Just a quick try. He'll never know.",
+          "cs": "Jen to rychle zkusím. Nikdy se to nedozví.",
           "action": ""
         }
       ],
@@ -133,41 +199,49 @@
         {
           "who": "wren",
           "text": "What's this book? It was hidden under the table.",
+          "cs": "Co je to za knihu? Byla schovaná pod stolem.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "\"The Usurper's Draught\"…?",
+          "cs": "„Uchvatitelův lektvar“…?",
           "action": ""
         },
         {
           "who": "",
           "text": "",
+          "cs": "",
           "action": "book"
         },
         {
           "who": "aldric",
           "text": "WHAT ARE YOU DOING?",
+          "cs": "CO TO DĚLÁŠ?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "That book is not for a gutter rat's eyes!",
+          "cs": "Ta kniha není pro oči krysy ze stoky!",
           "action": ""
         },
         {
           "who": "wren",
           "text": "I'm sorry! I only wanted to learn!",
+          "cs": "Promiňte! Jen jsem se chtěl učit!",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Learn? You can barely read. This would burn you alive.",
+          "cs": "Učit? Sotva umíš číst. Tohle by tě zaživa spálilo.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Get out. Now.",
+          "cs": "Ven. Hned.",
           "action": ""
         }
       ]
@@ -175,71 +249,147 @@
     {
       "id": 3,
       "chapter": "Chapter 1 · The Gutter",
+      "chapterCs": "Kapitola 1 · Stoka",
       "title": "Caught Red-Handed",
+      "titleCs": "Přistižen při činu",
       "background": "Workshop",
-      "goal": "Brew 3 potions in 90 seconds.",
+      "goal": "Brew 3 potions before the candle burns out.",
+      "goalCs": "Uvař 3 lektvary, než dohoří svíčka.",
       "intro": [
         {
-          "who": "wren",
-          "text": "He hasn't spoken to me in two days.",
+          "who": "narrator",
+          "text": "Wren is sent to sleep in the storeroom. But the herbs are right next door…",
+          "cs": "Wrena pošlou spát do komory. Jenže byliny jsou hned vedle…",
           "action": ""
         },
         {
           "who": "wren",
-          "text": "If I make something on my own… maybe he'll forgive me.",
+          "text": "He said I can barely read. Fine. I don't need to read.",
+          "cs": "Říkal, že sotva umím číst. Fajn. Číst nepotřebuju.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I remember how he did it. Which shelf, which herb, which sign.",
+          "cs": "Pamatuju si, jak to dělal. Která police, která kytka, jaké znamení.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Quickly, before the candle burns out.",
+          "cs": "Rychle, než dohoří svíčka.",
           "action": ""
         }
       ],
       "outro": [
         {
           "who": "aldric",
-          "text": "You brewed this? Alone?",
+          "text": "So this is where my herbs keep disappearing.",
+          "cs": "Takže tady mi pořád mizí byliny.",
           "action": ""
         },
         {
           "who": "wren",
-          "text": "I… yes. I'm sorry about the book.",
+          "text": "I'm sorry! I'll leave, I promise!",
+          "cs": "Promiňte! Odejdu, slibuju!",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Wait. Hand me that flask.",
+          "cs": "Počkej. Podej mi tu lahvičku.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "You brewed this? Alone? Without a single book?",
+          "cs": "Tohle jsi uvařil ty? Sám? Bez jediné knihy?",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I just watched you. And remembered.",
+          "cs": "Jen jsem se díval na vás. A zapamatoval si to.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Hm. Clumsy, but potent. Unusually potent.",
+          "cs": "Hm. Neobratné, ale silné. Neobvykle silné.",
           "action": ""
         },
         {
           "who": "aldric",
-          "text": "Very well. Here, a book you are allowed to read. Basic recipes.",
-          "action": ""
-        },
-        {
-          "who": "aldric",
-          "text": "From tomorrow, you are my apprentice.",
+          "text": "Go to sleep. Tomorrow at dawn, you'll be at my table.",
+          "cs": "Jdi spát. Zítra za úsvitu budeš sedět u mého stolu.",
           "action": ""
         }
       ]
     },
     {
       "id": 4,
-      "chapter": "Chapter 2 · The Apprentice",
-      "title": "The Apprentice",
+      "chapter": "Chapter 1 · The Gutter",
+      "chapterCs": "Kapitola 1 · Stoka",
+      "title": "First Lesson",
+      "titleCs": "První lekce",
       "background": "Workshop",
-      "goal": "Reach 600 points in 120 seconds.",
+      "goal": "Brew 4 potions from the recipe book.",
+      "goalCs": "Uvař 4 lektvary podle knihy receptů.",
       "intro": [
         {
           "who": "aldric",
-          "text": "Fire, frost and light. The three tempers of every brew.",
+          "text": "Sit. If you're going to steal my craft, you'll at least learn it properly.",
+          "cs": "Sedni si. Když už mi kradeš řemeslo, tak se ho aspoň nauč pořádně.",
           "action": ""
         },
         {
           "who": "aldric",
-          "text": "Speed matters, but precision matters more.",
+          "text": "Here, a book you are allowed to read. Basic recipes.",
+          "cs": "Tady máš knihu, kterou číst smíš. Základní recepty.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I can't read many of the words… but the pictures help.",
+          "cs": "Moc slov přečíst neumím… ale obrázky mi pomůžou.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Then look carefully. Herbs first, then the sign. Always in that order.",
+          "cs": "Tak se dívej pozorně. Nejdřív byliny, potom znamení. Vždycky v tomhle pořadí.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "But it works for me the other way round too. I just can't rush too far ahead with the herbs.",
+          "cs": "Mně to ale funguje i obráceně. Jen nesmím s bylinami moc předbíhat.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "The other way round? …Unusual. Very interesting.",
+          "cs": "Obráceně? …Neobvyklé. Velmi zajímavé.",
           "action": ""
         }
       ],
       "outro": [
         {
           "who": "aldric",
-          "text": "Better. Your hand is learning faster than your head.",
+          "text": "Not bad for a first lesson. Not bad at all.",
+          "cs": "Na první lekci to není špatné. Vůbec ne.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Does that mean… I can stay?",
+          "cs": "Znamená to… že můžu zůstat?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "It means more than that. From tomorrow, you are my apprentice.",
+          "cs": "Znamená to víc. Od zítřka jsi můj učeň.",
           "action": ""
         }
       ]
@@ -247,28 +397,67 @@
     {
       "id": 5,
       "chapter": "Chapter 2 · The Apprentice",
+      "chapterCs": "Kapitola 2 · Učeň",
+      "title": "The Apprentice",
+      "titleCs": "Učeň",
+      "background": "Workshop",
+      "goal": "Reach 600 points in 120 seconds.",
+      "goalCs": "Získej 600 bodů za 120 sekund.",
+      "intro": [
+        {
+          "who": "aldric",
+          "text": "Fire, water and light. The basic spells for every potion.",
+          "cs": "Oheň, voda a světlo. Základní kouzla pro lektvary.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Speed matters, but precision matters more.",
+          "cs": "Rychlost je důležitá, ale přesnost ještě víc.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "aldric",
+          "text": "Better. Your hand is learning faster than your head.",
+          "cs": "Lepší. Tvoje ruka se učí rychleji než hlava.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "chapter": "Chapter 2 · The Apprentice",
+      "chapterCs": "Kapitola 2 · Učeň",
       "title": "A Drop of Blood",
+      "titleCs": "Kapka krve",
       "background": "Workshop",
       "goal": "Brew 5 potions of Divine quality or better.",
+      "goalCs": "Uvař 5 lektvarů v kvalitě Divine nebo lepší.",
       "intro": [
         {
           "who": "aldric",
           "text": "Give me your hand.",
+          "cs": "Dej mi ruku.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Ow! What was that for?",
+          "cs": "Au! Proč to?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "A test. An alchemist must know what flows in his apprentice's veins.",
+          "cs": "Zkouška. Alchymista musí vědět, co proudí v žilách jeho učně.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Nothing to worry about. Back to work.",
+          "cs": "Nic, čeho by ses musel bát. Zpátky do práce.",
           "action": ""
         }
       ],
@@ -276,52 +465,19 @@
         {
           "who": "aldric",
           "text": "Touched by the Light… after all these years.",
+          "cs": "Dotčený Světlem… po všech těch letech.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Did you say something, Master?",
+          "cs": "Říkal jste něco, mistře?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Only that you're ready for real work. The clinic needs hands.",
-          "action": ""
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "chapter": "Chapter 3 · The Clinic",
-      "title": "Sister Maren's Clinic",
-      "background": "Clinic",
-      "goal": "Treat 6 patients. You have 3 lives.",
-      "intro": [
-        {
-          "who": "maren",
-          "text": "So you're Aldric's new apprentice. Good. We're drowning here.",
-          "action": ""
-        },
-        {
-          "who": "maren",
-          "text": "Border skirmishes again. Humans and Beastfolk at each other's throats.",
-          "action": ""
-        },
-        {
-          "who": "wren",
-          "text": "Over what?",
-          "action": ""
-        },
-        {
-          "who": "maren",
-          "text": "Fear, mostly. Nobody remembers who struck first.",
-          "action": ""
-        }
-      ],
-      "outro": [
-        {
-          "who": "maren",
-          "text": "Not bad. Your potions heal faster than mine. Strange.",
+          "cs": "Jen že jsi připraven na skutečnou práci. Ošetřovna potřebuje pomocné ruce.",
           "action": ""
         }
       ]
@@ -329,40 +485,43 @@
     {
       "id": 7,
       "chapter": "Chapter 3 · The Clinic",
-      "title": "The Wolf at the Door",
+      "chapterCs": "Kapitola 3 · Ošetřovna",
+      "title": "Sister Maren's Clinic",
+      "titleCs": "Ošetřovna sestry Maren",
       "background": "Clinic",
-      "goal": "Treat 8 patients.",
+      "goal": "Treat 6 patients. You have 3 lives.",
+      "goalCs": "Ošetři 6 pacientů. Máš 3 životy.",
       "intro": [
         {
-          "who": "torvin",
-          "text": "…Please. I won't hurt anyone.",
-          "action": ""
-        },
-        {
-          "who": "wren",
-          "text": "You're… Beastfolk.",
-          "action": ""
-        },
-        {
-          "who": "torvin",
-          "text": "I'm bleeding. Does it matter?",
+          "who": "maren",
+          "text": "So you're Aldric's new apprentice. Good. We're drowning here.",
+          "cs": "Takže ty jsi Aldricův nový učeň. Dobře. Topíme se tu v práci.",
           "action": ""
         },
         {
           "who": "maren",
-          "text": "Not in my clinic, it doesn't. Wren, help him.",
+          "text": "Border skirmishes again. Humans and Beastfolk at each other's throats.",
+          "cs": "Zase šarvátky na hranici. Lidé a Zvířecí lid si jdou po krku.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Over what?",
+          "cs": "Kvůli čemu?",
+          "action": ""
+        },
+        {
+          "who": "maren",
+          "text": "Fear, mostly. Nobody remembers who struck first.",
+          "cs": "Hlavně ze strachu. Nikdo si nepamatuje, kdo udeřil první.",
           "action": ""
         }
       ],
       "outro": [
         {
-          "who": "torvin",
-          "text": "Thank you, little alchemist. I won't forget this.",
-          "action": ""
-        },
-        {
-          "who": "torvin",
-          "text": "Tell your master… no. Never mind.",
+          "who": "maren",
+          "text": "Not bad. Your potions heal faster than mine. Strange.",
+          "cs": "Není to špatné. Tvoje lektvary léčí rychleji než moje. Zvláštní.",
           "action": ""
         }
       ]
@@ -370,18 +529,73 @@
     {
       "id": 8,
       "chapter": "Chapter 3 · The Clinic",
+      "chapterCs": "Kapitola 3 · Ošetřovna",
+      "title": "The Wolf at the Door",
+      "titleCs": "Vlk za dveřmi",
+      "background": "Clinic",
+      "goal": "Treat 8 patients.",
+      "goalCs": "Ošetři 8 pacientů.",
+      "intro": [
+        {
+          "who": "torvin",
+          "text": "…Please. I won't hurt anyone.",
+          "cs": "…Prosím. Nikomu neublížím.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "You're… Beastfolk.",
+          "cs": "Ty jsi… ze Zvířecího lidu.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "I'm bleeding. Does it matter?",
+          "cs": "Krvácím. Záleží na tom?",
+          "action": ""
+        },
+        {
+          "who": "maren",
+          "text": "Not in my clinic, it doesn't. Wren, help him.",
+          "cs": "V mojí ošetřovně ne. Wrene, pomoz mu.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "torvin",
+          "text": "Thank you, little alchemist. I won't forget this.",
+          "cs": "Děkuju, malý alchymisto. Tohle ti nezapomenu.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "Tell your master… no. Never mind.",
+          "cs": "Vyřiď svému mistrovi… ne. To nic.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "chapter": "Chapter 3 · The Clinic",
+      "chapterCs": "Kapitola 3 · Ošetřovna",
       "title": "War Breaks Out",
+      "titleCs": "Vypukla válka",
       "background": "Clinic",
       "goal": "Survive 150 seconds of wounded.",
+      "goalCs": "Vydrž 150 sekund přílivu raněných.",
       "intro": [
         {
           "who": "maren",
           "text": "The border fort has fallen. It's war.",
+          "cs": "Pohraniční pevnost padla. Je válka.",
           "action": ""
         },
         {
           "who": "maren",
           "text": "Every bed is full. Brew, Wren. Brew like your life depends on it.",
+          "cs": "Všechna lůžka jsou plná. Vař, Wrene. Vař, jako by ti šlo o život.",
           "action": ""
         }
       ],
@@ -389,42 +603,19 @@
         {
           "who": "aldric",
           "text": "The army has asked for you. They need an alchemist at the front.",
+          "cs": "Armáda si tě vyžádala. Potřebují na frontě alchymistu.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Me? Why not you, Master?",
+          "cs": "Mě? Proč ne vás, mistře?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "My hands are… not what they were. Go.",
-          "action": ""
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "chapter": "Chapter 4 · The War",
-      "title": "The Front Line",
-      "background": "WarCamp",
-      "goal": "Reach 1200 points in 150 seconds.",
-      "intro": [
-        {
-          "who": "brask",
-          "text": "You're the kid alchemist? Hope you're faster than you look.",
-          "action": ""
-        },
-        {
-          "who": "brask",
-          "text": "The beasts hit at dawn. My men need iron in their skin.",
-          "action": ""
-        }
-      ],
-      "outro": [
-        {
-          "who": "brask",
-          "text": "We held the line. You've earned your rations.",
+          "cs": "Moje ruce už… nejsou, co bývaly. Jdi.",
           "action": ""
         }
       ]
@@ -432,45 +623,31 @@
     {
       "id": 10,
       "chapter": "Chapter 4 · The War",
-      "title": "The Same Seal",
+      "chapterCs": "Kapitola 4 · Válka",
+      "title": "The Front Line",
+      "titleCs": "Frontová linie",
       "background": "WarCamp",
-      "goal": "Brew 6 multi-step potions.",
+      "goal": "Reach 1200 points in 150 seconds.",
+      "goalCs": "Získej 1200 bodů za 150 sekund.",
       "intro": [
         {
           "who": "brask",
-          "text": "Beastbane oil. Coats a blade so the wounds won't close.",
-          "action": ""
-        },
-        {
-          "who": "wren",
-          "text": "That's… cruel.",
+          "text": "You're the kid alchemist? Hope you're faster than you look.",
+          "cs": "Ty jsi ten malej alchymista? Doufám, že jsi rychlejší, než vypadáš.",
           "action": ""
         },
         {
           "who": "brask",
-          "text": "So is war. Brew it.",
+          "text": "The beasts hit at dawn. My men need iron in their skin.",
+          "cs": "Bestie udeří za úsvitu. Moji muži potřebují kůži jako železo.",
           "action": ""
         }
       ],
       "outro": [
         {
-          "who": "wren",
-          "text": "Sergeant, this enemy poison flask… it bears a seal.",
-          "action": ""
-        },
-        {
           "who": "brask",
-          "text": "So? Beast filth.",
-          "action": ""
-        },
-        {
-          "who": "wren",
-          "text": "It's the same seal that's on our oil. An alchemist's seal.",
-          "action": ""
-        },
-        {
-          "who": "brask",
-          "text": "Probably stole it. Don't think so much, kid.",
+          "text": "We held the line. You've earned your rations.",
+          "cs": "Udrželi jsme linii. Svůj příděl sis zasloužil.",
           "action": ""
         }
       ]
@@ -478,23 +655,85 @@
     {
       "id": 11,
       "chapter": "Chapter 4 · The War",
+      "chapterCs": "Kapitola 4 · Válka",
+      "title": "The Same Seal",
+      "titleCs": "Stejná pečeť",
+      "background": "WarCamp",
+      "goal": "Brew 6 multi-step potions.",
+      "goalCs": "Uvař 6 vícekrokových lektvarů.",
+      "intro": [
+        {
+          "who": "brask",
+          "text": "Beastbane oil. Coats a blade so the wounds won't close.",
+          "cs": "Olej Zhouba bestií. Natře se na čepel, aby se rány nezavřely.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "That's… cruel.",
+          "cs": "To je… kruté.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "So is war. Brew it.",
+          "cs": "Válka taky. Uvař ho.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "wren",
+          "text": "Sergeant, this enemy poison flask… it bears a seal.",
+          "cs": "Seržante, tahle nepřátelská lahvička s jedem… je na ní pečeť.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "So? Beast filth.",
+          "cs": "No a? Zvířecí svinstvo.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "It's the same seal that's on our oil. An alchemist's seal.",
+          "cs": "Je to stejná pečeť jako na našem oleji. Pečeť alchymisty.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Probably stole it. Don't think so much, kid.",
+          "cs": "Nejspíš ji ukradli. Moc nepřemýšlej, mladej.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "chapter": "Chapter 4 · The War",
+      "chapterCs": "Kapitola 4 · Válka",
       "title": "Taken",
+      "titleCs": "Unesen",
       "background": "WarCamp",
       "goal": "Survive 120 seconds. The poison spreads faster.",
+      "goalCs": "Vydrž 120 sekund. Jed se šíří rychleji.",
       "intro": [
         {
           "who": "aldric",
           "text": "Wren. I came to see the front for myself.",
+          "cs": "Wrene. Přišel jsem se na frontu podívat osobně.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Master, you look so pale…",
+          "cs": "Mistře, vypadáte tak bledě…",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Age, child. Age and… unfinished work.",
+          "cs": "Stáří, dítě. Stáří a… nedokončená práce.",
           "action": ""
         }
       ],
@@ -502,52 +741,25 @@
         {
           "who": "torvin",
           "text": "Aldric of the Tower. You're coming with us.",
+          "cs": "Aldricu z Věže. Půjdeš s námi.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Wren! Help me!",
+          "cs": "Wrene! Pomoz mi!",
           "action": ""
         },
         {
           "who": "corin",
           "text": "Don't follow us, child. You don't know what he is.",
+          "cs": "Nechoď za námi, dítě. Nevíš, co je zač.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "MASTER!",
-          "action": ""
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "chapter": "Chapter 5 · The Dungeon",
-      "title": "Into the Dark",
-      "background": "Dungeon",
-      "goal": "Fill 6 orders for the warband.",
-      "intro": [
-        {
-          "who": "brask",
-          "text": "The beasts dragged your master to their fortress. We're going in.",
-          "action": ""
-        },
-        {
-          "who": "nim",
-          "text": "It's pitch black down there. I'll need eyes like a cat.",
-          "action": ""
-        },
-        {
-          "who": "odo",
-          "text": "And the gates are warded. Something to eat through iron, alchemist.",
-          "action": ""
-        }
-      ],
-      "outro": [
-        {
-          "who": "nim",
-          "text": "We're through the first gate. Your brews actually work.",
+          "cs": "MISTŘE!",
           "action": ""
         }
       ]
@@ -555,50 +767,37 @@
     {
       "id": 13,
       "chapter": "Chapter 5 · The Dungeon",
-      "title": "Lies of the Captors",
+      "chapterCs": "Kapitola 5 · Kobky",
+      "title": "Into the Dark",
+      "titleCs": "Do tmy",
       "background": "Dungeon",
-      "goal": "Fill 8 orders. You have 3 lives.",
+      "goal": "Fill 6 orders for the warband.",
+      "goalCs": "Splň 6 objednávek pro bojovou družinu.",
       "intro": [
         {
+          "who": "brask",
+          "text": "The beasts dragged your master to their fortress. We're going in.",
+          "cs": "Bestie odvlekly tvého mistra do své pevnosti. Jdeme dovnitř.",
+          "action": ""
+        },
+        {
+          "who": "nim",
+          "text": "It's pitch black down there. I'll need eyes like a cat.",
+          "cs": "Tam dole je tma jako v pytli. Budu potřebovat kočičí oči.",
+          "action": ""
+        },
+        {
           "who": "odo",
-          "text": "Guards ahead. We need to move without a sound.",
-          "action": ""
-        },
-        {
-          "who": "narrator",
-          "text": "Voices echo from behind a door…",
-          "action": ""
-        },
-        {
-          "who": "corin",
-          "text": "If the boy comes, we tell him the truth.",
-          "action": ""
-        },
-        {
-          "who": "torvin",
-          "text": "That Aldric lit this war? He'll never believe it.",
-          "action": ""
-        },
-        {
-          "who": "corin",
-          "text": "Then he'll die believing a lie.",
+          "text": "And the gates are warded. Something to eat through iron, alchemist.",
+          "cs": "A brány jsou chráněné kouzly. Potřebujeme něco, co prožere železo, alchymisto.",
           "action": ""
         }
       ],
       "outro": [
         {
-          "who": "wren",
-          "text": "They said Master started the war.",
-          "action": ""
-        },
-        {
-          "who": "brask",
-          "text": "Of course they did. Beasts lie, kid. Keep moving.",
-          "action": ""
-        },
-        {
-          "who": "wren",
-          "text": "…Right. Of course.",
+          "who": "nim",
+          "text": "We're through the first gate. Your brews actually work.",
+          "cs": "Jsme za první bránou. Tvoje lektvary fakt fungujou.",
           "action": ""
         }
       ]
@@ -606,18 +805,91 @@
     {
       "id": 14,
       "chapter": "Chapter 5 · The Dungeon",
+      "chapterCs": "Kapitola 5 · Kobky",
+      "title": "Lies of the Captors",
+      "titleCs": "Lži únosců",
+      "background": "Dungeon",
+      "goal": "Fill 8 orders. You have 3 lives.",
+      "goalCs": "Splň 8 objednávek. Máš 3 životy.",
+      "intro": [
+        {
+          "who": "odo",
+          "text": "Guards ahead. We need to move without a sound.",
+          "cs": "Před námi stráže. Musíme se pohybovat bez jediného zvuku.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Voices echo from behind a door…",
+          "cs": "Zpoza dveří se ozývají hlasy…",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "If the boy comes, we tell him the truth.",
+          "cs": "Jestli ten kluk přijde, řekneme mu pravdu.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "The truth? That this whole war was started by—",
+          "cs": "Pravdu? Že celou tuhle válku rozpoutal—",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "A roar of battle drowns out the rest of the words…",
+          "cs": "Zbytek slov přehluší hluk boje…",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "…or he'll die believing a lie.",
+          "cs": "…jinak zemře s vírou ve lež.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "wren",
+          "text": "They said someone started this war on purpose. But who?",
+          "cs": "Říkali, že tuhle válku někdo rozpoutal schválně. Ale kdo?",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Who cares? Beasts lie, kid. Keep moving.",
+          "cs": "Koho to zajímá? Bestie lžou, mladej. Pokračuj.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "…Right. Of course.",
+          "cs": "…Jasně. Samozřejmě.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "chapter": "Chapter 5 · The Dungeon",
+      "chapterCs": "Kapitola 5 · Kobky",
       "title": "The Last Gate",
+      "titleCs": "Poslední brána",
       "background": "Dungeon",
       "goal": "Reach 1500 points in 150 seconds.",
+      "goalCs": "Získej 1500 bodů za 150 sekund.",
       "intro": [
         {
           "who": "brask",
           "text": "One last gate. Behind it, your master.",
+          "cs": "Poslední brána. Za ní je tvůj mistr.",
           "action": ""
         },
         {
           "who": "brask",
           "text": "Whatever happens in there, we've got your back.",
+          "cs": "Ať se tam stane cokoli, kryjeme ti záda.",
           "action": ""
         }
       ],
@@ -625,70 +897,85 @@
         {
           "who": "torvin",
           "text": "Wren, stop! You saved my life once, now listen to me!",
-          "action": ""
-        },
-        {
-          "who": "brask",
-          "text": "Cut him down!",
+          "cs": "Wrene, stůj! Jednou jsi mi zachránil život, tak mě teď poslouchej!",
           "action": ""
         },
         {
           "who": "torvin",
-          "text": "Aldric needs your blood! Don't give him what he asks for!",
+          "text": "Aldric needs your—",
+          "cs": "Aldric potřebuje tvou—",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Enough talk! Get him!",
+          "cs": "Dost řečí! Na něj!",
           "action": ""
         },
         {
           "who": "narrator",
-          "text": "Torvin vanishes into the dark.",
+          "text": "Brask charges. Torvin leaps aside and vanishes into the dark.",
+          "cs": "Brask zaútočí. Torvin uskočí stranou a zmizí ve tmě.",
           "action": ""
         },
         {
           "who": "wren",
-          "text": "…My blood?",
+          "text": "Master needs my… what?",
+          "cs": "Mistr potřebuje moji… co?",
           "action": ""
         }
       ]
     },
     {
-      "id": 15,
+      "id": 16,
       "chapter": "Chapter 6 · The Usurper",
+      "chapterCs": "Kapitola 6 · Uchvatitel",
       "title": "The Usurper's Draught",
+      "titleCs": "Uchvatitelův lektvar",
       "background": "Dungeon",
       "goal": "Brew one last potion.",
+      "goalCs": "Uvař poslední lektvar.",
       "intro": [
         {
           "who": "aldric",
           "text": "Wren… you came. I knew you would.",
+          "cs": "Wrene… přišel jsi. Věděl jsem, že přijdeš.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Master! Are you hurt?",
+          "cs": "Mistře! Jste zraněný?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "I'm dying, child. They poisoned me.",
+          "cs": "Umírám, dítě. Otrávili mě.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "There is one cure. The recipe from my book. You remember it?",
+          "cs": "Existuje jediný lék. Recept z mé knihy. Pamatuješ si ho?",
           "action": ""
         },
         {
           "who": "wren",
           "text": "The Usurper's Draught…",
+          "cs": "Uchvatitelův lektvar…",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "It needs a drop of your blood. Please. Save me.",
+          "cs": "Potřebuje kapku tvé krve. Prosím. Zachraň mě.",
           "action": ""
         },
         {
           "who": "",
           "text": "",
+          "cs": "",
           "action": "choice"
         }
       ],
@@ -699,36 +986,79 @@
     {
       "id": "failure",
       "title": "Broken Mind",
+      "titleCs": "Zlomená mysl",
       "achievement": "ending_failure",
       "lines": [
         {
           "who": "aldric",
           "text": "No… no, it's wrong… it's…",
+          "cs": "Ne… ne, je to špatně… je to…",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Master? MASTER!",
+          "cs": "Mistře? MISTŘE!",
           "action": ""
         },
         {
           "who": "narrator",
           "text": "The old alchemist breathes his last.",
+          "cs": "Starý alchymista naposledy vydechne.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "I was too slow. Too clumsy. I killed him.",
+          "cs": "Byl jsem moc pomalý. Moc neobratný. Zabil jsem ho.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I failed you, Master… I'm useless. Completely useless.",
+          "cs": "Zklamal jsem vás, mistře… Jsem k ničemu. Úplně k ničemu.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "No… no, no… NOOO!",
+          "cs": "Ne… ne, ne… NEEE!",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Again. Let me try again. Silvarra first… then…",
+          "cs": "Znovu. Zkusím to znovu. Nejdřív Silvarra… pak…",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Kid, it's over. Come on, we're getting you out of here.",
+          "cs": "Mladej, je konec. Pojď, odvedeme tě odsud.",
+          "action": ""
+        },
+        {
+          "who": "nim",
+          "text": "Please, Wren. There's nothing more you can do.",
+          "cs": "Prosím, Wrene. Už nemůžeš nic udělat.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Go away! Leave me alone! All of you, just GO!",
+          "cs": "Jděte pryč! Nechte mě být! Všichni, prostě ZMIZTE!",
+          "action": ""
+        },
+        {
+          "who": "odo",
+          "text": "…As you wish, alchemist.",
+          "cs": "…Jak chceš, alchymisto.",
           "action": ""
         },
         {
           "who": "narrator",
-          "text": "Wren never left the dungeon. Some say they still brew there, in the dark.",
+          "text": "Wren never left the dungeon. It was his own choice. Some say he still brews there, in the dark.",
+          "cs": "Wren už z kobek nikdy nevyšel. Byla to jeho volba. Říká se, že tam ve tmě vaří dodnes.",
           "action": ""
         }
       ]
@@ -736,46 +1066,85 @@
     {
       "id": "obedience",
       "title": "The Good Apprentice",
+      "titleCs": "Hodný učeň",
       "achievement": "ending_obedience",
       "lines": [
         {
           "who": "aldric",
           "text": "Yes… YES! I can feel the years falling away!",
+          "cs": "Ano… ANO! Cítím, jak ze mě opadávají roky!",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Master, you're… young?",
+          "cs": "Mistře, vy jste… mladý?",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "Forty years I searched for blood touched by the Light. And it walked into my workshop, starving.",
+          "cs": "Čtyřicet let jsem hledal krev dotčenou Světlem. A ona mi přišla do dílny, vyhladovělá.",
           "action": ""
         },
         {
           "who": "wren",
-          "text": "You started the war. Torvin was telling the truth.",
+          "text": "Touched by the Light? I don't understand…",
+          "cs": "Dotčenou Světlem? Já nerozumím…",
           "action": ""
         },
         {
           "who": "aldric",
-          "text": "War brings blood, gold, and chaos. Perfect cover for an old man's work.",
+          "text": "You never did. That's what made you perfect.",
+          "cs": "Nikdy jsi nerozuměl. Proto jsi byl dokonalý.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Humans, Beastfolk… I set them at each other's throats, and not one of them ever looked at me.",
+          "cs": "Lidé, Zvířecí lid… poštval jsem je proti sobě a ani jeden se nikdy nepodíval na mě.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "You… you started the war?",
+          "cs": "Vy… vy jste rozpoutal tu válku?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "War is perfect cover for an old man's work.",
+          "cs": "Válka je dokonalé krytí pro práci starého muže.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "I… can't… stand…",
+          "cs": "Já… nemůžu… stát…",
           "action": ""
         },
         {
           "who": "aldric",
-          "text": "Your blood is drained, child. You were a good apprentice. Thank you.",
+          "text": "Your blood has done its work, child. You were a good apprentice. Thank you.",
+          "cs": "Tvá krev splnila svůj úkol, dítě. Byl jsi hodný učeň. Děkuji ti.",
           "action": ""
         },
         {
           "who": "narrator",
-          "text": "The Usurper rose that night. The war never ended.",
+          "text": "That night, the Usurper rose.",
+          "cs": "Té noci povstal Uchvatitel.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Land by land, kingdom by kingdom, he took everything. Humans and Beastfolk alike knelt before him.",
+          "cs": "Zemi za zemí, království za královstvím bral všechno. Lidé i Zvířecí lid před ním poklekli.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "And there was no hope left anywhere.",
+          "cs": "A naděje nezbyla nikde.",
           "action": ""
         }
       ]
@@ -783,62 +1152,75 @@
     {
       "id": "betrayal",
       "title": "Root of Betrayal",
+      "titleCs": "Kořen zrady",
       "achievement": "ending_betrayal",
       "lines": [
         {
           "who": "aldric",
           "text": "Yes… the power… The world will kneel. Humans, beasts, every will bound to mine!",
+          "cs": "Ano… ta moc… Svět poklekne. Lidé, bestie, každá vůle spoutaná s mou!",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "And it was all built on your blood, my foolish little—",
+          "cs": "A to všechno postavené na tvé krvi, můj hloupý malý—",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "What… what did you put in it?",
+          "cs": "Co… cos tam dal?",
           "action": ""
         },
         {
           "who": "wren",
           "text": "Mandrake. Your book warned me. You just never let me finish reading.",
+          "cs": "Mandragoru. Vaše kniha mě varovala. Jen jste mě ji nikdy nenechal dočíst.",
           "action": ""
         },
         {
           "who": "aldric",
           "text": "NO! My power… it's leaving me!",
+          "cs": "NE! Má moc… opouští mě!",
           "action": ""
         },
         {
           "who": "corin",
           "text": "It's over, Aldric.",
+          "cs": "Je konec, Aldricu.",
           "action": ""
         },
         {
           "who": "torvin",
           "text": "You'll answer to humans and Beastfolk alike.",
+          "cs": "Zodpovíš se lidem i Zvířecímu lidu.",
           "action": ""
         },
         {
           "who": "wren",
           "text": "I helped them kill the only people trying to stop this war.",
+          "cs": "Pomohl jsem jim zabíjet jediné, kdo se snažili tuhle válku zastavit.",
           "action": ""
         },
         {
           "who": "corin",
           "text": "Then help us end it now.",
+          "cs": "Tak nám ji teď pomoz ukončit.",
           "action": ""
         },
         {
           "who": "narrator",
           "text": "Aldric was tried before both peoples. And for the first time in years, they sat at one table.",
+          "cs": "Aldric byl souzen před oběma národy. A poprvé po letech zasedli k jednomu stolu.",
           "action": ""
         }
       ]
     }
   ],
-  "bookPage1": "<align=center><b>THE USURPER'S DRAUGHT</b></align>\n\n<i>To take back what the years have stolen.\nTo bind every will to one.</i>\n\n<b>I.</b> Silvarra and Virelen, beneath the sign of Life.\n\n<b>II.</b> Moonpetal and … <color=#7a6a55><i>(the corner is torn away)</i></color> … the sign of Dark.\n\n<b>III.</b> The blood of one touched by the Light,\nsealed with …",
+  "bookPage1": "<align=center><b>THE USURPER'S DRAUGHT</b></align>\n<i>To take back what the years have stolen.\nTo bind every will to one.</i>\n<b>I.</b> Silvarra and Virelen, beneath the sign of Life.\n<b>II.</b> Moonpetal and … <color=#7a6a55><i>(the corner is torn away)</i></color> … the sign of Dark.\n<b>III.</b> The blood of one touched by the Light,\nsealed with …",
   "bookPage2": "… Gravecup, to seal the blood beneath the sign of Blood.\n\nNever let Mandrake take its place, for the rite would turn upon the one who",
-  "allEndingsAchievement": "three_fates"
+  "allEndingsAchievement": "three_fates",
+  "bookPage1Cs": "<align=center><b>UCHVATITELŮV LEKTVAR</b></align>\n<i>Aby vzal zpět, co roky ukradly.\nAby spoutal každou vůli s jedinou.</i>\n<b>I.</b> Silvarra a Virelen pod znamením Života.\n<b>II.</b> Moonpetal a … <color=#7a6a55><i>(roh je utržený)</i></color> … znamení Temnoty.\n<b>III.</b> Krev toho, koho se dotklo Světlo,\nzapečetěná …",
+  "bookPage2Cs": "… Gravecup, aby zapečetil krev pod znamením Krve.\n\nNikdy nedovol, aby jeho místo zaujala Mandragora, neboť obřad by se obrátil proti tomu, kdo"
 }

@@ -104,7 +104,7 @@ public class DialoguePlayer : MonoBehaviour
             target = lineText;
         }
 
-        target.text = line.text;
+        target.text = CampaignText.With(line.text, line.cs);
         target.ForceMeshUpdate();
         int total = target.textInfo.characterCount;
         target.maxVisibleCharacters = 0;

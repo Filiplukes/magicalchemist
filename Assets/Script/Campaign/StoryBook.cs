@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Scéna s knihou (level 2). Hráč si přečte stranu 1 a otočí stránku. Strana 2 se ukáže
-/// jen na okamžik, pak knihou škubne (mistr ji vytrhne) a scéna skončí.
+/// Scéna s knihou (level 2). Kniha je otevřená: vlevo text knihy, vpravo (volitelně) jeho překlad.
+/// Jakmile se hráč pokusí otočit stránku, mistr mu knihu hned vytrhne a scéna skončí.
 /// </summary>
 public class StoryBook : MonoBehaviour
 {
@@ -16,23 +16,39 @@ public class StoryBook : MonoBehaviour
     public TextMeshProUGUI page2Text;
     public Button turnButton;
 
-    [Tooltip("Jak dlouho je strana 2 vidět, než mistr knihu vytrhne.")]
-    public float glimpseSeconds = 1.5f;
+    [Header("Písmo stránek")]
+    public float pageFontMin = 50f;
+    public float pageFontMax = 80f;
+    [Tooltip("Řádkování v TMP jednotkách, záporné = řádky blíž u sebe.")]
+    public float pageLineSpacing = -12f;
 
     private bool turned;
 
     void Awake()
     {
         turnButton.onClick.AddListener(() => turned = true);
+        ApplyPageFont(page1Text);
+        ApplyPageFont(page2Text);
         root.SetActive(false);
     }
 
-    public IEnumerator Play(string pageOne, string pageTwo)
+    private void ApplyPageFont(TextMeshProUGUI text)
     {
-        page1Text.text = pageOne;
-        page2Text.text = pageTwo;
-        page2.localScale = new Vector3(0f, 1f, 1f);
-        page2.gameObject.SetActive(false);
+        text.enableAutoSizing = true;
+        text.fontSizeMin = pageFontMin;
+        text.fontSizeMax = pageFontMax;
+        text.lineSpacing = pageLineSpacing;
+    }
+
+    /// <param name="page">Text knihy na levé stránce.</param>
+    /// <param name="facingPage">Text na pravé stránce (překlad); prázdný = pravá stránka se neukáže.</param>
+    public IEnumerator Play(string page, string facingPage)
+    {
+        page1Text.text = page;
+        bool facing = !string.IsNullOrEmpty(facingPage);
+        page2Text.text = facing ? facingPage : "";
+        page2.localScale = Vector3.one;
+        page2.gameObject.SetActive(facing);
         bookBody.anchoredPosition = Vector2.zero;
         bookBody.localRotation = Quaternion.identity;
         turnButton.gameObject.SetActive(true);
@@ -42,18 +58,7 @@ public class StoryBook : MonoBehaviour
         while (!turned) yield return null;
         turnButton.gameObject.SetActive(false);
 
-        // Otočení stránky: strana 2 se "rozloží" od hřbetu.
-        page2.gameObject.SetActive(true);
-        for (float t = 0f; t < 0.45f; t += Time.unscaledDeltaTime)
-        {
-            page2.localScale = new Vector3(Mathf.SmoothStep(0f, 1f, t / 0.45f), 1f, 1f);
-            yield return null;
-        }
-        page2.localScale = Vector3.one;
-
-        yield return new WaitForSecondsRealtime(glimpseSeconds);
-
-        // Mistr knihu vytrhne: škubnutí a odlet nahoru.
+        // Mistr knihu vytrhne hned, jak chce hráč otočit: škubnutí a odlet nahoru.
         Vector2 start = bookBody.anchoredPosition;
         for (float t = 0f; t < 0.2f; t += Time.unscaledDeltaTime)
         {
