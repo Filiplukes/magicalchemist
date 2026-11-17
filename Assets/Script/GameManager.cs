@@ -130,6 +130,55 @@ public class GameManager : MonoBehaviour
         imageOfCreatedPotionl.sprite = ResourceCache.Load<Sprite>("Potions/" + aktualRecept.name);
 }
 
+    // Série Divine/Legendary lektvarů za sebou. Prahy odpovídají hodnocení
+    // v RiseAndScalePotion.GetRating: Legendary (>= 80) a Divine (>= 65).
+    // - Každý další Legendary v sérii zvedne násobič: 1×, 2×, 4×, 6×, 8×, max 10×.
+    // - Každý další Divine v sérii přidá +5 bodů k bonusu: 0, +5, +10, … max +25.
+    // - Divine a Legendary se navzájem neruší, oba platí pro každý lektvar v sérii.
+    // - Cokoliv horšího než Divine (i rozbitý lektvar) sérii vynuluje.
+    // Body = body za recept × násobič + bonus (nejdřív se násobí).
+    private const int LegendaryQualityThreshold = 80;
+    private const int DivineQualityThreshold = 65;
+    private const int MaxLegendaryMultiplier = 10;
+    private const int DivineBonusStep = 5;
+    private const int MaxDivineBonus = 25;
+
+    private int legendaryMultiplier = 1;
+    private int divineBonus = 0;
+    private bool hadLegendary = false;
+    private bool hadDivine = false;
+
+    private int ApplyQualityStreak(int point, int quality)
+    {
+        if (quality >= LegendaryQualityThreshold)
+        {
+            if (hadLegendary)
+            {
+                // 1 → 2, pak po dvou: 4, 6, 8, 10.
+                int next = legendaryMultiplier == 1 ? 2 : legendaryMultiplier + 2;
+                legendaryMultiplier = Mathf.Min(next, MaxLegendaryMultiplier);
+            }
+            hadLegendary = true;
+        }
+        else if (quality >= DivineQualityThreshold)
+        {
+            // První Divine v sérii bonus ještě nedá, až každý další.
+            if (hadDivine)
+                divineBonus = Mathf.Min(divineBonus + DivineBonusStep, MaxDivineBonus);
+            hadDivine = true;
+        }
+        else
+        {
+            legendaryMultiplier = 1;
+            divineBonus = 0;
+            hadLegendary = false;
+            hadDivine = false;
+            return point;
+        }
+
+        return point * legendaryMultiplier + divineBonus;
+    }
+
     private IEnumerator ExecuteReceptSteps()
     {
         GetRandomRecept();
@@ -232,7 +281,7 @@ public class GameManager : MonoBehaviour
         }
         int quality = Mathf.RoundToInt(((float)point / maxPoints) * 100f);
         cauldronPotion.CreateCompletePotion(namePotion,quality);
-        totalScore = totalScore + point;
+        totalScore = totalScore + ApplyQualityStreak(point, quality);
         if (quality > 10)
         {
 
