@@ -7,6 +7,8 @@ public class TimerInGame : MonoBehaviour
     public float roundDuration = 120f;                // Délka kola v sekundách
     public TextMeshProUGUI timerText;                // TextMeshPro text pro zobrazení èasu
     public GameManager gameManager;
+    [Tooltip("Mód pøedaný do GameManager.EndGame (TimeMode = žebøíèek, Campaign = bez žebøíèku).")]
+    public string endGameMode = "TimeMode";
     private GameObject ad;
     private float timeMultiplier = 1f;
     private float speedModif = 120f;
@@ -67,7 +69,7 @@ public class TimerInGame : MonoBehaviour
         {
             timerText.text = "0";
         }
-        gameManager.EndGame("TimeMode");
+        gameManager.EndGame(endGameMode);
         if (ad != null) { ad.GetComponent<AdIns>().ShowInterstitialAd(); }
     }
 

@@ -1,0 +1,36 @@
+{
+  "herbs": [
+    "Silvarra",
+    "Virelen",
+    "Basil",
+    "Menthira",
+    "Frostria",
+    "Heparil",
+    "Gravecup",
+    "Lysanthia",
+    "Embercap",
+    "Emberroot",
+    "Wolfsbane",
+    "Spottella",
+    "Moonpetal",
+    "Lumenveil",
+    "Aurabloom",
+    "Blessed Blood",
+    "Mandrake"
+  ],
+  "recepts": [
+    "Calming Tonic",
+    "Fever Breaker",
+    "Bone Mender",
+    "Sleep Draught",
+    "Ironskin Elixir",
+    "Beastbane Oil",
+    "Battle Fervor",
+    "Night Eye Drops",
+    "Lockbreaker Acid",
+    "Silent Step",
+    "Featherfall Draught",
+    "Moonlit Cure",
+    "The Usurper's Draught"
+  ]
+}

@@ -1,0 +1,844 @@
+{
+  "characters": [
+    {
+      "id": "wren",
+      "name": "Wren",
+      "portrait": "Light019",
+      "side": "right"
+    },
+    {
+      "id": "aldric",
+      "name": "Master Aldric",
+      "portrait": "Light018",
+      "side": "left"
+    },
+    {
+      "id": "maren",
+      "name": "Sister Maren",
+      "portrait": "Light011",
+      "side": "left"
+    },
+    {
+      "id": "torvin",
+      "name": "Torvin",
+      "portrait": "dark021",
+      "side": "left"
+    },
+    {
+      "id": "corin",
+      "name": "Envoy Corin",
+      "portrait": "Light123",
+      "side": "left"
+    },
+    {
+      "id": "brask",
+      "name": "Sergeant Brask",
+      "portrait": "Light076",
+      "side": "left"
+    },
+    {
+      "id": "nim",
+      "name": "Nim",
+      "portrait": "Light081",
+      "side": "left"
+    },
+    {
+      "id": "odo",
+      "name": "Odo",
+      "portrait": "Light147",
+      "side": "left"
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "chapter": "Chapter 1 · The Gutter",
+      "title": "The Gutter",
+      "background": "Street",
+      "goal": "Brew your first potion.",
+      "intro": [
+        {
+          "who": "aldric",
+          "text": "You there. How long since you last ate?",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "…Three days. Maybe four.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "The street will kill you before winter does.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "I need hands in my workshop. Follow me, and you'll never starve again.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "What do I have to do?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Sweep. Carry. Obey. And never touch my books.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Watch closely. Silvarra first, then Virelen.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Now trace the sign of Life on the scroll. Steady hand.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "wren",
+          "text": "It's… glowing.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "A Health Potion. Nothing special. Now go and scrub the floor.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "chapter": "Chapter 1 · The Gutter",
+      "title": "Forbidden Pages",
+      "background": "Workshop",
+      "goal": "Brew 2 potions by trial and error.",
+      "intro": [
+        {
+          "who": "wren",
+          "text": "He's asleep. Just one try…",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "If I mix what he mixed… maybe I can learn too.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "wren",
+          "text": "What's this book? It was hidden under the table.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "\"The Usurper's Draught\"…?",
+          "action": ""
+        },
+        {
+          "who": "",
+          "text": "",
+          "action": "book"
+        },
+        {
+          "who": "aldric",
+          "text": "WHAT ARE YOU DOING?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "That book is not for a gutter rat's eyes!",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I'm sorry! I only wanted to learn!",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Learn? You can barely read. This would burn you alive.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Get out. Now.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "chapter": "Chapter 1 · The Gutter",
+      "title": "Caught Red-Handed",
+      "background": "Workshop",
+      "goal": "Brew 3 potions in 90 seconds.",
+      "intro": [
+        {
+          "who": "wren",
+          "text": "He hasn't spoken to me in two days.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "If I make something on my own… maybe he'll forgive me.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "aldric",
+          "text": "You brewed this? Alone?",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I… yes. I'm sorry about the book.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Hm. Clumsy, but potent. Unusually potent.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Very well. Here, a book you are allowed to read. Basic recipes.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "From tomorrow, you are my apprentice.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "chapter": "Chapter 2 · The Apprentice",
+      "title": "The Apprentice",
+      "background": "Workshop",
+      "goal": "Reach 600 points in 120 seconds.",
+      "intro": [
+        {
+          "who": "aldric",
+          "text": "Fire, frost and light. The three tempers of every brew.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Speed matters, but precision matters more.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "aldric",
+          "text": "Better. Your hand is learning faster than your head.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "chapter": "Chapter 2 · The Apprentice",
+      "title": "A Drop of Blood",
+      "background": "Workshop",
+      "goal": "Brew 5 potions of Divine quality or better.",
+      "intro": [
+        {
+          "who": "aldric",
+          "text": "Give me your hand.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Ow! What was that for?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "A test. An alchemist must know what flows in his apprentice's veins.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Nothing to worry about. Back to work.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "aldric",
+          "text": "Touched by the Light… after all these years.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Did you say something, Master?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Only that you're ready for real work. The clinic needs hands.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "chapter": "Chapter 3 · The Clinic",
+      "title": "Sister Maren's Clinic",
+      "background": "Clinic",
+      "goal": "Treat 6 patients. You have 3 lives.",
+      "intro": [
+        {
+          "who": "maren",
+          "text": "So you're Aldric's new apprentice. Good. We're drowning here.",
+          "action": ""
+        },
+        {
+          "who": "maren",
+          "text": "Border skirmishes again. Humans and Beastfolk at each other's throats.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Over what?",
+          "action": ""
+        },
+        {
+          "who": "maren",
+          "text": "Fear, mostly. Nobody remembers who struck first.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "maren",
+          "text": "Not bad. Your potions heal faster than mine. Strange.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "chapter": "Chapter 3 · The Clinic",
+      "title": "The Wolf at the Door",
+      "background": "Clinic",
+      "goal": "Treat 8 patients.",
+      "intro": [
+        {
+          "who": "torvin",
+          "text": "…Please. I won't hurt anyone.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "You're… Beastfolk.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "I'm bleeding. Does it matter?",
+          "action": ""
+        },
+        {
+          "who": "maren",
+          "text": "Not in my clinic, it doesn't. Wren, help him.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "torvin",
+          "text": "Thank you, little alchemist. I won't forget this.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "Tell your master… no. Never mind.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "chapter": "Chapter 3 · The Clinic",
+      "title": "War Breaks Out",
+      "background": "Clinic",
+      "goal": "Survive 150 seconds of wounded.",
+      "intro": [
+        {
+          "who": "maren",
+          "text": "The border fort has fallen. It's war.",
+          "action": ""
+        },
+        {
+          "who": "maren",
+          "text": "Every bed is full. Brew, Wren. Brew like your life depends on it.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "aldric",
+          "text": "The army has asked for you. They need an alchemist at the front.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Me? Why not you, Master?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "My hands are… not what they were. Go.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "chapter": "Chapter 4 · The War",
+      "title": "The Front Line",
+      "background": "WarCamp",
+      "goal": "Reach 1200 points in 150 seconds.",
+      "intro": [
+        {
+          "who": "brask",
+          "text": "You're the kid alchemist? Hope you're faster than you look.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "The beasts hit at dawn. My men need iron in their skin.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "brask",
+          "text": "We held the line. You've earned your rations.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "chapter": "Chapter 4 · The War",
+      "title": "The Same Seal",
+      "background": "WarCamp",
+      "goal": "Brew 6 multi-step potions.",
+      "intro": [
+        {
+          "who": "brask",
+          "text": "Beastbane oil. Coats a blade so the wounds won't close.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "That's… cruel.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "So is war. Brew it.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "wren",
+          "text": "Sergeant, this enemy poison flask… it bears a seal.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "So? Beast filth.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "It's the same seal that's on our oil. An alchemist's seal.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Probably stole it. Don't think so much, kid.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "chapter": "Chapter 4 · The War",
+      "title": "Taken",
+      "background": "WarCamp",
+      "goal": "Survive 120 seconds. The poison spreads faster.",
+      "intro": [
+        {
+          "who": "aldric",
+          "text": "Wren. I came to see the front for myself.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Master, you look so pale…",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Age, child. Age and… unfinished work.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "torvin",
+          "text": "Aldric of the Tower. You're coming with us.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Wren! Help me!",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "Don't follow us, child. You don't know what he is.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "MASTER!",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "chapter": "Chapter 5 · The Dungeon",
+      "title": "Into the Dark",
+      "background": "Dungeon",
+      "goal": "Fill 6 orders for the warband.",
+      "intro": [
+        {
+          "who": "brask",
+          "text": "The beasts dragged your master to their fortress. We're going in.",
+          "action": ""
+        },
+        {
+          "who": "nim",
+          "text": "It's pitch black down there. I'll need eyes like a cat.",
+          "action": ""
+        },
+        {
+          "who": "odo",
+          "text": "And the gates are warded. Something to eat through iron, alchemist.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "nim",
+          "text": "We're through the first gate. Your brews actually work.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "chapter": "Chapter 5 · The Dungeon",
+      "title": "Lies of the Captors",
+      "background": "Dungeon",
+      "goal": "Fill 8 orders. You have 3 lives.",
+      "intro": [
+        {
+          "who": "odo",
+          "text": "Guards ahead. We need to move without a sound.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Voices echo from behind a door…",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "If the boy comes, we tell him the truth.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "That Aldric lit this war? He'll never believe it.",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "Then he'll die believing a lie.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "wren",
+          "text": "They said Master started the war.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Of course they did. Beasts lie, kid. Keep moving.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "…Right. Of course.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "chapter": "Chapter 5 · The Dungeon",
+      "title": "The Last Gate",
+      "background": "Dungeon",
+      "goal": "Reach 1500 points in 150 seconds.",
+      "intro": [
+        {
+          "who": "brask",
+          "text": "One last gate. Behind it, your master.",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Whatever happens in there, we've got your back.",
+          "action": ""
+        }
+      ],
+      "outro": [
+        {
+          "who": "torvin",
+          "text": "Wren, stop! You saved my life once, now listen to me!",
+          "action": ""
+        },
+        {
+          "who": "brask",
+          "text": "Cut him down!",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "Aldric needs your blood! Don't give him what he asks for!",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Torvin vanishes into the dark.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "…My blood?",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "chapter": "Chapter 6 · The Usurper",
+      "title": "The Usurper's Draught",
+      "background": "Dungeon",
+      "goal": "Brew one last potion.",
+      "intro": [
+        {
+          "who": "aldric",
+          "text": "Wren… you came. I knew you would.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Master! Are you hurt?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "I'm dying, child. They poisoned me.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "There is one cure. The recipe from my book. You remember it?",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "The Usurper's Draught…",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "It needs a drop of your blood. Please. Save me.",
+          "action": ""
+        },
+        {
+          "who": "",
+          "text": "",
+          "action": "choice"
+        }
+      ],
+      "outro": []
+    }
+  ],
+  "endings": [
+    {
+      "id": "failure",
+      "title": "Broken Mind",
+      "achievement": "ending_failure",
+      "lines": [
+        {
+          "who": "aldric",
+          "text": "No… no, it's wrong… it's…",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Master? MASTER!",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "The old alchemist breathes his last.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I was too slow. Too clumsy. I killed him.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Again. Let me try again. Silvarra first… then…",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Wren never left the dungeon. Some say they still brew there, in the dark.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": "obedience",
+      "title": "The Good Apprentice",
+      "achievement": "ending_obedience",
+      "lines": [
+        {
+          "who": "aldric",
+          "text": "Yes… YES! I can feel the years falling away!",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Master, you're… young?",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Forty years I searched for blood touched by the Light. And it walked into my workshop, starving.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "You started the war. Torvin was telling the truth.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "War brings blood, gold, and chaos. Perfect cover for an old man's work.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I… can't… stand…",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "Your blood is drained, child. You were a good apprentice. Thank you.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "The Usurper rose that night. The war never ended.",
+          "action": ""
+        }
+      ]
+    },
+    {
+      "id": "betrayal",
+      "title": "Root of Betrayal",
+      "achievement": "ending_betrayal",
+      "lines": [
+        {
+          "who": "aldric",
+          "text": "Yes… the power… The world will kneel. Humans, beasts, every will bound to mine!",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "And it was all built on your blood, my foolish little—",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "What… what did you put in it?",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "Mandrake. Your book warned me. You just never let me finish reading.",
+          "action": ""
+        },
+        {
+          "who": "aldric",
+          "text": "NO! My power… it's leaving me!",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "It's over, Aldric.",
+          "action": ""
+        },
+        {
+          "who": "torvin",
+          "text": "You'll answer to humans and Beastfolk alike.",
+          "action": ""
+        },
+        {
+          "who": "wren",
+          "text": "I helped them kill the only people trying to stop this war.",
+          "action": ""
+        },
+        {
+          "who": "corin",
+          "text": "Then help us end it now.",
+          "action": ""
+        },
+        {
+          "who": "narrator",
+          "text": "Aldric was tried before both peoples. And for the first time in years, they sat at one table.",
+          "action": ""
+        }
+      ]
+    }
+  ],
+  "bookPage1": "<align=center><b>THE USURPER'S DRAUGHT</b></align>\n\n<i>To take back what the years have stolen.\nTo bind every will to one.</i>\n\n<b>I.</b> Silvarra and Virelen, beneath the sign of Life.\n\n<b>II.</b> Moonpetal and … <color=#7a6a55><i>(the corner is torn away)</i></color> … the sign of Dark.\n\n<b>III.</b> The blood of one touched by the Light,\nsealed with …",
+  "bookPage2": "… Gravecup, to seal the blood beneath the sign of Blood.\n\nNever let Mandrake take its place, for the rite would turn upon the one who",
+  "allEndingsAchievement": "three_fates"
+}

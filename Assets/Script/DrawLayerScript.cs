@@ -78,7 +78,10 @@ public class SpellDrawScript : MonoBehaviour,
         { "Earth", 3 },
         { "Life", 1 },
         { "Light", 1 },
-        { "Time", 1 }
+        { "Time", 1 },
+        { "Blood", 2 },   // kruh + kapka
+        { "Venom", 1 },   // had (hlava je napojená na tělo, jeden tah)
+        { "Spirit", 1 }   // spirála
     };
 
     readonly Dictionary<string, Color> spellColor = new Dictionary<string, Color> {
@@ -90,7 +93,10 @@ public class SpellDrawScript : MonoBehaviour,
         { "Earth", new Color(0.59f, 0.29f, 0f) },     // brown
         { "Life", Color.green },
         { "Light", Color.white },
-        { "Time", new Color(1f, 0.65f, 0f) }          // orange
+        { "Time", new Color(1f, 0.65f, 0f) },         // orange
+        { "Blood", new Color(0.6f, 0f, 0.05f) },      // dark red
+        { "Venom", new Color(0.45f, 0.85f, 0.1f) },   // toxic green
+        { "Spirit", new Color(0.8f, 0.7f, 1f) }       // pale violet
     };
 
     void Awake()

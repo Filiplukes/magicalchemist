@@ -1,0 +1,84 @@
+CHYBĚJÍCÍ A DOČASNÁ GRAFIKA PRO KAMPAŇ
+======================================
+
+Obrázek nahradíš tak, že novým souborem přepíšeš ten starý na stejné cestě
+a se stejným názvem (včetně mezer a velkých písmen). Unity si ho samo
+přenačte a všechny odkazy zůstanou funkční. Formát PNG s průhledným pozadím,
+pokud není uvedeno jinak.
+
+
+1) CHYBÍ ÚPLNĚ (teď je tam černý čtverec)
+------------------------------------------
+
+Assets/Resources/Herbs/Mandrake.png
+    Kořen mandragory, ideálně s náznakem lidské postavy. Ve finále je to
+    "podezřelá" položka, má působit temně a trochu znepokojivě.
+    Velikost: cca 600×600, průhledné pozadí, stejný kreslený styl
+    jako ostatní byliny (silné tmavé obrysy, měkké stínování).
+
+Assets/Resources/Campaign/Book.png
+    Otevřená stará kniha (dvoustrana), prázdné pergamenové stránky,
+    roh pravé stránky utržený. Text se do ní bude psát ve hře.
+    Velikost: cca 2048×1280 (na šířku), pozadí může být průhledné.
+
+Assets/Resources/Campaign/Backgrounds/Street.png     (kapitola 1, noční ulice / chudinská čtvrť)
+Assets/Resources/Campaign/Backgrounds/Clinic.png     (kapitola 3, klinika s lůžky)
+Assets/Resources/Campaign/Backgrounds/WarCamp.png    (kapitola 4, válečný tábor, stany, ohně)
+Assets/Resources/Campaign/Backgrounds/Dungeon.png    (kapitola 5–6, kamenná kobka, pochodně)
+    Pozadí kapitol (volitelné, jinak se použije dílna).
+    Velikost: stejná jako pozadí v Assets/Resources/Rooms, styl jako Room0.
+
+
+2) VYGENEROVANÉ PŘEBARVENÍM (fungují, ale můžeš je nahradit hezčími)
+---------------------------------------------------------------------
+
+Lektvary, Assets/Resources/Potions/ (velikost cca 300–390 px):
+    Fever Breaker.png           přebarvená Lightning Tincture (mátově zelená)
+    Bone Mender.png             přebarvený Rejuvenation Brew (kostěně šedá)
+    Battle Fervor.png           přebarvený Flame Elixir (krvavě červená koule)
+    Night Eye Drops.png         přebarvený Love Draught (jantarová)
+    Silent Step.png             přebarvený Shadow Syrup (fialová)
+    Featherfall Draught.png     přebarvená Frost Essence (bledě modrá)
+    Moonlit Cure.png            přebarvený Wisdom Serum (levandulová)
+    The Usurper's Draught.png   přebarvený Mana Potion (tmavě krvavá)
+                                -> doporučuji nahradit něčím výjimečným, je to finální lektvar
+
+Lektvary, kopie nepoužitých obrázků (originály elixir0/3/6/7, potion3 zůstaly):
+    Calming Tonic.png           = potion3
+    Sleep Draught.png           = elixir6
+    Ironskin Elixir.png         = elixir0
+    Beastbane Oil.png           = elixir7
+    Lockbreaker Acid.png        = elixir3
+
+Byliny, Assets/Resources/Herbs/ (velikost cca 600×600):
+    Wolfsbane.png               přebarvený Aurabloom (fialové květy)
+                                -> dost se podobá Aurabloomu, ideálně nahradit
+    Moonpetal.png               přebarvená Frostria (stříbřitě levandulová)
+                                -> dost se podobá Frostrii, ideálně nahradit
+    Blessed Blood.png           kapka ze symbolu Water vyplněná červeně
+
+
+3) NOVÁ KOUZLA (hotová, jen pro přehled)
+----------------------------------------
+
+Symboly, Assets/Resources/Spells/ (600×600, černá čára na průhledném):
+    blood.png     kapka v kruhu (2 tahy)
+    venom.png     had (1 tah)
+    spirit.png    spirála (1 tah)
+
+Zvuky, Assets/Resources/SoundsSpells/ (upravené stávající zvuky):
+    Blood.wav     = Dark.wav, hlubší a pomalejší
+    Venom.wav     = Air.wav, vyšší a rychlejší
+    Spirit.wav    = Light.wav, hlubší s ozvěnou
+    -> pokud seženeš lepší zvuky, stačí přepsat soubory
+
+Efekty: objekty Blood, Venom, Spirit ve scénách TimeMode a LifeMode
+(kopie efektů Fire, Dark a Air v jiné barvě).
+
+
+4) PORTRÉTY PRO DIALOGY
+-----------------------
+
+Postavy kampaně mají navržené portréty z balíku Fantasy Character Portraits
+(viz Design/Campaign.md). Wren = Light019, ten je teď mezi zákazníky
+v Assets/Resources/Customers, při stavbě kampaně se přesune.

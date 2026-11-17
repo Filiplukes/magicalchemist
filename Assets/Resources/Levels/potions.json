@@ -121,6 +121,172 @@
           "element": "Water"
         }
       ]
+    },
+    {
+      "name": "Calming Tonic",
+      "description": "Soothes nerves and quiets a racing heart.",
+      "steps": [
+        {
+          "herbs": ["Basil", "Menthira"],
+          "element": "Water"
+        }
+      ]
+    },
+    {
+      "name": "Fever Breaker",
+      "description": "Cools the blood and breaks the worst fever.",
+      "steps": [
+        {
+          "herbs": ["Frostria", "Basil"],
+          "element": "Life"
+        }
+      ]
+    },
+    {
+      "name": "Bone Mender",
+      "description": "Knits broken bones overnight.",
+      "steps": [
+        {
+          "herbs": ["Heparil", "Silvarra"],
+          "element": "Earth"
+        },
+        {
+          "herbs": ["Virelen"],
+          "element": "Life"
+        }
+      ]
+    },
+    {
+      "name": "Sleep Draught",
+      "description": "A dreamless sleep, deep enough for surgery.",
+      "steps": [
+        {
+          "herbs": ["Gravecup", "Lysanthia"],
+          "element": "Dark"
+        }
+      ]
+    },
+    {
+      "name": "Ironskin Elixir",
+      "description": "Hardens skin against blade and claw.",
+      "steps": [
+        {
+          "herbs": ["Heparil", "Embercap"],
+          "element": "Earth"
+        },
+        {
+          "herbs": ["Emberroot"],
+          "element": "Fire"
+        }
+      ]
+    },
+    {
+      "name": "Beastbane Oil",
+      "description": "Coats a blade so beast wounds won't close.",
+      "steps": [
+        {
+          "herbs": ["Wolfsbane", "Embercap"],
+          "element": "Fire"
+        },
+        {
+          "herbs": ["Spottella"],
+          "element": "Venom"
+        }
+      ]
+    },
+    {
+      "name": "Battle Fervor",
+      "description": "Fearless strength for one desperate charge.",
+      "steps": [
+        {
+          "herbs": ["Embercap", "Emberroot"],
+          "element": "Bolt"
+        },
+        {
+          "herbs": ["Virelen"],
+          "element": "Life"
+        }
+      ]
+    },
+    {
+      "name": "Night Eye Drops",
+      "description": "See in the dark like a cat.",
+      "steps": [
+        {
+          "herbs": ["Moonpetal", "Lumenveil"],
+          "element": "Light"
+        }
+      ]
+    },
+    {
+      "name": "Lockbreaker Acid",
+      "description": "Eats through iron and warded locks.",
+      "steps": [
+        {
+          "herbs": ["Embercap", "Spottella"],
+          "element": "Fire"
+        },
+        {
+          "herbs": ["Frostria"],
+          "element": "Water"
+        }
+      ]
+    },
+    {
+      "name": "Silent Step",
+      "description": "Footsteps make no sound.",
+      "steps": [
+        {
+          "herbs": ["Gravecup", "Moonpetal"],
+          "element": "Spirit"
+        },
+        {
+          "herbs": ["Aurabloom"],
+          "element": "Air"
+        }
+      ]
+    },
+    {
+      "name": "Featherfall Draught",
+      "description": "Fall from any height like a leaf.",
+      "steps": [
+        {
+          "herbs": ["Aurabloom", "Moonpetal"],
+          "element": "Air"
+        }
+      ]
+    },
+    {
+      "name": "Moonlit Cure",
+      "description": "Purges beast poison from the blood.",
+      "steps": [
+        {
+          "herbs": ["Moonpetal", "Silvarra"],
+          "element": "Life"
+        },
+        {
+          "herbs": ["Lumenveil"],
+          "element": "Spirit"
+        }
+      ]
+    },
+    {
+      "name": "The Usurper's Draught",
+      "description": "To take back what the years have stolen.",
+      "steps": [
+        {
+          "herbs": ["Silvarra", "Virelen"],
+          "element": "Life"
+        },
+        {
+          "herbs": ["Moonpetal", "Spottella"],
+          "element": "Dark"
+        },
+        {
+          "herbs": ["Blessed Blood", "Gravecup"],
+          "element": "Blood"
+        }
+      ]
     }
   ]
 }

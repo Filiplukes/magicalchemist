@@ -73,6 +73,6 @@ public class MenuController : MonoBehaviour
     public void LoadCampaign()
      {
         
-          SceneLoader.Load("Campaign");
+          SceneLoader.Load("CampaignStory"); // pøíbìh; testovací scéna s recepty je "Campaign"
     }
 }

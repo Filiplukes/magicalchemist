@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-guid: 758826b037ba390409fdd9c5dc19d319
-AssetOrigin:
-  serializedVersion: 1
-  productId: 258129
-  packageName: Fantasy Character Portraits - Dark and Light
-  packageVersion: 1.0
-  assetPath: Assets/Fantasy Character Portraits - Dark and Light/Portraits/Light081.png
-  uploadId: 649444
+guid: fc1fc458e916c5a47a541553fcc8b39f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -9208202679118285600
+    second: Sleep Draught_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,11 +68,11 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,9 +109,44 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Sleep Draught_0
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 47
+        width: 230
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e4ba535374e53080800000000000000
+      internalID: -9208202679118285600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -129,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Sleep Draught_0: -9208202679118285600
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

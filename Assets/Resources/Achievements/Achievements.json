@@ -61,6 +61,30 @@
         "name": "Grand Alchemage",
         "description": "You've unlocked all other achievements. Your name echoes through potion history.",
         "unlocked": false
+      },
+      {
+        "id": "ending_failure",
+        "name": "Broken Mind",
+        "description": "You failed your master when it mattered most.",
+        "unlocked": false
+      },
+      {
+        "id": "ending_obedience",
+        "name": "The Good Apprentice",
+        "description": "You did exactly as you were told. It cost you everything.",
+        "unlocked": false
+      },
+      {
+        "id": "ending_betrayal",
+        "name": "Root of Betrayal",
+        "description": "You finally finished reading the book.",
+        "unlocked": false
+      },
+      {
+        "id": "three_fates",
+        "name": "Three Fates",
+        "description": "You have seen every way the story can end.",
+        "unlocked": false
       }
     ]
 }

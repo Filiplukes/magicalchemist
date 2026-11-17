@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public GameObject poisonEffekt;
     [Tooltip("Zákazník, který si objednává aktuální recept. Může být prázdné.")]
     public CustomerScript customer;
+    [Tooltip("Recepty jdou popořadě místo náhodně (testovací kampaň, ať se vystřídají všechny).")]
+    public bool sequentialRecipes = false;
+    private int nextReceptIndex = 0;
 
     private int totalFlowersThrown;
     private int perfectTrace;
@@ -128,8 +131,18 @@ public class GameManager : MonoBehaviour
 
     private void GetRandomRecept()
     {
-        int index = Random.Range(0, allRecepts.Count);
+        int index;
+        if (sequentialRecipes)
+        {
+            index = nextReceptIndex % allRecepts.Count;
+            nextReceptIndex++;
+        }
+        else
+        {
+            index = Random.Range(0, allRecepts.Count);
+        }
         aktualRecept = allRecepts[index];
+        if (setLevel != null) setLevel.PrepareHerbsFor(aktualRecept);
         textNameOfCreatedPotion.text = aktualRecept.name;
         imageOfCreatedPotionl.sprite = ResourceCache.Load<Sprite>("Potions/" + aktualRecept.name);
         if (customer != null) customer.Arrive(aktualRecept);
@@ -336,7 +349,10 @@ public class GameManager : MonoBehaviour
            
         }
         var result = Instantiate(resultScore);
-        if (mode == "TimeMode") {
+        if (mode == "Campaign") {
+            // Kampaň do žebříčku nepíše.
+        }
+        else if (mode == "TimeMode") {
             await LeaderBoardNonDestroyObject.Instance.AddScoreAsync(totalScore, "Time_Score_Leaderboard");
         } 
         else { 
