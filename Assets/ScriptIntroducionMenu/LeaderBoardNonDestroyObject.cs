@@ -108,9 +108,11 @@ public class LeaderBoardNonDestroyObject : MonoBehaviour
 
     public async Task SetNameForScore()
     {
-        string playerName = PlayerPrefs.GetString("PlayerName");
+        // Ocisteni opravi i jmena ulozena starsi verzi (s mezerou je Unity odmitla
+        // a hrac zustal v zebricku s nahodnym jmenem). Zakazane jmeno se nenahraje.
+        string playerName = NameRules.Sanitize(PlayerPrefs.GetString("PlayerName"));
 
-        if (!string.IsNullOrWhiteSpace(playerName))
+        if (!string.IsNullOrWhiteSpace(playerName) && NameRules.IsAllowed(playerName))
         {
             try
             {

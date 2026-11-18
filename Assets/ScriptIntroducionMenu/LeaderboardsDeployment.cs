@@ -75,7 +75,7 @@ class LeaderboardsDeployment : MonoBehaviour
             {   
                 var entry = entries[i];
                 string name = string.IsNullOrEmpty(entry.PlayerName) ? entry.PlayerId : entry.PlayerName;
-                ListTextScore[i].text = $"{name.Split('#')[0]}";
+                ListTextScore[i].text = NameRules.ForDisplay(name); // bez #cisla, sprosta jmena schovana, dlouha zkracena
                 ListScore[i].text = $"{entry.Score}";
                 Places[i].text = $"{entry.Rank +1}";
             }
