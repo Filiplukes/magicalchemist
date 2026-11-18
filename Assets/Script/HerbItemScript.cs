@@ -2,13 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
-public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
+    IInitializePotentialDragHandler, IDragHandler
 {
     public string herbName; // třeba "Virelen"
 
-    private bool isDragging = false;
+    // Prst (nebo myš), který bylinku drží. Ostatní dotyky se ignorují.
+    private const int NoPointer = int.MinValue;
+    private int activePointerId = NoPointer;
     private GameObject currentHerbObj;
     private RectTransform canvasRectTransform;
     private RectTransform currentHerbRect;
@@ -30,6 +32,9 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        // Bylinku už drží jiný prst: druhý dotyk nesmí vytvořit další ani ji přebrat.
+        if (activePointerId != NoPointer) return;
+
         currentHerbObj = Instantiate(ResourceCache.Load<GameObject>("Prefabs/Herb"));
         currentHerbRect = currentHerbObj.GetComponent<RectTransform>();
 
@@ -65,19 +70,43 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
             }
         }
 
-        isDragging = true;
+        activePointerId = eventData.pointerId;
+        MoveHerbTo(eventData);
+    }
+
+    // Bylinka má jet za prstem hned, ne až po prahu tažení EventSystemu.
+    public void OnInitializePotentialDrag(PointerEventData eventData)
+    {
+        eventData.useDragThreshold = false;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (eventData.pointerId != activePointerId) return;
+        MoveHerbTo(eventData);
+    }
+
+    private void MoveHerbTo(PointerEventData eventData)
+    {
+        if (currentHerbRect == null || canvasRectTransform == null) return;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, eventData.position, null, out Vector2 localPos))
+            currentHerbRect.localPosition = localPos;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        isDragging = false;
+        if (eventData.pointerId != activePointerId) return;
+        activePointerId = NoPointer;
 
         if (currentHerbObj != null)
         {
-            Vector3 cauldornScreenPos = Camera.main.WorldToScreenPoint(cauldronRenderer.transform.position);
-            Vector3 uiScreenPos = Touchscreen.current.primaryTouch.position.ReadValue();
-
-            float distance = Vector2.Distance(uiScreenPos, cauldornScreenPos);
+            // Bez kotle (nebo kamery) nejde trefit, bylinka se jen zahodí.
+            float distance = float.MaxValue;
+            if (cauldronRenderer != null && Camera.main != null)
+            {
+                Vector3 cauldornScreenPos = Camera.main.WorldToScreenPoint(cauldronRenderer.transform.position);
+                distance = Vector2.Distance(eventData.position, cauldornScreenPos);
+            }
 
             if (distance < 300f)
             {
@@ -102,27 +131,16 @@ public class HerbItemScript : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         }
     }
 
-    void Update()
+    // Konec hry nebo zničení panelu během tažení: bylinka nesmí zůstat viset na obrazovce.
+    void OnDisable()
     {
-        if (isDragging && currentHerbObj != null)
+        activePointerId = NoPointer;
+        if (currentHerbObj != null)
         {
-
-            Vector2 touchPos;
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
-            {
-                // Získání pozice dotyku
-                Vector2 screenPos = Touchscreen.current.primaryTouch.position.ReadValue();
-
-                // Převod na lokální pozici v rámci canvasu
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, null, out touchPos))
-                {
-                    currentHerbRect.localPosition = touchPos;
-                }
-            }
+            Destroy(currentHerbObj);
+            currentHerbObj = null;
         }
     }
-
-
 
     IEnumerator FlyToTargetAndShrink(RectTransform uiObj, Vector3 targetWorldPos)
     {
