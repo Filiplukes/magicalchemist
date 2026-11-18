@@ -20610,7 +20610,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 50, y: 76.9}
-  m_SizeDelta: {x: 650, y: 50}
+  m_SizeDelta: {x: 650, y: 95}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &616161698
 MonoBehaviour:
@@ -20662,12 +20662,12 @@ MonoBehaviour:
   m_fontSize: 73
   m_fontSizeBase: 73
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 36
+  m_fontSizeMax: 73
   m_fontStyle: 1
   m_HorizontalAlignment: 4
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -20676,7 +20676,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -20698,7 +20698,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -46.16557, z: 0, w: -46.165398}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -38479,6 +38479,7 @@ MonoBehaviour:
   loadedRecepts: []
   levelFile: Levels/levelTime
   extraHerbSwaps: 2
+  addUnlockedCampaignRecipes: 1
 --- !u!4 &1927181169
 Transform:
   m_ObjectHideFlags: 0
@@ -38518,6 +38519,8 @@ MonoBehaviour:
   poisonEffekt: {fileID: 357047006}
   customer: {fileID: 1733780282}
   sequentialRecipes: 0
+  poisonOnSuccess: 0.05
+  poisonOnFailure: 0.15
 --- !u!114 &1927181171
 MonoBehaviour:
   m_ObjectHideFlags: 0

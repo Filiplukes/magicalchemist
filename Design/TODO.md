@@ -46,6 +46,16 @@ Podle priority:
    Když přijde na řadu v TimeMode/LifeMode, interstitial se ten konec neukáže.
    Okno jde vidět jen ve hře z Google Play (interní testování), ne v buildu nahraném přes kabel.
 
+9. **Prohlídka hry 18. 11.** HOTOVO:
+   - Jména v žebříčku: `NameRules` (mezery → podtržítko, max. 16 znaků, filtr sprostých slov).
+     Unity jméno s mezerou odmítala, hráč pak měl náhodné jméno. Opraví se i staré uložené
+     jméno při dalším spuštění. Sprostá jména se v žebříčku ukazují jako „Alchemist“.
+   - Žebříček: dlouhá jména zkrácená „…“, mezera před skóre.
+   - Achievementy: název na jeden řádek (zmenší se), nepřetéká přes ikonu a okraj.
+   - Název receptu v HUD (TimeMode, LifeMode, Campaign): jeden řádek, zmenší se.
+   - Kniha receptů: tmavé pozadí přes menu, tlačítka menu pod ní nejdou stisknout.
+   - Nechané být: `AdIns` má skutečné ID i ve vývojových buildech (neklikat na vlastní reklamy).
+
 ## Shrnutí hodnocení
 
 Silné: originální jádro (byliny + obkreslování run), hloubka (24 receptů, 12 živlů,
