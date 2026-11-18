@@ -17,9 +17,9 @@ Assets/Resources/Herbs/Mandrake.png
     jako ostatní byliny (silné tmavé obrysy, měkké stínování).
 
 Assets/Resources/Campaign/Book.png
-    Otevřená stará kniha (dvoustrana), prázdné pergamenové stránky,
-    roh pravé stránky utržený. Text se do ní bude psát ve hře.
-    Velikost: cca 2048×1280 (na šířku), pozadí může být průhledné.
+    VYŘEŠENO: černý obrázek slouží jen jako tmavá deska knihy, stránky jsou
+    pergameny "UI board Large  parchment" (objekty Page1/Page2 v CampaignStory).
+    Nahradit ho jde volitelně (deska/obálka 2360×1440), není to nutné.
 
 Assets/Resources/Campaign/Backgrounds/Street.png     (kapitola 1, noční ulice / chudinská čtvrť)
 Assets/Resources/Campaign/Backgrounds/Clinic.png     (kapitola 3, klinika s lůžky)
