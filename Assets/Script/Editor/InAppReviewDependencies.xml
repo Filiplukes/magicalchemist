@@ -1,0 +1,11 @@
+<dependencies>
+  <!-- Google Play In-App Review, používá ho Assets/Script/InAppReview.cs.
+       External Dependency Manager ho zapíše do Plugins/Android/mainTemplate.gradle. -->
+  <androidPackages>
+    <androidPackage spec="com.google.android.play:review:2.0.2">
+      <repositories>
+        <repository>https://maven.google.com/</repository>
+      </repositories>
+    </androidPackage>
+  </androidPackages>
+</dependencies>

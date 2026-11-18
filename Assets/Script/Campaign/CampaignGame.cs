@@ -307,8 +307,10 @@ public class CampaignGame : MonoBehaviour
         // Domů = závěrečný dialog a výběr levelů, Další = závěrečný dialog a hned další level.
         var board = ShowBoard("Level complete!", $"{level.id}. {level.title}");
         board.SetGems(game.TotalGems);
+        board.OfferRewardedGems(game.TotalGems, "2×");
         bool hasNext = CampaignController.NextLevel(data, level) != null;
         board.SetButtons(home: true, restart: false, next: hasNext, play: false);
+        InAppReview.OnGameFinished(); // výhra je dobrá chvíle požádat o hodnocení
     }
 
     private void Lose(string reason)

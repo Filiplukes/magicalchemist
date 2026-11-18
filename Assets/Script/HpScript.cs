@@ -23,7 +23,8 @@ public class HpScript : MonoBehaviour
     void EndRound()
     {
         gameManager.EndGame("LifeMode");
-        if (ad != null) { ad.GetComponent<AdIns>().ShowInterstitialAd(); }
+        // Kdyz na konci hry prijde rada na hodnoceni, reklama se tentokrat neukaze.
+        if (!InAppReview.OnGameFinished() && ad != null) { ad.GetComponent<AdIns>().ShowInterstitialAd(); }
     }
 
     public void AddLife() {

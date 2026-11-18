@@ -70,7 +70,8 @@ public class TimerInGame : MonoBehaviour
             timerText.text = "0";
         }
         gameManager.EndGame(endGameMode);
-        if (ad != null) { ad.GetComponent<AdIns>().ShowInterstitialAd(); }
+        // Kdyz na konci hry prijde rada na hodnoceni, reklama se tentokrat neukaze.
+        if (!InAppReview.OnGameFinished() && ad != null) { ad.GetComponent<AdIns>().ShowInterstitialAd(); }
     }
 
     public void AddTime(int time) {
