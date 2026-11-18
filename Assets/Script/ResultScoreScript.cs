@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
@@ -23,10 +24,28 @@ public class ResultScoreScript : MonoBehaviour
     public RectTransform nextButton;
     public RectTransform playButton;
 
+    [Header("Reklama s odměnou (malé tlačítko v rohu)")]
+    public Button rewardedButton;
+    public TextMeshProUGUI rewardedLabel;
+
+    private int shownGems;
+    private int rewardedBonus;
+
     private void Awake()
     {
         SetTitle(null);
         LayoutButtons();
+        if (rewardedButton != null)
+        {
+            rewardedButton.onClick.AddListener(WatchRewardedAd);
+            rewardedButton.gameObject.SetActive(false);
+        }
+        Rewarded.ReadyChanged += UpdateRewardedButton;
+    }
+
+    private void OnDestroy()
+    {
+        Rewarded.ReadyChanged -= UpdateRewardedButton;
     }
 
     private void Start()
@@ -64,10 +83,59 @@ public class ResultScoreScript : MonoBehaviour
     public void SetGems(int gems)
     {
         Cosmetics.AddGems(gems);
+        ShowGems(gems);
+    }
 
+    private void ShowGems(int gems)
+    {
+        shownGems = gems;
         gemsText.text = gems.ToString();
         gemsText.gameObject.SetActive(true);
         gemsText.transform.parent.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Nabídne dobrovolnou reklamu, za kterou hráč dostane bonus gemů navíc.
+    /// Po výhře se volá s gemy ze hry (= 2×), po prohře v kampani s gemy, o které hráč přišel.
+    /// Tlačítko je vidět, jen když je bonus kladný a reklama načtená.
+    /// </summary>
+    public void OfferRewardedGems(int bonus, string label)
+    {
+        rewardedBonus = bonus;
+        if (rewardedLabel != null) rewardedLabel.text = label;
+        UpdateRewardedButton();
+    }
+
+    private void UpdateRewardedButton()
+    {
+        if (rewardedButton == null) return;
+        rewardedButton.gameObject.SetActive(rewardedBonus > 0 && Rewarded.IsReady);
+    }
+
+    public void WatchRewardedAd()
+    {
+        int bonus = rewardedBonus;
+        if (bonus <= 0) return;
+        // Nabídka platí jednou: tlačítko zmizí hned, ať nejde kliknout dvakrát.
+        rewardedBonus = 0;
+        UpdateRewardedButton();
+
+        bool shown = Rewarded.Show(
+            onRewarded: () =>
+            {
+                if (this == null) return; // tabule mezitím zmizela (odchod ze scény)
+                Cosmetics.AddGems(bonus);
+                ShowGems(shownGems + bonus);
+            },
+            // Nedokoukaná reklama: bez odměny, ale nabídka zůstane.
+            onSkipped: () => { if (this != null) RestoreOffer(bonus); });
+        if (!shown) RestoreOffer(bonus);
+    }
+
+    private void RestoreOffer(int bonus)
+    {
+        rewardedBonus = bonus;
+        UpdateRewardedButton();
     }
 
     /// <summary>Kampaň: závěr vyhraného levelu a hned další level (bez výběru levelů).</summary>

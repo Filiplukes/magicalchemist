@@ -9,9 +9,13 @@ public class SettingScript : MonoBehaviour
     public Sprite MusicOffSprite;
     public Sprite SoundOnSprite;
     public Sprite SoundOffSprite;
+    [Tooltip("Tlacitko nastaveni soukromi reklam (GDPR). Je videt jen tam, kde to Google vyzaduje.")]
+    public GameObject privacyButton;
     private AudioSource menuAudio;
     private void Start()
     {
+        if (privacyButton != null) privacyButton.SetActive(AdsConsent.PrivacyOptionsRequired);
+
         menuAudio = GameObject.Find("MenuCanvas").GetComponent<AudioSource>();
 
         string musicActive = PlayerPrefs.GetString("MusicActive", "1");
@@ -75,6 +79,11 @@ public class SettingScript : MonoBehaviour
         }
         PlayerPrefs.SetString("SoundActive", active);
 
+    }
+
+    public void OpenPrivacyOptions()
+    {
+        AdsConsent.ShowPrivacyOptions();
     }
 
     public void BackMenu()

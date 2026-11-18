@@ -371,6 +371,7 @@ public class GameManager : MonoBehaviour
         
         result.GetComponent<ResultScoreScript>().SetScore(totalScore);
         result.GetComponent<ResultScoreScript>().SetGems(totalGems);
+        result.GetComponent<ResultScoreScript>().OfferRewardedGems(totalGems, "2×");
     }
 
     /// <summary>Zastaví vaření i zákazníky bez výsledkové obrazovky (konec levelu kampaně).</summary>

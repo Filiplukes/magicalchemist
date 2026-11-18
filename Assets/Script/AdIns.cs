@@ -19,11 +19,8 @@ public class AdIns : MonoBehaviour
 
         if (PlayerPrefs.GetInt("NoAds") != 1) { 
 
-        MobileAds.Initialize((InitializationStatus initStatus) =>
-        {
-            RequestInterstitial();
-        });
-        interstitial.OnAdFullScreenContentClosed += HandleAdClosed;
+        // Reklamy az po souhlasu (GDPR) a spusteni SDK, viz AdsConsent.
+        AdsConsent.WhenReady(() => { if (this != null) RequestInterstitial(); }); // scena uz mohla skoncit
         }
     }
 

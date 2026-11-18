@@ -1,144 +1,178 @@
-//using GoogleMobileAds.Api;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using GoogleMobileAds.Api;
 using UnityEngine;
 
+/// <summary>
+/// Reklama s odměnou (AdMob). Žije přes všechny scény, sama se načte po startu hry
+/// a po každém zhlédnutí načte další. Výsledková tabule se ptá na IsReady a volá Show.
+/// V Editoru a vývojových buildech jede testovací jednotka Googlu, skutečná jen v release buildu
+/// (klikání na vlastní skutečné reklamy porušuje pravidla AdMobu).
+/// </summary>
 public class Rewarded : MonoBehaviour
-{/*
-    public void Start()
-    {
-        // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize((InitializationStatus initStatus) =>
-        {
-            LoadRewardedAd();
-            // This callback is called once the MobileAds SDK is initialized.
-        });
-    }
-    // These ad units are configured to always serve test ads.
+{
 #if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-2771443006207374/5393647118";
+    private const string ReleaseUnitId = "ca-app-pub-2771443006207374/9130330574";
+    private const string TestUnitId = "ca-app-pub-3940256099942544/5224354917";
 #elif UNITY_IPHONE
-  private string _adUnitId = "ca-app-pub-2771443006207374/5393647118";
+    private const string ReleaseUnitId = "unused"; // iOS jednotka zatím neexistuje
+    private const string TestUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else
-  private string _adUnitId = "unused";
+    private const string ReleaseUnitId = "unused";
+    private const string TestUnitId = "unused";
 #endif
 
-    private RewardedAd rewardedAd;
+    private static string UnitId => Debug.isDebugBuild ? TestUnitId : ReleaseUnitId;
+
+    private const float MinRetryDelay = 5f;
+    private const float MaxRetryDelay = 120f;
+
+    private static Rewarded instance;
+
+    /// <summary>Změnila se dostupnost reklamy (načetla se, nebo se právě spotřebovala).</summary>
+    public static event Action ReadyChanged;
+
+    public static bool IsReady => instance != null && instance.ad != null && instance.ad.CanShowAd();
+
+    private RewardedAd ad;
+    private bool loading;
+    private float retryDelay = MinRetryDelay;
+    private Action pendingReward;
+    private Action pendingSkip;
+    private bool rewardEarned;
+
+    // Callbacky SDK můžou přijít mimo hlavní vlákno Unity, proto jen zařadí práci sem
+    // a Update ji provede na hlavním vlákně.
+    private readonly Queue<Action> mainThread = new Queue<Action>();
+
+    private static bool bootstrapping;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void Bootstrap()
+    {
+        if (instance != null) return;
+        var go = new GameObject("Rewarded");
+        DontDestroyOnLoad(go);
+        bootstrapping = true;
+        instance = go.AddComponent<Rewarded>();
+        bootstrapping = false;
+    }
+
+    private void Awake()
+    {
+        // Jediná instance vzniká v Bootstrap. Komponenta přidaná ručně do scény nebo prefabu se zruší.
+        if (bootstrapping) return;
+        enabled = false; // vypnutá komponenta nedostane Start ani Update
+        Destroy(this);
+    }
+
+    private void Start()
+    {
+        // Načítá se až po souhlasu (GDPR) a spuštění SDK, viz AdsConsent.
+        AdsConsent.WhenReady(Load);
+    }
+
+    // Play mode bez reloadu domény by jinak držel statiku z minulého spuštění.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        instance = null;
+        bootstrapping = false;
+        ReadyChanged = null;
+    }
+
+    private void Update()
+    {
+        while (true)
+        {
+            Action work;
+            lock (mainThread)
+            {
+                if (mainThread.Count == 0) break;
+                work = mainThread.Dequeue();
+            }
+            work();
+        }
+    }
+
+    private void Post(Action work)
+    {
+        lock (mainThread) mainThread.Enqueue(work);
+    }
+
+    private void Load()
+    {
+        if (loading || ad != null) return;
+        loading = true;
+
+        RewardedAd.Load(UnitId, new AdRequest(), (RewardedAd loaded, LoadAdError error) => Post(() =>
+        {
+            loading = false;
+            if (error != null || loaded == null)
+            {
+                Debug.LogWarning($"Rewarded: reklama se nenačetla ({error?.GetMessage()}), další pokus za {retryDelay} s.");
+                StartCoroutine(RetryLater(retryDelay));
+                retryDelay = Mathf.Min(retryDelay * 2f, MaxRetryDelay);
+                return;
+            }
+
+            retryDelay = MinRetryDelay;
+            ad = loaded;
+            ad.OnAdFullScreenContentClosed += () => Post(OnAdFinished);
+            ad.OnAdFullScreenContentFailed += failure => Post(() =>
+            {
+                Debug.LogWarning($"Rewarded: reklama se nezobrazila ({failure?.GetMessage()}).");
+                OnAdFinished();
+            });
+            ReadyChanged?.Invoke();
+        }));
+    }
+
+    private IEnumerator RetryLater(float delay)
+    {
+        // Realtime: výsledková tabule může mít zastavený čas.
+        yield return new WaitForSecondsRealtime(delay);
+        Load();
+    }
 
     /// <summary>
-    /// Loads the rewarded ad.
+    /// Ukáže reklamu. Po zavření se zavolá (na hlavním vlákně) onRewarded, když ji hráč dokoukal,
+    /// jinak onSkipped. Vrátí false, když reklama není připravená.
     /// </summary>
-    public void LoadRewardedAd()
+    public static bool Show(Action onRewarded, Action onSkipped = null)
     {
-        // Clean up the old ad before loading a new one.
-        if (rewardedAd != null)
+        if (!IsReady) return false;
+        var self = instance;
+        self.pendingReward = onRewarded;
+        self.pendingSkip = onSkipped;
+        self.rewardEarned = false;
+        self.ad.Show(_ => self.Post(() => self.rewardEarned = true));
+        return true;
+    }
+
+    // Reklama se zavřela (nebo se nepodařilo ji otevřít): odměna, úklid a načtení další.
+    private void OnAdFinished()
+    {
+        // Odměna může dorazit těsně po zavření, proto se vyhodnotí až o snímek později.
+        StartCoroutine(FinishNextFrame());
+    }
+
+    private IEnumerator FinishNextFrame()
+    {
+        yield return null;
+        var done = rewardEarned ? pendingReward : pendingSkip;
+        pendingReward = null;
+        pendingSkip = null;
+        rewardEarned = false;
+
+        if (ad != null)
         {
-            rewardedAd.Destroy();
-            rewardedAd = null;
+            ad.Destroy();
+            ad = null;
         }
-
-       // Debug.Log("Loading the rewarded ad.");
-
-        // create our request used to load the ad.
-        var adRequest = new AdRequest();
-
-        // send the request to load the ad.
-        RewardedAd.Load(_adUnitId, adRequest,
-            (RewardedAd ad, LoadAdError error) =>
-            {
-                // if error is not null, the load request failed.
-                if (error != null || ad == null)
-                {
-                    Debug.LogError("Rewarded ad failed to load an ad " +
-                                   "with error : " + error);
-                    return;
-                }
-
-                rewardedAd = ad;
-            });
+        ReadyChanged?.Invoke();
+        done?.Invoke();
+        Load();
     }
-
-    public bool readyAdd() {
-
-        return (rewardedAd != null && rewardedAd.CanShowAd());
-    }
-
-    public void ShowRewardedAd(GameObject backMenu)
-    {
-
-        const string rewardMsg =
-            "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
-        if (rewardedAd != null && rewardedAd.CanShowAd())
-        {
-            rewardedAd.Show((Reward reward) =>
-            {
-                Destroy(backMenu);
-                var gameManager = FindAnyObjectByType<InGameManager>();
-                gameManager.GetComponent<InGameManager>().startGame(true);
-                Time.timeScale = 1;
-                Destroy(gameObject);
-                // TODO: Reward the user.
-                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
-            });
-        }
-    }
-
-    private void RegisterEventHandlers(RewardedAd ad)
-    {
-        // Raised when the ad is estimated to have earned money.
-        ad.OnAdPaid += (AdValue adValue) =>
-        {
-            Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
-                adValue.Value,
-                adValue.CurrencyCode));
-        };
-        // Raised when an impression is recorded for an ad.
-        ad.OnAdImpressionRecorded += () =>
-        {
-            Debug.Log("Rewarded ad recorded an impression.");
-        };
-        // Raised when a click is recorded for an ad.
-        ad.OnAdClicked += () =>
-        {
-            Debug.Log("Rewarded ad was clicked.");
-        };
-        // Raised when an ad opened full screen content.
-        ad.OnAdFullScreenContentOpened += () =>
-        {
-            Debug.Log("Rewarded ad full screen content opened.");
-        };
-        // Raised when the ad closed full screen content.
-        ad.OnAdFullScreenContentClosed += () =>
-        {
-            Debug.Log("Rewarded ad full screen content closed.");
-        };
-        // Raised when the ad failed to open full screen content.
-        ad.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            Debug.LogError("Rewarded ad failed to open full screen content " +
-                           "with error : " + error);
-        };
-    }
-    private void RegisterReloadHandler(RewardedAd ad)
-    {
-        // Raised when the ad closed full screen content.
-        ad.OnAdFullScreenContentClosed += () =>
-    {
-            Debug.Log("Rewarded Ad full screen content closed.");
-
-            // Reload the ad so that we can show another as soon as possible.
-            LoadRewardedAd();
-        };
-        // Raised when the ad failed to open full screen content.
-        ad.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            Debug.LogError("Rewarded ad failed to open full screen content " +
-                           "with error : " + error);
-
-            // Reload the ad so that we can show another as soon as possible.
-            LoadRewardedAd();
-        };
-    }
-    */
 }
-

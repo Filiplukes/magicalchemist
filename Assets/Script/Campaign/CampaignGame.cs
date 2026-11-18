@@ -326,6 +326,8 @@ public class CampaignGame : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         var board = ShowBoard("Level failed", reason);
         board.SetButtons(home: true, restart: true, next: false, play: false);
+        // Prohra gemy nedává. Za dobrovolnou reklamu si je hráč může nechat.
+        board.OfferRewardedGems(game.TotalGems, $"+{game.TotalGems}");
     }
 
     /// <summary>Stejná výsledková tabule jako v TimeMode a LifeMode (prefab GameManager.resultScore).</summary>
