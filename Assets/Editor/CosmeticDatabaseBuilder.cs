@@ -79,7 +79,10 @@ public static class CosmeticDatabaseBuilder
                 found.Add((number, item));
             }
 
-            list.AddRange(found.OrderBy(x => x.number).Select(x => x.item));
+            // Odměny za kampaň (zamčené) zůstávají na konci obchodu, nové položky jdou před ně.
+            int insertAt = list.FindIndex(i => i.CampaignReward);
+            if (insertAt < 0) insertAt = list.Count;
+            list.InsertRange(insertAt, found.OrderBy(x => x.number).Select(x => x.item));
             db.EditorSet(type, list);
         }
 

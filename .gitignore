@@ -49,3 +49,6 @@ Thumbs.db
 # Editor player save data (persistentDataPath resolves to project root in this editor)
 /Items/
 /cosmetics.json*
+
+# Screenshoty z Editoru
+/Screenshots/
