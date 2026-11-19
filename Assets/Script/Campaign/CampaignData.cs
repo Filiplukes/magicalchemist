@@ -131,6 +131,8 @@ public static class CampaignBackgrounds
         if (sprite == null)
         {
             var room = Cosmetics.GetSelected(CosmeticType.Room);
+            // Scéna z kampaně (ulice, kobka…) jako dílna nedává smysl, tam patří výchozí místnost.
+            if (room != null && room.CampaignReward) room = Cosmetics.Database.GetDefault(CosmeticType.Room);
             if (room != null) sprite = room.Sprite;
         }
         return sprite;
@@ -186,8 +188,31 @@ public static class CampaignProgress
     private const string ReachedKey = "CampaignLevelReached";
     private const string DonePrefix = "CampaignDone_";
     private const string EndingPrefix = "CampaignEnding_";
+    private const string RoomsAnnouncedKey = "CampaignRoomsAnnounced";
+
+    private static int finalLevel; // 0 = ještě nenačteno, -1 = kampaň chybí
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() => finalLevel = 0;
 
     public static int Reached => Mathf.Max(1, PlayerPrefs.GetInt(ReachedKey, 1));
+
+    /// <summary>Hráč dohrál poslední level kampaně (s jakýmkoli koncem).</summary>
+    public static bool IsCampaignFinished
+    {
+        get
+        {
+            if (finalLevel == 0)
+            {
+                finalLevel = -1;
+                var data = CampaignData.Load();
+                if (data?.levels != null)
+                    foreach (var level in data.levels) finalLevel = Mathf.Max(finalLevel, level.id);
+            }
+            return finalLevel > 0 && IsCompleted(finalLevel);
+        }
+    }
+
     public static bool IsUnlocked(int level) => level <= Reached;
     public static bool IsCompleted(int level) => PlayerPrefs.GetInt(DonePrefix + level, 0) == 1;
 
@@ -196,6 +221,17 @@ public static class CampaignProgress
         PlayerPrefs.SetInt(DonePrefix + level, 1);
         if (level + 1 > Reached) PlayerPrefs.SetInt(ReachedKey, level + 1);
         PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Poprvé po dohrání kampaně vrátí true (oznámit odemčené místnosti z kampaně), pak už false.
+    /// </summary>
+    public static bool TakeRoomsAnnouncement()
+    {
+        if (!IsCampaignFinished || PlayerPrefs.GetInt(RoomsAnnouncedKey, 0) == 1) return false;
+        PlayerPrefs.SetInt(RoomsAnnouncedKey, 1);
+        PlayerPrefs.Save();
+        return true;
     }
 
     public static bool HasSeenEnding(string id) => PlayerPrefs.GetInt(EndingPrefix + id, 0) == 1;
@@ -222,6 +258,7 @@ public static class CampaignProgress
     public static void Reset(IEnumerable<CampaignLevel> levels, IEnumerable<CampaignEnding> endings)
     {
         PlayerPrefs.DeleteKey(ReachedKey);
+        PlayerPrefs.DeleteKey(RoomsAnnouncedKey);
         foreach (var l in levels) PlayerPrefs.DeleteKey(DonePrefix + l.id);
         foreach (var e in endings) PlayerPrefs.DeleteKey(EndingPrefix + e.id);
         PlayerPrefs.Save();

@@ -22,6 +22,10 @@ public class CosmeticItem : ScriptableObject
     [SerializeField, Min(0)] private int price;
     [Tooltip("Položka je vlastněná od začátku (výchozí kosmetika).")]
     [SerializeField] private bool ownedByDefault;
+    [Tooltip("Scéna z kampaně: hráč ji dostane zdarma, až dohraje celou kampaň. " +
+             "S cenou 0 je do té doby zamčená, s cenou nad 0 jde koupit hned. " +
+             "V kampani se místo ní jako dílna ukáže výchozí místnost.")]
+    [SerializeField] private bool campaignReward;
 
     [Header("Jen pro typ Fire")]
     [Tooltip("Vypnuto = plamen si nechá barvu nastavenou v particle systému.")]
@@ -34,6 +38,7 @@ public class CosmeticItem : ScriptableObject
     public Sprite Sprite => sprite;
     public int Price => price;
     public bool OwnedByDefault => ownedByDefault;
+    public bool CampaignReward => campaignReward;
     public bool OverrideFlameColor => overrideFlameColor && flameGradient != null;
     public Gradient FlameGradient => flameGradient;
 

@@ -229,6 +229,8 @@ public class CampaignController : MonoBehaviour
         var recipes = RecipeUnlocks.Unlock(ending.unlocksRecipes);
         yield return Banner($"The End\n<size=60%>{ending.title}</size>", 2.5f);
         yield return AnnounceRecipes(recipes);
+        if (CampaignProgress.TakeRoomsAnnouncement())
+            yield return Banner("New rooms!\n<size=60%>Campaign scenes are in the shop</size>", 2.5f);
     }
 
     private static void Unlock(string id)

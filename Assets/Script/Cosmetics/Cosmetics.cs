@@ -6,6 +6,7 @@ using UnityEngine;
 public enum CosmeticPurchaseResult
 {
     Invalid,
+    Locked,
     NotEnoughGems,
     SaveFailed,
     Purchased,
@@ -86,7 +87,14 @@ public static class Cosmetics
     {
         if (item == null) return false;
         EnsureLoaded();
-        return item.OwnedByDefault || ownedSet.Contains(item.Id);
+        return item.OwnedByDefault || ownedSet.Contains(item.Id)
+            || (item.CampaignReward && CampaignProgress.IsCampaignFinished);
+    }
+
+    /// <summary>Zamčená = nejde koupit ani vybrat (odměna za kampaň bez ceny, dokud hráč kampaň nedohraje).</summary>
+    public static bool IsLocked(CosmeticItem item)
+    {
+        return item != null && item.CampaignReward && item.Price <= 0 && !IsOwned(item);
     }
 
     public static bool IsSelected(CosmeticItem item)
@@ -126,6 +134,8 @@ public static class Cosmetics
     {
         if (item == null) return CosmeticPurchaseResult.Invalid;
         EnsureLoaded();
+
+        if (IsLocked(item)) return CosmeticPurchaseResult.Locked;
 
         bool buying = !IsOwned(item);
         int gems = Gems;

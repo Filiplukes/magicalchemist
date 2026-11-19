@@ -30,6 +30,13 @@ public class RoomManager : MonoBehaviour
         if (applyBuyButton != null)
         {
             buttonText = applyBuyButton.GetComponentInChildren<TMP_Text>(true);
+            if (buttonText != null)
+            {
+                // "Finish campaign" je delší než cena, zmenší se a zalomí; ostatní texty zůstanou stejně velké.
+                buttonText.fontSizeMax = buttonText.fontSize;
+                buttonText.fontSizeMin = Mathf.Min(24f, buttonText.fontSize);
+                buttonText.enableAutoSizing = true;
+            }
             gemIcon = applyBuyButton.GetComponentsInChildren<RawImage>(true)
                 .FirstOrDefault(r => r.gameObject.name == "GemIcon")?.gameObject;
         }
@@ -60,7 +67,8 @@ public class RoomManager : MonoBehaviour
     public void BuyAcitevRoom()
     {
         var result = Cosmetics.BuyOrSelect(Current);
-        if (result == CosmeticPurchaseResult.NotEnoughGems || result == CosmeticPurchaseResult.Invalid)
+        if (result == CosmeticPurchaseResult.NotEnoughGems || result == CosmeticPurchaseResult.Invalid
+            || result == CosmeticPurchaseResult.Locked)
         {
             FlashBuyButtonRed();
             return;
@@ -92,12 +100,13 @@ public class RoomManager : MonoBehaviour
 
         bool owned = Cosmetics.IsOwned(item);
         bool selected = Cosmetics.IsSelected(item);
+        bool locked = Cosmetics.IsLocked(item);
 
-        applyBuyButton.interactable = !selected;
+        applyBuyButton.interactable = !selected && !locked;
         if (buttonText != null)
-            buttonText.text = selected ? "Active" : owned ? "Apply" : item.Price.ToString();
+            buttonText.text = locked ? "Finish campaign" : selected ? "Active" : owned ? "Apply" : item.Price.ToString();
         if (gemIcon != null)
-            gemIcon.SetActive(!owned);
+            gemIcon.SetActive(!owned && !locked);
     }
 
     public void FlashBuyButtonRed(float duration = 0.4f)
