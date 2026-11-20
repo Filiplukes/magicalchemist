@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Green Fairy Cauldron
   sprite: {fileID: -3884348571767505077, guid: cadaa3bb626c4ebeb5334b14aa3a311b, type: 3}
-  price: 500
+  price: 1000
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

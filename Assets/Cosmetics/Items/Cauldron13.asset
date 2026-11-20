@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Spectral Skull Cauldron
   sprite: {fileID: -876052996950496494, guid: 39e2f311047c4a048b9c279aba9f804d, type: 3}
-  price: 500
+  price: 1000
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

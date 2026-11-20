@@ -12,6 +12,9 @@ public class FlameColor : MonoBehaviour
         {
             var main = particle.main;
             main.startColor = fire.FlameGradient;
+            // Délku smyčky jde měnit jen u zastaveného systému (playOnAwake je vypnuté).
+            if (fire.FlameCycleSeconds > 0f && !particle.isPlaying)
+                main.duration = fire.FlameCycleSeconds;
         }
         if (particle != null) particle.Play();
     }

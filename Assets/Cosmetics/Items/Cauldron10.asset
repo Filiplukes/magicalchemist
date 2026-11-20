@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Venom Demon Cauldron
   sprite: {fileID: 6574098755865412768, guid: 18127811145a4e4c984ed2247c100525, type: 3}
-  price: 500
+  price: 600
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

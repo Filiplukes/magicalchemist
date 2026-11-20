@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Violet Demon Cauldron
   sprite: {fileID: 6574098755865412768, guid: 5bc00397db404b80beeeeb92ed42fbaa, type: 3}
-  price: 500
+  price: 600
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

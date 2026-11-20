@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Cauldron1
   sprite: {fileID: 6574098755865412768, guid: f8ae21af8fc70704797d60cf9b953014, type: 3}
-  price: 500
+  price: 600
   ownedByDefault: 0
   flameGradient:
     serializedVersion: 2

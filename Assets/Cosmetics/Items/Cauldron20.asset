@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Teal Fairy Cauldron
   sprite: {fileID: -3884348571767505077, guid: bb509724448245feb00087b693379473, type: 3}
-  price: 500
+  price: 1000
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

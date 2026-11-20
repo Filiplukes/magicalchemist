@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Frost Cauldron
   sprite: {fileID: -5469213065076485013, guid: 21987b33f7784db5bfe253cca7ef8c6e, type: 3}
-  price: 500
+  price: 300
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Rose Fairy Cauldron
   sprite: {fileID: -3884348571767505077, guid: ca091df3253d4d7ab939b62322bda33d, type: 3}
-  price: 500
+  price: 1000
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

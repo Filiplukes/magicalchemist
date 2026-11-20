@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Teal Crystal Cauldron
   sprite: {fileID: 3267053287153157932, guid: 5f69fe87eb754d8abf9154964ece06fe, type: 3}
-  price: 500
+  price: 600
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

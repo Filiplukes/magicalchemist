@@ -31,6 +31,9 @@ public class CosmeticItem : ScriptableObject
     [Tooltip("Vypnuto = plamen si nechá barvu nastavenou v particle systému.")]
     [SerializeField] private bool overrideFlameColor;
     [SerializeField] private Gradient flameGradient = new Gradient();
+    [Tooltip("Za kolik sekund plamen projde celým gradientem (délka smyčky particle systému). " +
+             "0 = nechat délku z prefabu (5 s).")]
+    [SerializeField, Min(0)] private float flameCycleSeconds;
 
     public string Id => id;
     public CosmeticType Type => type;
@@ -41,6 +44,7 @@ public class CosmeticItem : ScriptableObject
     public bool CampaignReward => campaignReward;
     public bool OverrideFlameColor => overrideFlameColor && flameGradient != null;
     public Gradient FlameGradient => flameGradient;
+    public float FlameCycleSeconds => flameCycleSeconds;
 
 #if UNITY_EDITOR
     /// <summary>Jen pro editorový generátor databáze.</summary>

@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Golden Cauldron
   sprite: {fileID: -5469213065076485013, guid: a8b2aa616fdd4a15886e28dff791ea89, type: 3}
-  price: 500
+  price: 300
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Venom Skull Cauldron
   sprite: {fileID: -876052996950496494, guid: bed07c5ab3cf4170914d421dfa97c04a, type: 3}
-  price: 500
+  price: 1000
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

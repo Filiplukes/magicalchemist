@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   displayName: Bronze Cauldron
   sprite: {fileID: -5469213065076485013, guid: 5a27dd52d0154a4493f74aeea5fef7cd, type: 3}
-  price: 500
+  price: 300
   ownedByDefault: 0
   campaignReward: 0
   overrideFlameColor: 0

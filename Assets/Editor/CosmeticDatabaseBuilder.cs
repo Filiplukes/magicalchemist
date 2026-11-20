@@ -23,15 +23,20 @@ public static class CosmeticDatabaseBuilder
         (CosmeticType.Fire, "Fire", "Assets/Resources/Fires", 250),
     };
 
-    // Původní barvy z FlameColor.cs (index = číslo ohně).
-    private static readonly (string from, string to)[] FireColors =
+    // Barvy plamene (index = číslo ohně), klíče gradientu rovnoměrně od 0 do 1.
+    // 0–5 jsou původní barvy z FlameColor.cs.
+    private static readonly string[][] FireColors =
     {
-        ("00B5FF", "00CAFF"),
-        ("1270E5", "1A00FF"),
-        ("8312E5", "9A00FF"),
-        ("B90500", "D10B17"),
-        ("E55312", "FF0000"),
-        ("49E512", "00FF44"),
+        new[] { "00B5FF", "00CAFF" },
+        new[] { "1270E5", "1A00FF" },
+        new[] { "8312E5", "9A00FF" },
+        new[] { "B90500", "D10B17" },
+        new[] { "E55312", "FF0000" },
+        new[] { "49E512", "00FF44" },
+        new[] { "FF4FD8", "FF1493" },                                   // 6 růžový
+        new[] { "FFD21A", "FF9F00" },                                   // 7 zlatý
+        new[] { "FFFFFF", "BFE9FF" },                                   // 8 mrazivě bílý
+        new[] { "FF2020", "FFB000", "30FF40", "20A0FF", "C040FF", "FF2020" }, // 9 duhový
     };
 
     [MenuItem("Tools/Magic Alchemist/Build Cosmetic Database")]
@@ -104,12 +109,15 @@ public static class CosmeticDatabaseBuilder
     private static Gradient FireGradient(int number)
     {
         if (number < 0 || number >= FireColors.Length) return null;
-        ColorUtility.TryParseHtmlString("#" + FireColors[number].from, out var from);
-        ColorUtility.TryParseHtmlString("#" + FireColors[number].to, out var to);
+        string[] hex = FireColors[number];
+        var keys = new GradientColorKey[hex.Length]; // Gradient bere max. 8 klíčů
+        for (int i = 0; i < hex.Length; i++)
+        {
+            ColorUtility.TryParseHtmlString("#" + hex[i], out var c);
+            keys[i] = new GradientColorKey(c, hex.Length == 1 ? 0f : i / (float)(hex.Length - 1));
+        }
         var g = new Gradient();
-        g.SetKeys(
-            new[] { new GradientColorKey(from, 0f), new GradientColorKey(to, 1f) },
-            new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) });
+        g.SetKeys(keys, new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) });
         return g;
     }
 
